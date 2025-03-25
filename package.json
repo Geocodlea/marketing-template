@@ -12,6 +12,7 @@
     "@auth/mongodb-adapter": "^3.8.0",
     "bootstrap": "^5.3.3",
     "clipboard": "^2.0.11",
+    "mongoose": "^8.13.0",
     "next": "14.2.3",
     "next-auth": "^4.24.11",
     "openai": "^4.89.0",

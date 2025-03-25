@@ -15,7 +15,7 @@ export const authOptions = {
         url: "https://www.facebook.com/v22.0/dialog/oauth",
         params: {
           scope:
-            "ads_management,business_management,pages_read_engagement,pages_show_list",
+            "email,ads_management,business_management,pages_read_engagement,pages_show_list,pages_manage_posts",
         },
       },
     }),
