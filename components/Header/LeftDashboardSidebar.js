@@ -9,9 +9,12 @@ import avatar from "../../public/images/team/team-01sm.jpg";
 import SmallNavItem from "../../data/header.json";
 import { useAppContext } from "@/context/Context";
 
+import { useSession } from "next-auth/react";
+
 const LeftSidebar = () => {
   const pathname = usePathname();
   const { shouldCollapseLeftbar } = useAppContext();
+  const { data: session } = useSession();
 
   const isActive = (href) => pathname.startsWith(href);
   return (
@@ -140,15 +143,15 @@ const LeftSidebar = () => {
                 <div className="author-img active">
                   <Image
                     className="w-100"
-                    width={49}
-                    height={48}
-                    src={avatar}
+                    width={31}
+                    height={31}
+                    src={session?.user.image || avatar}
                     alt="Author"
                   />
                 </div>
                 <div className="author-desc">
-                  <h6>Rafi Dev</h6>
-                  <p>trentadam@net</p>
+                  <h6>{session?.user.name}</h6>
+                  <p>{session?.user.email}</p>
                 </div>
                 <div className="author-badge">Free</div>
               </Link>

@@ -1,12 +1,11 @@
 import React from "react";
 import Form from "./Form";
 
-const StaticbarDashboard = () => {
+const StaticbarDashboard = ({ onSendMessage }) => {
   return (
     <>
       <div className="rbt-static-bar">
-        <Form />
-
+        <Form onSendMessage={onSendMessage} />
         <p className="b3 small-text">
           AiWave can make mistakes. Consider checking important information.
         </p>

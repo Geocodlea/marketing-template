@@ -10,6 +10,8 @@ import avatar from "../../public/images/team/team-01sm.jpg";
 import Nav from "./Nav";
 import UserMenu from "./UserMenu";
 
+import { useSession } from "next-auth/react";
+
 const HeaderDashboard = ({ display }) => {
   const {
     mobile,
@@ -19,6 +21,9 @@ const HeaderDashboard = ({ display }) => {
     activeMobileMenu,
     setActiveMobileMenu,
   } = useAppContext();
+
+  const { data: session } = useSession();
+
   return (
     <>
       <header className="rbt-dashboard-header rainbow-header header-default header-left-align rbt-fluid-header">
@@ -69,27 +74,36 @@ const HeaderDashboard = ({ display }) => {
                   </div>
                 </div>
 
-                <div className="rbt-admin-panel account-access rbt-user-wrapper right-align-dropdown">
-                  <div className="rbt-admin-card grid-style">
-                    <a className="d-flex align-items-center" href="#">
-                      <div className="inner d-flex align-items-center">
-                        <div className="img-box">
-                          <Image src={avatar} alt="Admin" />
+                {session ? (
+                  <div className="rbt-admin-panel account-access rbt-user-wrapper right-align-dropdown">
+                    <div className="rbt-admin-card grid-style">
+                      <a className="d-flex align-items-center" href="#">
+                        <div className="inner d-flex align-items-center">
+                          <div className="img-box">
+                            <Image
+                              src={session.user.image || avatar}
+                              alt="Admin"
+                              width={31}
+                              height={31}
+                            />
+                          </div>
+                          <div className="content">
+                            <span className="title ">{session.user.name}</span>
+                            <p>{session.user.email}</p>
+                          </div>
                         </div>
-                        <div className="content">
-                          <span className="title ">Rafi Dev</span>
-                          <p>adam@gmail.com</p>
+                        <div className="icon">
+                          <i className="fa-sharp fa-solid fa-chevron-down"></i>
                         </div>
-                      </div>
-                      <div className="icon">
-                        <i className="fa-sharp fa-solid fa-chevron-down"></i>
-                      </div>
-                    </a>
+                      </a>
+                    </div>
+                    <div className="rbt-user-menu-list-wrapper">
+                      <UserMenu />
+                    </div>
                   </div>
-                  <div className="rbt-user-menu-list-wrapper">
-                    <UserMenu />
-                  </div>
-                </div>
+                ) : (
+                  <Link href="/signin">SignIn</Link>
+                )}
 
                 <div className={`expand-btn-grp ${display}`}>
                   <button

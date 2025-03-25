@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 
@@ -7,7 +9,12 @@ import brandImg from "../../public/images/brand/brand-t.png";
 import google from "../../public/images/sign-up/google.png";
 import facebook from "../../public/images/sign-up/facebook.png";
 
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+
 const SigninPage = () => {
+  const router = useRouter();
+
   return (
     <>
       <main className="page-wrapper">
@@ -38,7 +45,13 @@ const SigninPage = () => {
                           </span>
                           Login with Google
                         </a>
-                        <a className="btn-default btn-border" href="#">
+                        <button
+                          className="btn-default btn-border"
+                          onClick={() => {
+                            signIn("facebook");
+                            router.push("/");
+                          }}
+                        >
                           <span className="icon-left">
                             <Image
                               src={facebook}
@@ -48,7 +61,7 @@ const SigninPage = () => {
                             />
                           </span>
                           Login with Facebook
-                        </a>
+                        </button>
                       </div>
                       <div className="text-social-area">
                         <hr />
