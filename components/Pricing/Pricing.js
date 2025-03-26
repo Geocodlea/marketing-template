@@ -91,7 +91,7 @@ const Pricing = ({ start, end, parentClass, isBadge, gap }) => {
                                       toggleSection(innerData.subTitle)
                                     }
                                   >
-                                    Show More
+                                    Arată toate
                                   </div>
                                 ) : (
                                   ""
@@ -108,7 +108,7 @@ const Pricing = ({ start, end, parentClass, isBadge, gap }) => {
                               }`}
                               href="#"
                             >
-                              Get Started
+                              Începe
                             </a>
                             <p className="bottom-text">{innerData.limited}</p>
                           </div>

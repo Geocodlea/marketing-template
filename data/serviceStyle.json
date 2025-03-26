@@ -2,50 +2,50 @@
   "serviceOne": [
     {
       "img": "/images/icons/service-icon-01.svg",
-      "title": "Ask anything",
-      "desc": "Lets users quickly find answers to their questions without having to search through multiple sources."
+      "title": "Întreabă orice",
+      "desc": "Permite utilizatorilor să găsească rapid răspunsuri la întrebările lor fără a fi nevoie să caute prin mai multe surse."
     },
     {
       "img": "/images/icons/service-icon-02.svg",
-      "title": "Connect everywhere",
-      "desc": "Lets users quickly find answers to their questions without having to search through multiple sources."
+      "title": "Conectează-te oriunde",
+      "desc": "Permite utilizatorilor să găsească rapid răspunsuri la întrebările lor fără a fi nevoie să caute prin mai multe surse."
     },
     {
       "img": "/images/icons/service-icon-03.svg",
-      "title": "Fast responding",
-      "desc": "Lets users quickly find answers to their questions without having to search through multiple sources."
+      "title": "Răspuns rapid",
+      "desc": "Permite utilizatorilor să găsească rapid răspunsuri la întrebările lor fără a fi nevoie să caute prin mai multe surse."
     },
     {
       "img": "/images/icons/service-icon-01.svg",
-      "title": "Ask anything",
-      "desc": "Lets users quickly find answers to their questions without having to search through multiple sources."
+      "title": "Întreabă orice",
+      "desc": "Permite utilizatorilor să găsească rapid răspunsuri la întrebările lor fără a fi nevoie să caute prin mai multe surse."
     },
     {
       "img": "/images/icons/service-icon-02.svg",
-      "title": "Connect everywhere",
-      "desc": "Lets users quickly find answers to their questions without having to search through multiple sources."
+      "title": "Conectează-te oriunde",
+      "desc": "Permite utilizatorilor să găsească rapid răspunsuri la întrebările lor fără a fi nevoie să caute prin mai multe surse."
     },
     {
       "img": "/images/icons/service-icon-03.svg",
-      "title": "Fast responding",
-      "desc": "Lets users quickly find answers to their questions without having to search through multiple sources."
+      "title": "Răspuns rapid",
+      "desc": "Permite utilizatorilor să găsească rapid răspunsuri la întrebările lor fără a fi nevoie să caute prin mai multe surse."
     }
   ],
   "serviceTwo": [
     {
       "img": "/images/service/service-icon-01.png",
-      "title": "100% No-Risk, Money Back Guarantee!",
-      "desc": "Refunds will be issued within period of 14 days from the purchase date"
+      "title": "100% Fără risc, garanție de returnare a banilor!",
+      "desc": "Restituirile vor fi emise în termen de 14 zile de la data achiziției."
     },
     {
       "img": "/images/service/service-icon-02.png",
-      "title": "Upgrade or Cancel Anytime",
-      "desc": "Passages there are many variations variations of of Lorem Ipsum available"
+      "title": "Actualizează sau anulează oricând",
+      "desc": "Există multe variante disponibile."
     },
     {
       "img": "/images/service/service-icon-03.png",
-      "title": "Not sure yet, try the free version",
-      "desc": "Refunds will be issued within period of 14 days from the purchase date"
+      "title": "Nu ești sigur încă, încearcă gratuit",
+      "desc": "Restituirile vor fi emise în termen de 14 zile de la data achiziției."
     }
   ]
 }

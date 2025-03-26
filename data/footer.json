@@ -6,12 +6,8 @@
           "title": "Qucik Links",
           "innerItem": [
             {
-              "link": "#",
-              "text": "Pages"
-            },
-            {
-              "link": "/blog",
-              "text": "Blog"
+              "link": "/pricing",
+              "text": "Pricing"
             },
             {
               "link": "/contact",
@@ -24,6 +20,10 @@
             {
               "link": "/roadmap",
               "text": "Roadmap"
+            },
+            {
+              "link": "/blog",
+              "text": "Blog"
             }
           ]
         }

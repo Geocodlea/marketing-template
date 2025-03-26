@@ -2,7 +2,7 @@
   "pricing": [
     {
       "priceId": "nav-home",
-      "priceType": "Monthly",
+      "priceType": "Lunar",
       "discount": "",
       "isSelect": false,
       "priceBody": [
@@ -13,28 +13,17 @@
           "isShow": false,
           "classNum": "one",
           "subTitle": "Basic",
-          "title": "For large teams & corportaions",
-          "price": "Free",
-          "priceFor": "/Per Month",
-          "limited": "Limited Offer",
-          "text": "Features",
+          "title": "Pentru startup-uri și echipe mici",
+          "price": "Gratuit",
+          "priceFor": "/Lună",
+          "limited": "Ofertă Limitată",
+          "text": "Funcționalități",
           "iconClass": "fa-regular fa-circle-radiation",
           "listItem": [
-            {
-              "text": "7,700 3-5 day turnarouord"
-            },
-            {
-              "text": "6+ Naive development"
-            },
-            {
-              "text": "5+ Task delivered one-by-one"
-            },
-            {
-              "text": "AI Blog Updates via dashboard & slack"
-            },
-            {
-              "text": "Advance Updates via dashboard & slack"
-            }
+            { "text": "Acces la instrumente esențiale" },
+            { "text": "Timp de execuție: 3-5 zile" },
+            { "text": "Suport prin e-mail" },
+            { "text": "Actualizări AI prin dashboard" }
           ]
         },
         {
@@ -44,37 +33,20 @@
           "isShow": true,
           "classNum": "two",
           "subTitle": "Premium",
-          "title": "For large teams & corportaions",
+          "title": "Pentru echipe și companii în creștere",
           "price": "$60.50",
-          "priceFor": "/Per Month",
-          "limited": "Limited Offer",
-          "text": "Features",
+          "priceFor": "/Lună",
+          "limited": "Ofertă Limitată",
+          "text": "Funcționalități",
           "iconClass": "fa-sharp fa-regular fa-flower",
           "listItem": [
-            {
-              "text": "12,700 7-9 day turnarouord"
-            },
-            {
-              "text": "6+ Naive development"
-            },
-            {
-              "text": "5+ Task delivered one-by-one"
-            },
-            {
-              "text": "7,700 3-5 day turnarouord"
-            },
-            {
-              "text": "6+ Naive development"
-            },
-            {
-              "text": "5+ Task delivered one-by-one"
-            },
-            {
-              "text": "AI Blog Updates via dashboard & slack"
-            },
-            {
-              "text": "Advance Updates via dashboard & slack"
-            }
+            { "text": "Acces complet la toate funcționalitățile" },
+            { "text": "Timp de execuție: 7-9 zile" },
+            { "text": "Suport prioritar prin e-mail și chat" },
+            { "text": "Automatizări AI avansate" },
+            { "text": "Analiză și recomandări AI personalizate" },
+            { "text": "Integrare cu platforme de marketing" },
+            { "text": "Export de date și rapoarte detaliate" }
           ]
         },
         {
@@ -84,44 +56,27 @@
           "isShow": true,
           "classNum": "three",
           "subTitle": "Enterprise",
-          "title": "For large teams & corportaions",
+          "title": "Pentru companii mari cu nevoi avansate",
           "price": "$80.50",
-          "priceFor": "/Per Month",
-          "limited": "Limited Offer",
-          "text": "Features",
+          "priceFor": "/Lună",
+          "limited": "Ofertă Limitată",
+          "text": "Funcționalități",
           "iconClass": "fa-sharp fa-regular fa-waveform-lines",
           "listItem": [
-            {
-              "text": "12,700 7-9 day turnarouord"
-            },
-            {
-              "text": "6+ Naive development"
-            },
-            {
-              "text": "5+ Task delivered one-by-one"
-            },
-            {
-              "text": "7,700 3-5 day turnarouord"
-            },
-            {
-              "text": "6+ Naive development"
-            },
-            {
-              "text": "5+ Task delivered one-by-one"
-            },
-            {
-              "text": "AI Blog Updates via dashboard & slack"
-            },
-            {
-              "text": "Advance Updates via dashboard & slack"
-            }
+            { "text": "Toate funcțiile Premium + AI personalizat" },
+            { "text": "Timp de execuție prioritar: 3-5 zile" },
+            { "text": "Consultanță dedicată pentru strategii AI" },
+            { "text": "Acces la API pentru automatizare" },
+            { "text": "Integrare cu CRM și alte sisteme" },
+            { "text": "Dashboard avansat pentru analize AI" },
+            { "text": "Suport 24/7 prin telefon, chat și e-mail" }
           ]
         }
       ]
     },
     {
       "priceId": "nav-profile",
-      "priceType": "Yearly",
+      "priceType": "Anual",
       "discount": 10,
       "isSelect": true,
       "priceBody": [
@@ -132,28 +87,17 @@
           "isShow": false,
           "classNum": "one",
           "subTitle": "Basic",
-          "title": "For large teams & corportaions",
-          "price": "Free",
-          "priceFor": "/Per Year",
-          "limited": "Limited Offer",
-          "text": "Features",
+          "title": "Pentru startup-uri și echipe mici",
+          "price": "Gratuit",
+          "priceFor": "/An",
+          "limited": "Ofertă Limitată",
+          "text": "Funcționalități",
           "iconClass": "fa-regular fa-circle-radiation",
           "listItem": [
-            {
-              "text": "7,700 3-5 day turnarouord"
-            },
-            {
-              "text": "6+ Naive development"
-            },
-            {
-              "text": "5+ Task delivered one-by-one"
-            },
-            {
-              "text": "AI Blog Updates via dashboard & slack"
-            },
-            {
-              "text": "Advance Updates via dashboard & slack"
-            }
+            { "text": "Acces la instrumente esențiale" },
+            { "text": "Timp de execuție: 3-5 zile" },
+            { "text": "Suport prin e-mail" },
+            { "text": "Actualizări AI prin dashboard" }
           ]
         },
         {
@@ -163,37 +107,21 @@
           "isShow": true,
           "classNum": "two",
           "subTitle": "Premium",
-          "title": "For large teams & corportaions",
+          "title": "Pentru echipe și companii în creștere",
           "price": "$499.00",
-          "priceFor": "/Per Year",
-          "limited": "Limited Offer",
-          "text": "Features",
+          "priceFor": "/An",
+          "limited": "Ofertă Limitată",
+          "text": "Funcționalități",
           "iconClass": "fa-sharp fa-regular fa-flower",
           "listItem": [
-            {
-              "text": "12,700 7-9 day turnarouord"
-            },
-            {
-              "text": "6+ Naive development"
-            },
-            {
-              "text": "5+ Task delivered one-by-one"
-            },
-            {
-              "text": "7,700 3-5 day turnarouord"
-            },
-            {
-              "text": "6+ Naive development"
-            },
-            {
-              "text": "5+ Task delivered one-by-one"
-            },
-            {
-              "text": "AI Blog Updates via dashboard & slack"
-            },
-            {
-              "text": "Advance Updates via dashboard & slack"
-            }
+            { "text": "Acces complet la toate funcționalitățile" },
+            { "text": "Timp de execuție: 7-9 zile" },
+            { "text": "Suport prioritar prin e-mail și chat" },
+            { "text": "Automatizări AI avansate" },
+            { "text": "Analiză și recomandări AI personalizate" },
+            { "text": "Integrare cu platforme de marketing" },
+            { "text": "Export de date și rapoarte detaliate" },
+            { "text": "Acces exclusiv la webinarii AI" }
           ]
         },
         {
@@ -203,37 +131,22 @@
           "isShow": true,
           "classNum": "three",
           "subTitle": "Enterprise",
-          "title": "For large teams & corportaions",
+          "title": "Pentru companii mari cu nevoi avansate",
           "price": "$599.00",
-          "priceFor": "/Per Year",
-          "limited": "Limited Offer",
-          "text": "Features",
+          "priceFor": "/An",
+          "limited": "Ofertă Limitată",
+          "text": "Funcționalități",
           "iconClass": "fa-sharp fa-regular fa-waveform-lines",
           "listItem": [
-            {
-              "text": "12,700 7-9 day turnarouord"
-            },
-            {
-              "text": "6+ Naive development"
-            },
-            {
-              "text": "5+ Task delivered one-by-one"
-            },
-            {
-              "text": "7,700 3-5 day turnarouord"
-            },
-            {
-              "text": "6+ Naive development"
-            },
-            {
-              "text": "5+ Task delivered one-by-one"
-            },
-            {
-              "text": "AI Blog Updates via dashboard & slack"
-            },
-            {
-              "text": "Advance Updates via dashboard & slack"
-            }
+            { "text": "Toate funcțiile Premium + AI personalizat" },
+            { "text": "Timp de execuție prioritar: 3-5 zile" },
+            { "text": "Consultanță dedicată pentru strategii AI" },
+            { "text": "Acces la API pentru automatizare" },
+            { "text": "Integrare cu CRM și alte sisteme" },
+            { "text": "Dashboard avansat pentru analize AI" },
+            { "text": "Suport 24/7 prin telefon, chat și e-mail" },
+            { "text": "Sesiuni lunare de consultanță AI personalizată" },
+            { "text": "Acces exclusiv la evenimente AI" }
           ]
         }
       ]

@@ -77,7 +77,7 @@ const TabStyleOne = () => {
                                 className="btn-default color-blacked"
                                 href="#"
                               >
-                                Start Exploring Now
+                                Încearcă gratuit
                                 <i className="fa-sharp fa-solid fa-arrow-right ps-2"></i>
                               </Link>
                             </div>

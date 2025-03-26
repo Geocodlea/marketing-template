@@ -56,7 +56,7 @@ const Home = () => {
             <div className="col-lg-12">
               <div className="inner text-center mt--140">
                 <h1 className="title display-one">
-                  Examine the Potential of
+                  Creează reclame pe Facebook
                   <br />{" "}
                   <span className="header-caption">
                     <span className="cd-headline rotate-1">
@@ -68,7 +68,7 @@ const Home = () => {
                               : "is-hidden theme-gradient"
                           }
                         >
-                          AI Chating
+                          automat
                         </b>
                         <b
                           className={
@@ -77,7 +77,7 @@ const Home = () => {
                               : "is-hidden theme-gradient"
                           }
                         >
-                          AI Writing
+                          simplu
                         </b>
                         <b
                           className={
@@ -86,18 +86,21 @@ const Home = () => {
                               : "is-hidden theme-gradient"
                           }
                         >
-                          AI Chating
+                          elegant
                         </b>
                       </span>
                     </span>
                   </span>{" "}
-                  AI Hack
+                  {/* fără agenții costisitoare. */}
                 </h1>
                 <p className="description">
-                  Unleash Brainwave's AI potential. Use the open AI <br />{" "}
-                  conversation app Rainbow theme
+                  Lansează reclame în 5 minute, optimizate automat pentru
+                  conversii.
                 </p>
-                <div className="form-group">
+                <Link className="btn-default " href="/signin">
+                  Încearcă gratuit
+                </Link>
+                {/* <div className="form-group">
                   <textarea
                     name="text"
                     id="slider-text-area"
@@ -108,7 +111,7 @@ const Home = () => {
                   <Link className="btn-default " href="/text-generator">
                     Start with AI
                   </Link>
-                </div>
+                </div> */}
                 <div className="inner-shape">
                   <Image
                     src={shapeOne}
@@ -184,7 +187,7 @@ const Home = () => {
                 data-sal-delay="100"
               >
                 <p className="b1 mb--0 small-title">
-                  truest 800,000+ HIGHLY PRODUCTIVE Company
+                  De încredere pentru 800.000+ de companii extrem de productive
                 </p>
               </div>
             </div>
@@ -209,7 +212,7 @@ const Home = () => {
               >
                 <h4 className="subtitle">
                   <span className="theme-gradient">
-                    RAINBOW UNLOCKS THE POTENTIAL ai
+                    RAINBOW UNLOCKS THE POTENTIAL OF AI
                   </span>
                 </h4>
                 <h2 className="title mb--0">
@@ -233,11 +236,9 @@ const Home = () => {
                 data-sal-delay="150"
               >
                 <h4 className="subtitle">
-                  <span className="theme-gradient">Assisting individuals</span>
+                  <span className="theme-gradient">Asistență individuala</span>
                 </h4>
-                <h2 className="title mb--60">
-                  Chat Smarter, Not <br /> Harder with
-                </h2>
+                <h2 className="title mb--60">Creează reclame mai inteligent</h2>
               </div>
             </div>
           </div>
@@ -267,17 +268,16 @@ const Home = () => {
                 data-sal-delay="100"
               >
                 <h4 className="subtitle ">
-                  <span className="theme-gradient">AI Collaboration</span>
+                  <span className="theme-gradient">Colaborare cu AI</span>
                 </h4>
                 <h2 className="title mb--20">
-                  AI Chat app for seamless
-                  <br /> collaboration
+                  Creează reclame cu AI <br /> fără efort
                 </h2>
                 <Link
                   className="btn-default btn-large color-blacked"
                   href="/contact"
                 >
-                  Try It Now{" "}
+                  Încearcă gratuit{" "}
                   <i className="fa-sharp fa-light fa-arrow-right ml--5"></i>
                 </Link>
               </div>
@@ -308,11 +308,11 @@ const Home = () => {
         </div>
       </div>
 
-      <div className="rainbow-rn-cta">
+      {/* <div className="rainbow-rn-cta">
         <div className="container">
           <CtaOne />
         </div>
-      </div>
+      </div> */}
 
       <div className="aiwave-pricing-area wrapper rainbow-section-gap-big">
         <div className="container">
@@ -325,10 +325,10 @@ const Home = () => {
                 data-sal-delay="150"
               >
                 <h4 className="subtitle">
-                  <span className="theme-gradient">Pricing</span>
+                  <span className="theme-gradient">Prețuri</span>
                 </h4>
                 <h2 className="title w-600 mb--40">
-                  Pricing plans for everyone
+                  Planuri și Prețuri pentru oricine
                 </h2>
               </div>
 
@@ -395,9 +395,9 @@ const Home = () => {
                 data-sal-delay="150"
               >
                 <h4 className="subtitle">
-                  <span className="theme-gradient">Assisting individuals</span>
+                  <span className="theme-gradient">Asistență individuala</span>
                 </h4>
-                <h2 className="title mb--60">The opinions of the community</h2>
+                <h2 className="title mb--60">Opiniile comunității</h2>
               </div>
             </div>
           </div>
@@ -432,7 +432,9 @@ const Home = () => {
                     <i className="fa-sharp fa-solid fa-star"></i>
                   </a>
                 </div>
-                <p className="subtitle mb--0">Based on 20,000+ reviews on</p>
+                <p className="subtitle mb--0">
+                  Bazat pe 20.000+ de recenzii pe
+                </p>
               </div>
             </div>
           </div>
@@ -448,11 +450,11 @@ const Home = () => {
         </div>
       </div>
 
-      <div className="rainbow-cta-area rainbow-section-gap rainbow-section-gapBottom-big">
+      {/* <div className="rainbow-cta-area rainbow-section-gap rainbow-section-gapBottom-big">
         <div className="container">
           <CtaTwo />
         </div>
-      </div>
+      </div> */}
     </>
   );
 };

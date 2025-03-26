@@ -74,7 +74,7 @@ const AdvanceTab = () => {
                                 className="btn-default color-blacked"
                                 href="/contact"
                               >
-                                Try It Now{" "}
+                                Creează prima ta reclamă{" "}
                                 <i className="fa-sharp fa-light fa-arrow-right ml--5"></i>
                               </Link>
                             </div>
