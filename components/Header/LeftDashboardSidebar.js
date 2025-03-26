@@ -143,15 +143,15 @@ const LeftSidebar = () => {
                 <div className="author-img active">
                   <Image
                     className="w-100"
-                    width={31}
-                    height={31}
+                    width={49}
+                    height={48}
                     src={session?.user.image || avatar}
                     alt="Author"
                   />
                 </div>
                 <div className="author-desc">
                   <h6>{session?.user.name}</h6>
-                  <p>{session?.user.email}</p>
+                  <span>{session?.user.email}</span>
                 </div>
                 <div className="author-badge">Free</div>
               </Link>

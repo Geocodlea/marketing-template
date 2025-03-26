@@ -9,13 +9,13 @@ export const authOptions = {
 
   providers: [
     FacebookProvider({
-      clientId: process.env.FACEBOOK_CLIENT_ID,
-      clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
+      clientId: process.env.FACEBOOK_APP_ID,
+      clientSecret: process.env.FACEBOOK_APP_SECRET,
       authorization: {
         url: "https://www.facebook.com/v22.0/dialog/oauth",
         params: {
           scope:
-            "email,ads_management,business_management,pages_read_engagement,pages_show_list,pages_manage_posts",
+            "email,ads_management,business_management,pages_read_engagement,pages_show_list,pages_manage_posts,pages_read_user_content",
         },
       },
     }),

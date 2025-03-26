@@ -90,7 +90,7 @@ const HeaderDashboard = ({ display }) => {
                             />
                           </div>
                           <div className="content">
-                            <span className="title ">{session.user.name}</span>
+                            <h6 className="title">{session.user.name}</h6>
                             <p>{session.user.email}</p>
                           </div>
                         </div>
