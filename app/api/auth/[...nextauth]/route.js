@@ -24,6 +24,12 @@ export const authOptions = {
     async redirect({ url, baseUrl }) {
       return baseUrl;
     },
+
+    async session({ session, user }) {
+      session.user.id = user.id;
+
+      return session;
+    },
   },
 };
 

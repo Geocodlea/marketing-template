@@ -22,10 +22,8 @@ let cachedPromise = null;
 async function dbConnect(maxRetries = 5, retryDelay = 1000) {
   for (let attempt = 1; attempt <= maxRetries; attempt++) {
     try {
-      // console.log(`Mongoose connection attempt ${attempt}`);
       cachedPromise = mongoose.connect(MONGO_URI, options);
       await cachedPromise;
-      // console.log("Mongoose connected successfully");
       cachedPromise = null; // Reset cachedPromise
       return;
     } catch (error) {

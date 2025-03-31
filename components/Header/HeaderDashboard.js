@@ -24,8 +24,6 @@ const HeaderDashboard = ({ display }) => {
 
   const { data: session } = useSession();
 
-  console.log(session);
-
   return (
     <>
       <header className="rbt-dashboard-header rainbow-header header-default header-left-align rbt-fluid-header">
