@@ -29,6 +29,7 @@ import ServiceTwo from "../Services/Service-Two";
 import Testimonial from "../Testimonials/Testimonial";
 import BrandTwo from "../Brands/Brand-Two";
 import CtaTwo from "../CallToActions/Cta-Two";
+import AccordionItem from "../Accordion/AccordionItem";
 
 const Home = () => {
   const [visibleIndex, setVisibleIndex] = useState(0);
@@ -446,6 +447,12 @@ const Home = () => {
               height={1055}
               alt="Bg shape"
             />
+          </div>
+
+          <div className="row rainbow-section-gap row--20">
+            <div className="col-lg-12">
+              <AccordionItem />
+            </div>
           </div>
         </div>
       </div>

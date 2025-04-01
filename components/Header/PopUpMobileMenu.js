@@ -7,7 +7,6 @@ import { useAppContext } from "@/context/Context";
 
 import logoLight from "../../public/images/logo/logo.png";
 
-import Nav from "./Nav";
 import SmallNav from "./SmallNav";
 
 const PopupMobileMenu = () => {
@@ -55,21 +54,9 @@ const PopupMobileMenu = () => {
             </div>
           </div>
           <div className="content">
-            <Nav />
-
-            <div className="rbt-sm-separator"></div>
             <div className="rbt-default-sidebar-wrapper">
               <SmallNav />
             </div>
-          </div>
-          <div className="header-btn d-block d-md-none">
-            <Link
-              className="btn-default"
-              target="_blank"
-              href="/text-generator"
-            >
-              Get Started Free
-            </Link>
           </div>
         </div>
       </div>

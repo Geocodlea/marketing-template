@@ -56,10 +56,8 @@ const BlogItem = ({ blog }) => {
           <div className="rainbow-load-more text-center mt--60">
             <button className="btn btn-default btn-icon">
               <span>
-                View More Post
-                <span className="icon">
-                  <i className="feather-loader"></i>
-                </span>
+                Vezi mai multe postări
+                <span className="icon"></span>
               </span>
             </button>
           </div>

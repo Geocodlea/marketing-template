@@ -15,9 +15,38 @@ const Team = () => {
     <>
       <div className="rbt-team-area bg-color-1 rainbow-section-gap-big pb--0">
         <div className="container">
+          <div className="section-title text-center">
+            <h4 className="subtitle">
+              <span className="theme-gradient">Despre Noi</span>
+            </h4>
+            <h2 className="title w-600 mb--20">Povestea Noastră</h2>
+            <p className="description b1">
+              Am creat această platformă pentru a face publicitatea pe Facebook
+              accesibilă tuturor. Ne-am dorit să oferim o soluție simplă și
+              eficientă pentru afacerile care vor să crească rapid.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div className="rbt-team-area bg-color-1 rainbow-section-gap-big">
+        <div className="container">
+          <div className="row mb--60">
+            <div className="col-lg-12">
+              <div className="section-title text-center">
+                <h4 className="subtitle">
+                  <span className="theme-gradient">Echipa Noastră</span>
+                </h4>
+                <h2 className="title w-600 mb--20">
+                  Oameni cu experiență, dedicați succesului tău
+                </h2>
+              </div>
+            </div>
+          </div>
+
           <div className="row row--15 mt_dec--30">
             {TeamData &&
-              TeamData.team.slice(0, 3).map((data, index) => (
+              TeamData.team.slice(0, 6).map((data, index) => (
                 <div
                   className="col-lg-4 col-md-6 col-sm-6 col-12 mt--30"
                   key={index}
@@ -28,12 +57,13 @@ const Team = () => {
                         src={data.img}
                         width={415}
                         height={352}
-                        alt="Team Images"
+                        alt="Team Member"
                       />
                     </div>
                     <div className="content">
                       <h4 className="title">{data.name}</h4>
                       <p className="designation">{data.profission}</p>
+                      <p className="description">{data.description}</p>
                     </div>
                     <ul className="social-icon">
                       <li>
@@ -60,50 +90,12 @@ const Team = () => {
       </div>
 
       <div className="rbt-team-area bg-color-1 rainbow-section-gap-big">
-        <div className="container">
-          <div className="row mb--60">
-            <div className="col-lg-12">
-              <div
-                className="section-title text-center"
-                data-sal="slide-up"
-                data-sal-duration="400"
-                data-sal-delay="150"
-              >
-                <h4 className="subtitle">
-                  <span className="theme-gradient">Rainbow team mbember</span>
-                </h4>
-                <h2 className="title w-600 mb--20">We Are Here To Serve You</h2>
-              </div>
-            </div>
-          </div>
-
-          <div className="row row--15 mt_dec--30">
-            {TeamData &&
-              TeamData.team.slice(3, 9).map((data, index) => (
-                <div className="col-lg-4 col-md-6 col-12 mt--30" key={index}>
-                  <div className="rbt-team team-style-default style-three rbt-hover">
-                    <div className="inner">
-                      <div className="thumbnail">
-                        <Image
-                          src={data.img}
-                          width={364}
-                          height={376}
-                          alt="Corporate Template"
-                        />
-                      </div>
-                      <div className="content">
-                        <h2 className="title">{data.name}</h2>
-                        <h6 className="subtitle">{data.profission}</h6>
-                        <span className="team-form">
-                          <i className="feather-map-pin"></i>
-                          <span className="location">{data.location}</span>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-          </div>
+        <div className="container text-center">
+          <h2 className="title w-600 mb--20">Misiunea Noastră</h2>
+          <p className="description b1">
+            Facem publicitatea pe Facebook accesibilă tuturor, oferind soluții
+            automatizate și eficiente care economisesc timp și bani.
+          </p>
         </div>
       </div>
     </>

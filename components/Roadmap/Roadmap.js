@@ -76,7 +76,7 @@ const Roadmap = () => {
                     data-sal-duration="400"
                     data-sal-delay="200"
                   >
-                    Missing a feature?
+                    Lipsește o funcționalitate?
                   </h3>
                   <p
                     className="sal-animate"
@@ -84,8 +84,9 @@ const Roadmap = () => {
                     data-sal-duration="400"
                     data-sal-delay="300"
                   >
-                    Anything you're missing in our product? Drop <br /> a
-                    message here to let us know!
+                    Există ceva ce îți lipsește în produsul nostru? Trimite-ne{" "}
+                    <br />
+                    un mesaj aici pentru a ne anunța!
                   </p>
                   <div
                     className="call-to-btn text-center mt--30 sal-animate"
@@ -94,7 +95,7 @@ const Roadmap = () => {
                     data-sal-delay="400"
                   >
                     <Link className="btn-default btn-icon" href="contact">
-                      Send feature request
+                      Trimite o solicitare de funcționalitate
                     </Link>
                   </div>
                 </div>

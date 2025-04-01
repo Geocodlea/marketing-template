@@ -3,7 +3,6 @@ import UserNav from "../Common/UserNav";
 import Pricing from "../Pricing/Pricing";
 import PricingData from "../../data/pricing.json";
 import Compare from "../Pricing/Compare";
-import AccordionItem from "../Accordion/AccordionItem";
 
 const PlansBilling = () => {
   return (
@@ -66,12 +65,6 @@ const PlansBilling = () => {
             <div className="rbt-sm-separator"></div>
 
             <Compare subTitle="" title="Detailed Compare" postion="left" />
-
-            <div className="row rainbow-section-gap row--20">
-              <div className="col-lg-12">
-                <AccordionItem />
-              </div>
-            </div>
           </div>
         </div>
       </div>

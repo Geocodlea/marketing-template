@@ -12,23 +12,8 @@ const SmallNav = () => {
     <>
       <nav className="mainmenu-nav">
         <ul className="dashboard-mainmenu rbt-default-sidebar-list">
-          <li>
-            <Link href="/dashboard">
-              <i className="feather-monitor"></i>
-              <span>Welcome</span>
-            </Link>
-          </li>
-          <li>
-            <Link href="/plans-billing">
-              <i className="feather-briefcase"></i>
-              <span>Manage Subsription</span>
-            </Link>
-          </li>
-        </ul>
-        <div className="rbt-sm-separator"></div>
-        <ul className="dashboard-mainmenu rbt-default-sidebar-list">
           {SmallNavItem &&
-            SmallNavItem.smallNavItem.slice(0, 7).map((data, index) => (
+            SmallNavItem.smallNavItem.slice(0, 5).map((data, index) => (
               <li key={index}>
                 <Link
                   className={
@@ -71,13 +56,13 @@ const SmallNav = () => {
                 aria-controls="collapseExampleMenu"
               >
                 <i className="feather-plus-circle"></i>
-                <span>Setting</span>
+                <span>Settings</span>
               </a>
               <div className="collapse" id="collapseExampleMenu">
                 <ul className="submenu rbt-default-sidebar-list">
                   {SmallNavItem &&
                     SmallNavItem.smallNavItem
-                      .slice(7, 14)
+                      .slice(5, 14)
                       .map((data, index) => (
                         <li key={index}>
                           <Link href={data.link}>
@@ -88,28 +73,6 @@ const SmallNav = () => {
                       ))}
                 </ul>
               </div>
-            </li>
-            <li>
-              <a href="#">
-                <i className="feather-award"></i>
-                <span>Help & FAQ</span>
-              </a>
-            </li>
-          </ul>
-
-          <div className="rbt-sm-separator"></div>
-          <ul className="dashboard-mainmenu rbt-default-sidebar-list">
-            <li>
-              <Link href="/release-notes">
-                <i className="feather-bell"></i>
-                <span>Release notes</span>
-              </Link>
-            </li>
-            <li>
-              <Link href="/terms-policy">
-                <i className="feather-briefcase"></i>
-                <span>Terms & Policy</span>
-              </Link>
             </li>
           </ul>
         </div>

@@ -4,7 +4,7 @@ import React, { useState } from "react";
 
 const ProfileBody = () => {
   const [text, setText] = useState(
-    "My name is Fazlay Elahi Rafi and I'm a Front-End Developer of #Rainbow IT in Bangladesh, OR. I have serious passion for UI effects, animations and creating intuitive, dynamic user experiences."
+    "Numele meu este Fazlay Elahi Rafi și sunt un Dezvoltator Front-End la #Rainbow IT în Bangladesh, OR. Am o pasiune serioasă pentru efectele UI, animații și crearea de experiențe de utilizator intuitive și dinamice."
   );
 
   const handleChange = (event) => {
@@ -31,23 +31,10 @@ const ProfileBody = () => {
                   aria-controls="profile"
                   aria-selected="true"
                 >
-                  <span className="title">Profile</span>
+                  <span className="title">Profil</span>
                 </a>
               </li>
-              <li role="presentation">
-                <a
-                  href="#"
-                  className="tab-button"
-                  id="password-tab"
-                  data-bs-toggle="tab"
-                  data-bs-target="#password"
-                  role="tab"
-                  aria-controls="password"
-                  aria-selected="false"
-                >
-                  <span className="title">Password</span>
-                </a>
-              </li>
+
               <li role="presentation">
                 <a
                   href="#"
@@ -59,7 +46,7 @@ const ProfileBody = () => {
                   aria-controls="delaccount"
                   aria-selected="false"
                 >
-                  <span className="title">Delete Account</span>
+                  <span className="title">Șterge Contul</span>
                 </a>
               </li>
             </ul>
@@ -78,25 +65,25 @@ const ProfileBody = () => {
               >
                 <div className="col-lg-6 col-md-6 col-sm-6 col-12">
                   <div className="form-group">
-                    <label htmlFor="firstname">First Name</label>
+                    <label htmlFor="firstname">Prenume</label>
                     <input id="firstname" type="text" defaultValue="Fazlay" />
                   </div>
                 </div>
                 <div className="col-lg-6 col-md-6 col-sm-6 col-12">
                   <div className="form-group">
-                    <label htmlFor="lastname">Last Name</label>
+                    <label htmlFor="lastname">Nume de Familie</label>
                     <input id="lastname" type="text" defaultValue="Elahi" />
                   </div>
                 </div>
                 <div className="col-lg-6 col-md-6 col-sm-6 col-12">
                   <div className="form-group">
-                    <label htmlFor="username">User Name</label>
+                    <label htmlFor="username">Nume de Utilizator</label>
                     <input id="username" type="text" defaultValue="Rafi" />
                   </div>
                 </div>
                 <div className="col-lg-6 col-md-6 col-sm-6 col-12">
                   <div className="form-group">
-                    <label htmlFor="phonenumber">Phone Number</label>
+                    <label htmlFor="phonenumber">Număr de Telefon</label>
                     <input
                       id="phonenumber"
                       type="tel"
@@ -106,7 +93,7 @@ const ProfileBody = () => {
                 </div>
                 <div className="col-12">
                   <div className="form-group">
-                    <label htmlFor="bio">Bio</label>
+                    <label htmlFor="bio">Biografie</label>
                     <textarea
                       id="bio"
                       cols="20"
@@ -119,59 +106,7 @@ const ProfileBody = () => {
                 <div className="col-12 mt--20">
                   <div className="form-group mb--0">
                     <a className="btn-default" href="#">
-                      Update Info
-                    </a>
-                  </div>
-                </div>
-              </form>
-            </div>
-
-            <div
-              className="tab-pane fade"
-              id="password"
-              role="tabpanel"
-              aria-labelledby="password-tab"
-            >
-              <form
-                action="#"
-                className="rbt-profile-row rbt-default-form row row--15"
-              >
-                <div className="col-12">
-                  <div className="form-group">
-                    <label htmlFor="currentpassword">Current Password</label>
-                    <input
-                      id="currentpassword"
-                      type="password"
-                      placeholder="Current Password"
-                    />
-                  </div>
-                </div>
-                <div className="col-12">
-                  <div className="form-group">
-                    <label htmlFor="newpassword">New Password</label>
-                    <input
-                      id="newpassword"
-                      type="password"
-                      placeholder="New Password"
-                    />
-                  </div>
-                </div>
-                <div className="col-12">
-                  <div className="form-group">
-                    <label htmlFor="retypenewpassword">
-                      Re-type New Password
-                    </label>
-                    <input
-                      id="retypenewpassword"
-                      type="password"
-                      placeholder="Re-type New Password"
-                    />
-                  </div>
-                </div>
-                <div className="col-12 mt--20">
-                  <div className="form-group mb--0">
-                    <a className="btn-default" href="#">
-                      Update Password
+                      Actualizează Informațiile
                     </a>
                   </div>
                 </div>
@@ -190,28 +125,19 @@ const ProfileBody = () => {
               >
                 <div className="col-11 text-Center">
                   <p className="mb--20">
-                    <strong>Warning: </strong>Deleting your account will
-                    permanently erase all your data and cannot be reversed. This
-                    includes your profile, conversations, comments, and any
-                    other info linked to your account. Are you sure you want to
-                    go ahead with deleting your account? Enter your password to
-                    confirm.
+                    <strong>Avertisment: </strong>Ștergerea contului tău va
+                    șterge permanent toate datele tale și nu poate fi inversată.
+                    Aceasta include profilul tău, conversațiile, comentariile și
+                    orice altă informație legată de contul tău. Ești sigur că
+                    vrei să continui cu ștergerea contului? Introdu parola
+                    pentru a confirma.
                   </p>
                 </div>
-                <div className="col-12">
-                  <div className="form-group">
-                    <label htmlFor="enterpassword">Your Password</label>
-                    <input
-                      id="enterpassword"
-                      type="password"
-                      placeholder="Current Password"
-                    />
-                  </div>
-                </div>
+
                 <div className="col-12 mt--20">
                   <div className="form-group mb--0">
                     <a className="btn-default" href="#">
-                      <i className="feather-trash-2"></i> Delete Accont
+                      <i className="feather-trash-2"></i> Șterge Contul
                     </a>
                   </div>
                 </div>

@@ -6,9 +6,9 @@
       "blogImg": "/images/blog/blog-detailes-01.png",
       "blogImg2": "/images/blog/blog-detailes-02.png",
       "date": "10 Dec 2024",
-      "cate": "Technology",
-      "title": "Best Corporate Tips You Will Read This Year.",
-      "desc": "Implement user authentication to provide personalized experiences"
+      "cate": "Tehnologie",
+      "title": "Cum să creezi reclame profitabile pe Facebook fără un marketer.",
+      "desc": "Împărtășim sfaturi pentru a crea reclame eficiente pe Facebook, chiar și fără experiență în marketing."
     },
     {
       "id": 2,
@@ -16,9 +16,9 @@
       "blogImg": "/images/blog/blog-detailes-01.png",
       "blogImg2": "/images/blog/blog-detailes-02.png",
       "date": "30 Nov 2024",
-      "cate": "Development",
-      "title": "Best Corporate Tips You Will Read This Year.",
-      "desc": "Implement user authentication to provide personalized experiences"
+      "cate": "Dezvoltare",
+      "title": "5 Greșeli frecvente în reclamele pe Facebook (și cum să le eviți).",
+      "desc": "Află care sunt cele mai comune greșeli în campaniile de Facebook Ads și cum le poți evita."
     },
     {
       "id": 3,
@@ -26,9 +26,9 @@
       "blogImg": "/images/blog/blog-detailes-01.png",
       "blogImg2": "/images/blog/blog-detailes-02.png",
       "date": "10 Oct 2024",
-      "cate": "AI Technology",
-      "title": "Best Corporate Tips You Will Read This Year.",
-      "desc": "Implement user authentication to provide personalized experiences"
+      "cate": "Tehnologie AI",
+      "title": "AI vs. Agenție: Care este mai eficient pentru afacerea ta?",
+      "desc": "Comparație între agențiile de publicitate și utilizarea AI pentru a crea reclame eficiente."
     },
     {
       "id": 4,
@@ -36,9 +36,9 @@
       "blogImg": "/images/blog/blog-detailes-01.png",
       "blogImg2": "/images/blog/blog-detailes-02.png",
       "date": "25 Aug 2024",
-      "cate": "Technology",
-      "title": "Best Corporate Tips You Will Read This Year.",
-      "desc": "Implement user authentication to provide personalized experiences"
+      "cate": "Tehnologie",
+      "title": "Sfaturi și strategii pentru reclame eficiente.",
+      "desc": "Îmbunătățește performanța reclamelor tale cu aceste strategii și sfaturi utile."
     },
     {
       "id": 5,
@@ -46,9 +46,9 @@
       "blogImg": "/images/blog/blog-detailes-01.png",
       "blogImg2": "/images/blog/blog-detailes-02.png",
       "date": "25 Jun 2024",
-      "cate": "Development",
-      "title": "Best Corporate Tips You Will Read This Year.",
-      "desc": "Implement user authentication to provide personalized experiences"
+      "cate": "Dezvoltare",
+      "title": "Cum să creezi reclame de impact pentru afacerea ta.",
+      "desc": "Cum să îți optimizezi campaniile pentru a atrage mai mulți clienți."
     },
     {
       "id": 6,
@@ -56,9 +56,9 @@
       "blogImg": "/images/blog/blog-detailes-01.png",
       "blogImg2": "/images/blog/blog-detailes-02.png",
       "date": "22 Nov 2024",
-      "cate": "Technology",
-      "title": "Best Corporate Tips You Will Read This Year.",
-      "desc": "Implement user authentication to provide personalized experiences"
+      "cate": "Tehnologie",
+      "title": "Importanța analizei datelor pentru îmbunătățirea campaniilor publicitare.",
+      "desc": "Cum să folosești analiza datelor pentru a îmbunătăți rezultatele publicității tale."
     },
     {
       "id": 7,
@@ -66,9 +66,9 @@
       "blogImg": "/images/blog/blog-detailes-01.png",
       "blogImg2": "/images/blog/blog-detailes-02.png",
       "date": "10 May 2024",
-      "cate": "AI Technology",
-      "title": "Best Corporate Tips You Will Read This Year.",
-      "desc": "Implement user authentication to provide personalized experiences"
+      "cate": "Tehnologie AI",
+      "title": "Cum AI poate revoluționa crearea de reclame.",
+      "desc": "Explorăm impactul tehnologiei AI în crearea și optimizarea reclamelor pe Facebook."
     },
     {
       "id": 8,
@@ -76,9 +76,9 @@
       "blogImg": "/images/blog/blog-detailes-01.png",
       "blogImg2": "/images/blog/blog-detailes-02.png",
       "date": "22 Sept 2024",
-      "cate": "Development",
-      "title": "Best Corporate Tips You Will Read This Year.",
-      "desc": "Implement user authentication to provide personalized experiences"
+      "cate": "Dezvoltare",
+      "title": "Cum să îți dezvolți afacerea cu ajutorul reclamelor online.",
+      "desc": "Strategii și sfaturi pentru a utiliza reclamele online pentru a-ți crește afacerea."
     },
     {
       "id": 9,
@@ -86,18 +86,18 @@
       "blogImg": "/images/blog/blog-detailes-01.png",
       "blogImg2": "/images/blog/blog-detailes-02.png",
       "date": "10 Dec 2024",
-      "cate": "AI Technology",
-      "title": "Best Corporate Tips You Will Read This Year.",
-      "desc": "Implement user authentication to provide personalized experiences"
+      "cate": "Tehnologie AI",
+      "title": "Cum să folosești AI pentru a crea reclame personalizate.",
+      "desc": "Învață cum să folosești AI pentru a genera reclame personalizate care atrag audiența potrivită."
     }
   ],
   "categories": [
     {
-      "name": "Development",
+      "name": "Dezvoltare",
       "num": 3
     },
     {
-      "name": "Company",
+      "name": "Companie",
       "num": 5
     },
     {
@@ -105,23 +105,23 @@
       "num": 2
     },
     {
-      "name": "UX Design",
+      "name": "Design UX",
       "num": 6
     },
     {
-      "name": "Business",
+      "name": "Afaceri",
       "num": 2
     },
     {
-      "name": "App Development",
+      "name": "Dezvoltare Aplicații",
       "num": 6
     },
     {
-      "name": "Application",
+      "name": "Aplicație",
       "num": 3
     },
     {
-      "name": "Art",
+      "name": "Artă",
       "num": 3
     }
   ],
@@ -130,10 +130,10 @@
       "name": "Corporate"
     },
     {
-      "name": "Agency"
+      "name": "Agenție"
     },
     {
-      "name": "Creative"
+      "name": "Creativ"
     },
     {
       "name": "Design"
@@ -142,22 +142,22 @@
       "name": "Minimal"
     },
     {
-      "name": "Company"
+      "name": "Companie"
     },
     {
-      "name": "Development"
+      "name": "Dezvoltare"
     },
     {
-      "name": "App Landing"
+      "name": "Landing Aplicație"
     },
     {
       "name": "Startup"
     },
     {
-      "name": "App"
+      "name": "Aplicație"
     },
     {
-      "name": "Business"
+      "name": "Afaceri"
     },
     {
       "name": "Software"
@@ -166,7 +166,7 @@
       "name": "Landing"
     },
     {
-      "name": "Art"
+      "name": "Artă"
     }
   ]
 }

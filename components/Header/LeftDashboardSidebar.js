@@ -32,7 +32,7 @@ const LeftSidebar = () => {
                   <ul className="dashboard-mainmenu rbt-default-sidebar-list">
                     {SmallNavItem &&
                       SmallNavItem.smallNavItem
-                        .slice(0, 7)
+                        .slice(0, 5)
                         .map((data, index) => (
                           <li key={index}>
                             <Link
@@ -76,13 +76,13 @@ const LeftSidebar = () => {
                           aria-controls="collapseExampleMenu"
                         >
                           <i className="feather-plus-circle"></i>
-                          <span>Setting</span>
+                          <span>Settings</span>
                         </a>
                         <div className="collapse" id="collapseExampleMenu">
                           <ul className="submenu rbt-default-sidebar-list">
                             {SmallNavItem &&
                               SmallNavItem.smallNavItem
-                                .slice(7, 14)
+                                .slice(5, 14)
                                 .map((data, index) => (
                                   <li key={index}>
                                     <Link
@@ -98,37 +98,6 @@ const LeftSidebar = () => {
                                 ))}
                           </ul>
                         </div>
-                      </li>
-                      <li>
-                        <Link
-                          href="/help"
-                          className={isActive("/help") ? "active" : ""}
-                        >
-                          <i className="feather-award"></i>
-                          <span>Help & FAQ</span>
-                        </Link>
-                      </li>
-                    </ul>
-
-                    <div className="rbt-sm-separator"></div>
-                    <ul className="dashboard-mainmenu rbt-default-sidebar-list">
-                      <li>
-                        <Link
-                          href="/release-notes"
-                          className={isActive("/release-notes") ? "active" : ""}
-                        >
-                          <i className="feather-bell"></i>
-                          <span>Release notes</span>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          href="/terms-policy"
-                          className={isActive("/terms-policy") ? "active" : ""}
-                        >
-                          <i className="feather-briefcase"></i>
-                          <span>Terms & Policy</span>
-                        </Link>
                       </li>
                     </ul>
                   </div>

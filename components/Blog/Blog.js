@@ -25,7 +25,7 @@ const Blog = () => {
                 <div className="rbt-single-widget widget_search mt--40">
                   <div className="inner">
                     <form className="blog-search" action="#">
-                      <input type="text" placeholder="Search ..." />
+                      <input type="text" placeholder="Căutare ..." />
                       <button className="search-button">
                         <i className="feather-search"></i>
                       </button>
@@ -33,19 +33,19 @@ const Blog = () => {
                   </div>
                 </div>
                 <div className="rbt-single-widget widget_categories mt--40">
-                  <h3 className="title">Categories</h3>
+                  <h3 className="title">Categorii</h3>
                   <Categories category={BlogData && BlogData.categories} />
                 </div>
                 <div className="rbt-single-widget widget_recent_entries mt--40">
-                  <h3 className="title">Post</h3>
+                  <h3 className="title">Postări</h3>
                   <BlogPost blogpost={BlogData && BlogData.blog} />
                 </div>
                 <div className="rbt-single-widget widget_archive mt--40">
-                  <h3 className="title">Archives</h3>
+                  <h3 className="title">Arhive</h3>
                   <Archives blogarc={BlogData && BlogData.blog} />
                 </div>
                 <div className="rbt-single-widget widget_tag_cloud mt--40">
-                  <h3 className="title">Tags</h3>
+                  <h3 className="title">Etichete</h3>
                   <BlogTags tags={BlogData && BlogData.tags} />
                 </div>
               </aside>
@@ -81,7 +81,7 @@ const Blog = () => {
                     <i className="fa-sharp fa-solid fa-star"></i>
                   </a>
                 </div>
-                <p className="subtitle mb--0">Based on 20,000+ reviews on</p>
+                <p className="subtitle mb--0">Bazat pe 20,000+ recenzii pe</p>
               </div>
             </div>
           </div>
@@ -89,7 +89,12 @@ const Blog = () => {
         </div>
 
         <div className="bg-shape-left">
-          <Image src={bgShape} width={688} height={1055} alt="Bg shape" />
+          <Image
+            src={bgShape}
+            width={688}
+            height={1055}
+            alt="Formă de fundal"
+          />
         </div>
       </div>
     </>

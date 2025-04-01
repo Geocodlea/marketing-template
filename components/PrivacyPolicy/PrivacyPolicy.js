@@ -8,92 +8,141 @@ const PrivacyPolicy = () => {
           <div className="rbt-dashboard-content rainbow-section-gap">
             <div className="banner-area">
               <div className="settings-area">
-                <h3 className="title">Privacy Policy</h3>
+                <h3 className="title">Politica de Confidențialitate</h3>
               </div>
             </div>
             <div className="content-page pb--50">
               <div className="chat-box-list">
                 <div className="content">
-                  <h4>Welcome to AiWavePrivacy Policy</h4>
+                  <h4>
+                    Bine ați venit la Politica de Confidențialitate AiWave
+                  </h4>
                   <ol>
                     <li>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                      sed do eiusmod tempor incididunt ut labore et dolore magna
-                      aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                      ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                      Duis aute irure dolor in reprehenderit in voluptate velit
-                      esse cillum dolore eu fugiat nulla pariatur (the “Sites”).
+                      Această politică explică cum colectăm și utilizăm
+                      informațiile personale ale utilizatorilor atunci când
+                      accesați site-ul nostru (denumit în continuare
+                      „Site-urile”).
                     </li>
                     <li>
-                      Sed ut perspiciatis unde omnis iste natus error sit
-                      voluptatem accusantium doloremque laudantium, totam rem
-                      aperiam, eaque ipsa quae ab illo inventore veritatis et
-                      quasi architecto beatae vitae dicta sunt explicabo.
+                      Ne angajăm să protejăm confidențialitatea și securitatea
+                      datelor dumneavoastră personale și să respectăm toate
+                      reglementările aplicabile în materie de protecția datelor.
                     </li>
                     <li>
-                      Nemo enim ipsam voluptatem quia voluptas sit aspernatur
-                      aut odit aut fugit, sed quia consequuntur magni dolores
-                      eos qui ratione voluptatem sequi nesciunt. Neque porro
-                      quisquam est, qui dolorem ipsum quia dolor sit amet,
-                      consectetur, adipisci velit, sed quia non numquam eius
-                      modi tempora incidunt ut labore et dolore magnam aliquam
-                      quaerat voluptatem.
+                      Colectăm datele personale ale utilizatorilor doar în
+                      scopuri specifice și transparente și le utilizăm doar în
+                      conformitate cu această politică.
                     </li>
                   </ol>
 
-                  <h4>The type of personal information we collect</h4>
+                  <h4>Tipurile de informații personale pe care le colectăm</h4>
 
                   <ol>
                     <li>
-                      We collect certain personal information about visitors and
-                      users of our Sites.{" "}
-                      <a href="http://rainbowit.net/themes/imroz">
-                        http://rainbowit.net/themes/imroz
-                      </a>
+                      Colectăm anumite informații personale despre vizitatorii
+                      și utilizatorii site-urilor noastre, cum ar fi numele,
+                      adresa de email, numărul de telefon și alte informații
+                      relevante pentru furnizarea serviciilor noastre.
                     </li>
                     <li>
-                      Ut enim ad minima veniam, quis nostrum exercitationem
-                      ullam corporis suscipit laboriosam, nisi ut aliquid ex ea
-                      commodi consequatur? Quis autem vel eum iure reprehenderit
-                      qui in ea voluptate velit esse quam nihil molestiae
-                      consequatur, vel illum qui dolorem eum fugiat quo voluptas
-                      nulla pariatur.
+                      În plus, putem colecta informații despre comportamentul de
+                      navigare pe site, datele de locație și alte informații
+                      tehnice prin utilizarea de cookie-uri.
                     </li>
                   </ol>
 
-                  <h4>How we collect personal information</h4>
+                  <h4>Cum colectăm informațiile personale</h4>
 
                   <ol>
                     <li>
-                      I must explain to you how all this mistaken idea of
-                      denouncing pleasure and praising pain was born and I will
-                      give you a complete account of the system, and expound the
-                      actual teachings.
+                      Colectăm informațiile personale direct de la utilizatorii
+                      care se înregistrează pe site-ul nostru sau care
+                      interacționează cu serviciile noastre.
                     </li>
                     <li>
-                      At vero eos et accusamus et iusto odio dignissimos ducimus
-                      qui blanditiis praesentium voluptatum deleniti atque
-                      corrupti quos dolores et quas molestias excepturi sint
-                      occaecati cupiditate non provident similique sunt in culpa
-                      qui officia deserunt mollitia animi, id est laborum et
-                      dolorum fuga.
+                      De asemenea, putem colecta informații prin tehnologii
+                      automate, precum cookie-urile, pentru a analiza cum sunt
+                      utilizate site-urile noastre și pentru a îmbunătăți
+                      experiența utilizatorilor.
                     </li>
                     <li>
-                      On the other hand, we denounce with righteous indignation
-                      and dislike men who are so beguiled and demoralized by the
-                      charms of pleasure of the moment, so blinded by desire,
-                      that they cannot foresee the pain and trouble that are
-                      bound to ensue; and equal blame belongs to those who fail
-                      in their duty through weakness of will, which is the same
-                      as saying through shrinking from toil and pain. These
-                      cases are perfectly simple and easy to distinguish. In a
-                      free hour, when our power of choice is untrammelled and
-                      when nothing prevents our being able to do what we like
-                      best, every pleasure is to be welcomed and every pain
-                      avoided. But in certain circumstances and owing to the
-                      claims of duty or the obligations{" "}
+                      Aceste informații pot include date despre dispozitivele
+                      utilizate, locația geografică, comportamentele de navigare
+                      și tipul de browser.
                     </li>
                   </ol>
+
+                  <h4>Cum utilizăm informațiile colectate</h4>
+
+                  <ol>
+                    <li>
+                      Informațiile colectate sunt utilizate pentru a furniza și
+                      a personaliza serviciile noastre, pentru a vă oferi o
+                      experiență îmbunătățită și pentru a respecta obligațiile
+                      legale.
+                    </li>
+                    <li>
+                      De asemenea, putem utiliza informațiile pentru a trimite
+                      mesaje de marketing și pentru a vă informa despre produse
+                      sau servicii relevante, cu consimțământul dumneavoastră
+                      explicit.
+                    </li>
+                  </ol>
+
+                  <h4>Drepturile dumneavoastră</h4>
+                  <p>
+                    Conform legislației aplicabile, aveți următoarele drepturi
+                    referitoare la datele personale pe care le colectăm:
+                  </p>
+                  <ul>
+                    <li>Accesul la datele personale colectate;</li>
+                    <li>Rectificarea datelor inexacte;</li>
+                    <li>
+                      Ștergerea datelor personale (dreptul de a fi uitat);
+                    </li>
+                    <li>Retragerea consimțământului în orice moment;</li>
+                    <li>Limitarea prelucrării datelor;</li>
+                    <li>Portabilitatea datelor.</li>
+                  </ul>
+                  <p>
+                    Puteți exercita aceste drepturi contactându-ne prin
+                    intermediul detaliilor de contact furnizate mai jos.
+                  </p>
+
+                  <h4>Securitatea datelor</h4>
+                  <p>
+                    Ne angajăm să protejăm informațiile dumneavoastră personale
+                    prin implementarea unor măsuri tehnice și organizatorice
+                    adecvate pentru a preveni accesul neautorizat, utilizarea
+                    abuzivă, modificarea sau divulgarea acestora.
+                  </p>
+
+                  <h4>Modificări ale Politicii de Confidențialitate</h4>
+                  <p>
+                    Ne rezervăm dreptul de a modifica această politică în orice
+                    moment. Modificările vor fi publicate pe această pagină și
+                    vor intra în vigoare imediat ce vor fi publicate. Vă
+                    recomandăm să verificați periodic această politică.
+                  </p>
+
+                  <h4>Legea aplicabilă</h4>
+                  <p>
+                    Politica de confidențialitate este reglementată de
+                    legislația română, inclusiv de Regulamentul (UE) 2016/679
+                    privind protecția datelor cu caracter personal (GDPR). Orice
+                    dispută va fi soluționată de instanțele competente din
+                    România.
+                  </p>
+
+                  <h4>Contact</h4>
+                  <p>
+                    Dacă aveți întrebări sau solicitări legate de politica
+                    noastră de confidențialitate, vă rugăm să ne contactați la:
+                    <br />
+                    Email:{" "}
+                    <a href="mailto:contact@aiwave.com">contact@aiwave.com</a>
+                  </p>
                 </div>
               </div>
             </div>

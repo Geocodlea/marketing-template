@@ -22,7 +22,7 @@ const RoadmapPage = () => {
             btnClass="rainbow-gradient-btn"
           />
           <PopupMobileMenu />
-          <Breadcrumb title="Roadmap" text="Roadmap" />
+          <Breadcrumb title="Cum funcționează" text="Utilizare" />
 
           <Roadmap />
 

@@ -43,7 +43,7 @@ const Nav = () => {
               {data.link === "#" ? (
                 <a
                   href="#"
-                  className={` ${!sectionStates[data.text] ? "open" : ""}`}
+                  className={`${!sectionStates[data.text] ? "open" : ""}`}
                   onClick={() => toggleSection(data.text)}
                 >
                   {data.text}

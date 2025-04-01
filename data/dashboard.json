@@ -620,33 +620,33 @@
   ],
   "accordion": [
     {
-      "title": "What is AiWave ? How does it work?",
-      "desc": "AiWave is an AI-powered messaging platform that understands and responds to your natural language queries. Ask anything you'd typically ask a human assistant—get weather updates, news, restaurant recommendations, and more!",
+      "title": "Ce este AiWave? Cum funcționează?",
+      "desc": "AiWave este o platformă de mesagerie alimentată de AI care înțelege și răspunde la întrebările tale în limbaj natural. Întreabă orice ai întreba un asistent uman—primește actualizări meteo, știri, recomandări de restaurante și multe altele!",
       "isExpand": true
     },
     {
-      "title": "What kind of questions can I ask AiWave?",
-      "desc": "AiWave, an AI-driven messaging platform, adeptly communicates with users using natural language understanding. It delivers helpful responses to your inquiries and requests.",
+      "title": "Ce fel de întrebări pot pune AiWave?",
+      "desc": "AiWave, o platformă de mesagerie bazată pe AI, comunică eficient cu utilizatorii folosind înțelegerea limbajului natural. Oferă răspunsuri utile la întrebările și cererile tale.",
       "isExpand": false
     },
     {
-      "title": "Can I get update regularly and For how long do I get updates?",
-      "desc": "Yes, We will get update the AiWave. And you can get it any time. Next time we will comes with more feature. You can be get update for unlimited times. Our dedicated team works for update.",
+      "title": "Pot primi actualizări regulate și pentru cât timp primesc actualizări?",
+      "desc": "Da, vom actualiza AiWave. Și poți primi actualizările oricând. Data viitoare vom veni cu mai multe funcționalități. Poți primi actualizări de un număr nelimitat de ori. Echipa noastră dedicată lucrează pentru actualizări.",
       "isExpand": false
     },
     {
-      "title": "How can I get the customer support?",
-      "desc": "After purchasing the product need you any support you can be share with us with sending mail to rainbowit10@gmail.com.",
+      "title": "Cum pot obține suportul pentru clienți?",
+      "desc": "După achiziționarea produsului, dacă ai nevoie de suport, ne poți contacta trimițând un e-mail la rainbowit10@gmail.com.",
       "isExpand": false
     },
     {
-      "title": "HIs my data safe with AiWave?",
-      "desc": "Feel free to toss any questions at AiWave, just like you would with a human helper—whether it's about the weather, the latest news, restaurant suggestions, or anything else you fancy!",
+      "title": "Datele mele sunt în siguranță cu AiWave?",
+      "desc": "Simte-te liber să adresezi orice întrebare către AiWave, la fel cum ai face cu un ajutor uman—fie că este vorba despre vreme, ultimele știri, sugestii de restaurante sau orice altceva îți dorești!",
       "isExpand": false
     },
     {
-      "title": "Is AiWave available in multiple languages?",
-      "desc": "Yes, AiWave is designed to support multiple languages, offering a versatile and inclusive communication experience for users worldwide.",
+      "title": "Este AiWave disponibil în mai multe limbi?",
+      "desc": "Da, AiWave este conceput pentru a suporta mai multe limbi, oferind o experiență de comunicare versatilă și incluzivă pentru utilizatorii din întreaga lume.",
       "isExpand": false
     }
   ]

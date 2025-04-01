@@ -22,10 +22,7 @@ const ContactPage = () => {
             btnClass="rainbow-gradient-btn"
           />
           <PopupMobileMenu />
-          <Breadcrumb
-            title="Get Started with a free quotation"
-            text="Contact"
-          />
+          <Breadcrumb title="Trimite-ne un mesaj" text="Contact" />
 
           <Contact />
 

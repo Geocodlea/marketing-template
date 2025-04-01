@@ -6,7 +6,6 @@ import Link from "next/link";
 import logo from "../../public/images/logo/logo.png";
 import userImg from "../../public/images/team/team-02sm.jpg";
 import brandImg from "../../public/images/brand/brand-t.png";
-import google from "../../public/images/sign-up/google.png";
 import facebook from "../../public/images/sign-up/facebook.png";
 
 import { signIn } from "next-auth/react";
@@ -34,17 +33,6 @@ const SigninPage = () => {
                   <div className="signup-box-bottom">
                     <div className="signup-box-content">
                       <div className="social-btn-grp">
-                        <a className="btn-default btn-border" href="#">
-                          <span className="icon-left">
-                            <Image
-                              src={google}
-                              width={18}
-                              height={18}
-                              alt="Google Icon"
-                            />
-                          </span>
-                          Login with Google
-                        </a>
                         <button
                           className="btn-default btn-border"
                           onClick={() => {
@@ -62,44 +50,6 @@ const SigninPage = () => {
                           </span>
                           Login with Facebook
                         </button>
-                      </div>
-                      <div className="text-social-area">
-                        <hr />
-                        <span>Or continue with</span>
-                        <hr />
-                      </div>
-                      <form>
-                        <div className="input-section mail-section">
-                          <div className="icon">
-                            <i className="fa-sharp fa-regular fa-envelope"></i>
-                          </div>
-                          <input
-                            type="email"
-                            placeholder="Enter email address"
-                          />
-                        </div>
-                        <div className="input-section password-section">
-                          <div className="icon">
-                            <i className="fa-sharp fa-regular fa-lock"></i>
-                          </div>
-                          <input type="password" placeholder="Password" />
-                        </div>
-                        <div className="forget-text">
-                          <a className="btn-read-more" href="#">
-                            <span>Forgot password</span>
-                          </a>
-                        </div>
-                        <button type="submit" className="btn-default">
-                          Sign In
-                        </button>
-                      </form>
-                    </div>
-                    <div className="signup-box-footer">
-                      <div className="bottom-text">
-                        Don't have an account?{" "}
-                        <a className="btn-read-more ml--5" href="/signup">
-                          <span>Sign Up</span>
-                        </a>
                       </div>
                     </div>
                   </div>

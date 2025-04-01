@@ -29,17 +29,14 @@ const CtaTwo = () => {
                   data-sal-delay="150"
                 >
                   <h4 className="subtitle">
-                    <span className="theme-gradient">
-                      Get Started with Rainbow
-                    </span>
+                    <span className="theme-gradient">Începe cu Rainbow</span>
                   </h4>
                   <h2 className="title w-600 mb--20">
-                    Experience Products in AI
+                    Experimentează produsele AI
                   </h2>
                   <p className="description b1">
-                    Based on the conversation with the AI chatbot, you will
-                    receive <br />
-                    personalized recommendations.
+                    Pe baza conversației cu chatbot-ul AI, vei primi <br />
+                    recomandări personalizate.
                   </p>
                 </div>
                 <div className="app-store-btn">
@@ -48,7 +45,7 @@ const CtaTwo = () => {
                       src={playApp}
                       width={157}
                       height={55}
-                      alt="Play Store Button"
+                      alt="Buton Google Play"
                     />
                   </Link>
                   <Link className="store-btn" href="#">
@@ -56,7 +53,7 @@ const CtaTwo = () => {
                       src={appleApp}
                       width={157}
                       height={55}
-                      alt="Apple Store Button"
+                      alt="Buton Apple Store"
                     />
                   </Link>
                 </div>
@@ -67,16 +64,26 @@ const CtaTwo = () => {
                     src={viewImg}
                     width={449}
                     height={499}
-                    alt="Mobile View"
+                    alt="Vizualizare pe mobil"
                   />
                 </div>
               </div>
               <div className="bg-shape-one">
-                <Image src={bgShape} width={639} height={404} alt="Bg shape" />
+                <Image
+                  src={bgShape}
+                  width={639}
+                  height={404}
+                  alt="Formă de fundal"
+                />
               </div>
             </div>
             <div className="bg-shape-inside">
-              <Image src={bgLight} width={968} height={1103} alt="Bg shape" />
+              <Image
+                src={bgLight}
+                width={968}
+                height={1103}
+                alt="Formă de fundal"
+              />
             </div>
           </div>
         </div>

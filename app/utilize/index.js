@@ -22,7 +22,7 @@ const UtilizePage = () => {
             btnClass="rainbow-gradient-btn"
           />
           <PopupMobileMenu />
-          <Breadcrumb title="How to use" text="How to use" />
+          <Breadcrumb title="Ghid de instrucțiuni" text="Setup" />
 
           <Utilize />
 

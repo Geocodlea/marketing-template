@@ -1,89 +1,80 @@
 {
   "roadmap": [
     {
-      "heading": "Define the problem",
+      "heading": "Conectează-te cu Facebook",
       "date": "25 APR, 2024",
       "isCheck": true,
       "isLoading": false,
       "isBorader": true,
-      "title": "Tacotron and Tacotron",
-      "desc": "It seems like your question is quite broad, and I'm not sure which specific problem or context you're referring to.",
+      "title": "Autentificare rapidă",
+      "desc": "Conectează-ți contul Meta (Facebook Ads) pentru a începe.",
       "list": [
         {
-          "desc": "Around 2013, the use of deep learning, especially transformer architectures, revolutionized NLP."
+          "desc": "Accesează platforma și conectează-te folosind Facebook."
         },
         {
-          "desc": "These models often use recurrent neural networks (RNNs), LSTM networks, or transformer architectures."
+          "desc": "Autorizează aplicația pentru a gestiona reclamele."
         }
       ]
     },
     {
-      "heading": "Train the chatbot",
+      "heading": "Configurează audiența",
       "date": "25 APR, 2024",
       "isCheck": true,
       "isLoading": false,
       "isBorader": true,
-      "title": "Choose a Platform",
-      "desc": "Clearly define the purpose of your chatbot. Determine if it will provide.",
+      "title": "Alege publicul țintă",
+      "desc": "Introdu detalii despre afacerea ta pentru a configura automat audiența.",
       "list": [
         {
-          "desc": "Around 2013, the use of deep learning, especially transformer architectures"
+          "desc": "Selectează nișa și interesele publicului."
         }
       ]
     },
     {
-      "heading": "Build the app",
+      "heading": "Generează reclama",
       "date": "25 APR, 2024",
       "isCheck": false,
       "isLoading": true,
       "isBorader": true,
-      "title": "",
-      "desc": "Research similar apps to understand market trends and identify opportunities."
+      "title": "AI creează conținutul",
+      "desc": "AI-ul generează automat textele, imaginile și call-to-action-ul."
     },
     {
-      "heading": "Launch the app",
+      "heading": "Monitorizează performanța",
       "date": "25 APR, 2024",
       "isCheck": false,
       "isLoading": true,
       "isBorader": true,
-      "title": "",
-      "desc": "Based on user feedback and insights, plan regular updates to enhance features, fix bugs, and introduce new functionalities."
+      "title": "Analizează rezultatele",
+      "desc": "Vezi statisticile și impactul reclamei în timp real."
     },
     {
-      "heading": "Update the app",
+      "heading": "Optimizează campania",
       "date": "25 APR, 2024",
       "isCheck": false,
       "isLoading": true,
       "isBorader": true,
-      "title": "",
-      "desc": "Bug Fixes Address critical bugs and issues reported by users"
+      "title": "Îmbunătățiri continue",
+      "desc": "Ajustează elementele reclamei pentru a obține rezultate mai bune."
     },
     {
-      "heading": "Train the chatbot",
+      "heading": "Extinde funcționalitățile",
       "date": "25 APR, 2024",
       "isCheck": false,
       "isLoading": false,
       "isBorader": true,
-      "title": "",
-      "desc": "If using machine learning, choose or build a suitable natural language processing (NLP) model. Popular choices."
+      "title": "Adaugă noi caracteristici",
+      "desc": "Permite chatbotului să răspundă la întrebări mai complexe."
     },
     {
-      "heading": "Collect and Label",
+      "heading": "Îmbunătățește AI-ul",
       "date": "25 APR, 2024",
       "isCheck": false,
       "isLoading": false,
       "isBorader": true,
-      "title": "",
-      "desc": "User Inputs Gather a diverse set of user inputs that your chatbot is likely to encounter."
-    },
-    {
-      "heading": "Add more features",
-      "date": "25 APR, 2024",
-      "isCheck": false,
-      "isLoading": false,
-      "isBorader": false,
-      "title": "",
-      "desc": "Enable the chatbot to handle and respond to multimedia inputs, such as images, videos, or audio clips."
+      "title": "Antrenează AI-ul",
+      "desc": "AI-ul devine mai precis pe baza feedback-ului utilizatorilor."
     }
   ]
 }
