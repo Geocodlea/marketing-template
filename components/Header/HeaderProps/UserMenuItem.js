@@ -39,38 +39,11 @@ const UserMenuItems = ({ parentClass }) => {
         </li>
         <li>
           <Link
-            className={isActive("/appearance") ? "active" : ""}
-            href="/appearance"
-          >
-            <i className="fa-sharp fa-regular fa-home"></i>
-            <span>Apperance</span>
-          </Link>
-        </li>
-        <li>
-          <Link
             className={isActive("/plans-billing") ? "active" : ""}
             href="/plans-billing"
           >
             <i className="fa-sharp fa-regular fa-briefcase"></i>
             <span>Plans and Billing</span>
-          </Link>
-        </li>
-        <li>
-          <Link
-            className={isActive("/sessions") ? "active" : ""}
-            href="/sessions"
-          >
-            <i className="fa-sharp fa-regular fa-users"></i>
-            <span>Sessions</span>
-          </Link>
-        </li>
-        <li>
-          <Link
-            className={isActive("/application") ? "active" : ""}
-            href="/application"
-          >
-            <i className="fa-sharp fa-regular fa-list"></i>
-            <span>Application</span>
           </Link>
         </li>
       </ul>

@@ -11,7 +11,13 @@ const TextGenerator = ({ messages, handleApprove, handleModify }) => {
 
   return (
     <>
-      <TopBar barImg={DocImg} title="AI Ad Generator" wdt={14} htd={18} />
+      <TopBar
+        barImg={DocImg}
+        title="AI Ad Generator"
+        wdt={14}
+        htd={18}
+        msg={messages.length}
+      />
 
       {messages.map((msg, index) => (
         <div className="chat-box-list pb-0" key={index}>
@@ -53,18 +59,20 @@ const TextGenerator = ({ messages, handleApprove, handleModify }) => {
                           Do you approve this ad, or would you like
                           modifications?
                         </p>
-                        <button
-                          onClick={handleApprove}
-                          style={{ marginRight: "10px", padding: "5px 10px" }}
-                        >
-                          Approve ✅
-                        </button>
-                        <button
-                          onClick={handleModify}
-                          style={{ padding: "5px 10px" }}
-                        >
-                          Modify ✏️
-                        </button>
+                        <div className="d-flex flex-wrap justify-content-center gap-5">
+                          <button
+                            onClick={handleApprove}
+                            className="btn btn-default btn-border btn-small"
+                          >
+                            Approve ✅
+                          </button>
+                          <button
+                            onClick={handleModify}
+                            className="btn btn-default btn-border btn-small"
+                          >
+                            Modify ✏️
+                          </button>
+                        </div>
                       </div>
                     </div>
                   )}

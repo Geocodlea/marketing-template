@@ -9,11 +9,8 @@ import brandImg from "../../public/images/brand/brand-t.png";
 import facebook from "../../public/images/sign-up/facebook.png";
 
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
 
 const SigninPage = () => {
-  const router = useRouter();
-
   return (
     <>
       <main className="page-wrapper">
@@ -35,10 +32,9 @@ const SigninPage = () => {
                       <div className="social-btn-grp">
                         <button
                           className="btn-default btn-border"
-                          onClick={() => {
-                            signIn("facebook");
-                            router.push("/");
-                          }}
+                          onClick={() =>
+                            signIn("facebook", { callbackUrl: "/" })
+                          }
                         >
                           <span className="icon-left">
                             <Image

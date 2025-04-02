@@ -38,7 +38,7 @@ const UserMenu = () => {
         <hr className="mt--10 mb--10" />
         <ul className="user-list-wrapper user-nav">
           <li>
-            <Link href="/privacy-policy">
+            <Link href="/contact">
               <i className="fa-solid fa-comments-question"></i>
               <span>Help Center</span>
             </Link>

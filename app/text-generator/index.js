@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Context from "@/context/Context";
 import PopupMobileMenu from "@/components/Header/PopUpMobileMenu";
 import BackToTop from "../backToTop";
@@ -12,11 +12,19 @@ import TextGenerator from "@/components/TextGenerator/TextGenerator";
 import StaticbarDashboard from "@/components/Common/StaticBarDashboard";
 
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const TextGeneratorPage = () => {
   const [messages, setMessages] = useState([]);
   const [currentCreative, setCurrentCreative] = useState(null);
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/signin");
+    }
+  }, [status]);
 
   const sendMessage = async (inputText) => {
     const newMessage = { role: "user", content: inputText };
