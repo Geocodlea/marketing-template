@@ -13,12 +13,16 @@ import StaticbarDashboard from "@/components/Common/StaticBarDashboard";
 
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { useChat } from "@ai-sdk/react";
 
 const TextGeneratorPage = () => {
-  const [messages, setMessages] = useState([]);
+  //  const [messages, setMessages] = useState([]);
   const [currentCreative, setCurrentCreative] = useState(null);
   const { data: session, status } = useSession();
   const router = useRouter();
+
+  // const { messages, setMessages, input, handleInputChange, handleSubmit } =
+  //   useChat("/api/facebook/chat");
 
   useEffect(() => {
     if (status === "unauthenticated") {
@@ -38,17 +42,47 @@ const TextGeneratorPage = () => {
         body: JSON.stringify({ message: inputText, history: updatedMessages }),
       });
 
-      const data = await response.json();
+      // const decoder = new TextDecoder("utf-8");
+      // let final = "";
+      // let accumulatedMessage = "";
 
-      if (data.status === "clarification" || data.status === "error") {
-        setMessages([
-          ...updatedMessages,
-          { role: "assistant", content: data.message },
-        ]);
-      } else if (data.status === "ready") {
-        setCurrentCreative(data.adCreative); // Store creative object
-        generateAdPreview(data.adCreative, updatedMessages);
-      }
+      // for await (const textPart of response.body) {
+      //   const text = decoder.decode(textPart, { stream: true });
+      //   final += text;
+
+      //   // Attempt to extract structured data
+      //   const messageMatch = final.match(/0: ?"([^"]+)"/g); // Matches `0: "text"`
+      //   if (messageMatch) {
+      //     // Extract words properly
+      //     const extractedText = messageMatch
+      //       .map((m) => m.split(":")[1].trim().replace(/"/g, "")) // Remove quotes
+      //       .join(" "); // Join words
+
+      //     // Fix spaces before punctuation
+      //     accumulatedMessage = (accumulatedMessage + " " + extractedText)
+      //       .replace(/\s+([.,!?])/g, "$1") // Remove space before punctuation
+      //       .trim(); // Trim any leading spaces
+
+      //     setMessages([
+      //       ...updatedMessages,
+      //       { role: "assistant", content: accumulatedMessage },
+      //     ]);
+
+      //     final = ""; // Reset chunk processing but keep accumulatedMessage
+      //   }
+      // }
+
+      // const data = await response.json();
+
+      // if (data.status === "clarification" || data.status === "unrelated") {
+      //   setMessages([
+      //     ...updatedMessages,
+      //     { role: "assistant", content: data.message },
+      //   ]);
+      // } else if (data.status === "ready") {
+      //   setCurrentCreative(data.adCreative); // Store creative object
+      //   generateAdPreview(data.adCreative, updatedMessages);
+      // }
     } catch (error) {
       console.error("Error:", error);
     }

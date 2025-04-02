@@ -9,6 +9,8 @@ import Reaction from "../Common/Reaction";
 const TextGenerator = ({ messages, handleApprove, handleModify }) => {
   const { data: session } = useSession();
 
+  console.log("messages: ", messages);
+
   return (
     <>
       <TopBar
@@ -19,7 +21,19 @@ const TextGenerator = ({ messages, handleApprove, handleModify }) => {
         msg={messages.length}
       />
 
-      {messages.map((msg, index) => (
+      {messages.map((message) => (
+        <div key={message.id} className="whitespace-pre-wrap">
+          {message.role === "user" ? "User: " : "AI: "}
+          {message.parts.map((part, i) => {
+            switch (part.type) {
+              case "text":
+                return <div key={`${message.id}-${i}`}>{part.text}</div>;
+            }
+          })}
+        </div>
+      ))}
+
+      {/* {messages.map((msg, index) => (
         <div className="chat-box-list pb-0" key={index}>
           <div
             className={`chat-box ${
@@ -83,7 +97,7 @@ const TextGenerator = ({ messages, handleApprove, handleModify }) => {
             </div>
           </div>
         </div>
-      ))}
+      ))} */}
     </>
   );
 };

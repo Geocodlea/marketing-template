@@ -1,7 +1,10 @@
 import { NextResponse } from "next/server";
 import OpenAI from "openai";
 
-const openai = new OpenAI({
+import { openai } from "@ai-sdk/openai";
+import { streamText } from "ai";
+
+const openaix = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
@@ -34,7 +37,7 @@ export async function POST(req) {
   let conversation = [...history, { role: "user", content: message }];
 
   // **Step 1: Determine if input is ad-related, vague, or unrelated**
-  const validationResponse = await openai.chat.completions.create({
+  const validationResponse = await openaix.chat.completions.create({
     model: "gpt-4o-mini",
     messages: [
       {
@@ -57,8 +60,8 @@ export async function POST(req) {
 
   if (validationText === "no") {
     // Generate a polite response for unrelated prompts
-    const unrelatedResponse = await openai.chat.completions.create({
-      model: "gpt-4o-mini",
+    const result = streamText({
+      model: openai("gpt-4o-mini"),
       messages: [
         { role: "system", content: "You guide users to create Facebook ads." },
         {
@@ -69,12 +72,14 @@ export async function POST(req) {
       max_tokens: 50,
     });
 
-    return NextResponse.json({
-      status: "error",
-      message:
-        unrelatedResponse.choices[0]?.message?.content ||
-        "I'm here to assist with Facebook ads! What do you need an ad for?",
-    });
+    // return NextResponse.json({
+    //   status: "error",
+    //   message:
+    //     unrelatedResponse.choices[0]?.message?.content ||
+    //     "I'm here to assist with Facebook ads! What do you need an ad for?",
+    // });
+
+    return result.toDataStreamResponse();
   }
 
   if (validationText === "clarification") {
