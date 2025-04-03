@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import Context from "@/context/Context";
 import PopupMobileMenu from "@/components/Header/PopUpMobileMenu";
 import BackToTop from "../backToTop";
@@ -15,151 +15,53 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useChat } from "@ai-sdk/react";
 
+const adFetch = async (adCreative, session, api) => {
+  try {
+    const response = await fetch(`/api/facebook/${api}/${session.user.id}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ adCreative }),
+    });
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error("Error:", error);
+  }
+};
+
 const TextGeneratorPage = () => {
-  const [currentCreative, setCurrentCreative] = useState(null);
   const { data: session, status: sessionStatus } = useSession();
   const router = useRouter();
 
   const {
     messages,
-    setMessages,
     input,
     handleInputChange,
     handleSubmit,
     status,
     stop,
     reload,
-  } = useChat({ api: "/api/facebook/chat" });
+    addToolResult,
+  } = useChat({
+    api: "/api/facebook/chat",
+    maxSteps: 5,
+    async onToolCall({ toolCall }) {
+      if (toolCall.toolName === "generateAdPreview") {
+        const result = await adFetch(toolCall.args, session, "generatePreview");
+        return result;
+      }
+      if (toolCall.toolName === "createAd") {
+        const result = await adFetch(toolCall.args, session, "createAd");
+        return result.message;
+      }
+    },
+  });
 
   useEffect(() => {
     if (sessionStatus === "unauthenticated") {
       router.push("/signin");
     }
   }, [sessionStatus]);
-
-  const sendMessage = async (inputText) => {
-    const newMessage = { role: "user", content: inputText };
-    const updatedMessages = [...messages, newMessage];
-    setMessages(updatedMessages);
-
-    try {
-      const response = await fetch("/api/facebook/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: inputText, history: updatedMessages }),
-      });
-
-      // const decoder = new TextDecoder("utf-8");
-      // let final = "";
-      // let accumulatedMessage = "";
-
-      // for await (const textPart of response.body) {
-      //   const text = decoder.decode(textPart, { stream: true });
-      //   final += text;
-
-      //   // Attempt to extract structured data
-      //   const messageMatch = final.match(/0: ?"([^"]+)"/g); // Matches `0: "text"`
-      //   if (messageMatch) {
-      //     // Extract words properly
-      //     const extractedText = messageMatch
-      //       .map((m) => m.split(":")[1].trim().replace(/"/g, "")) // Remove quotes
-      //       .join(" "); // Join words
-
-      //     // Fix spaces before punctuation
-      //     accumulatedMessage = (accumulatedMessage + " " + extractedText)
-      //       .replace(/\s+([.,!?])/g, "$1") // Remove space before punctuation
-      //       .trim(); // Trim any leading spaces
-
-      //     setMessages([
-      //       ...updatedMessages,
-      //       { role: "assistant", content: accumulatedMessage },
-      //     ]);
-
-      //     final = ""; // Reset chunk processing but keep accumulatedMessage
-      //   }
-      // }
-
-      // const data = await response.json();
-
-      // if (data.status === "clarification" || data.status === "unrelated") {
-      //   setMessages([
-      //     ...updatedMessages,
-      //     { role: "assistant", content: data.message },
-      //   ]);
-      // } else if (data.status === "ready") {
-      //   setCurrentCreative(data.adCreative); // Store creative object
-      //   generateAdPreview(data.adCreative, updatedMessages);
-      // }
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
-
-  const generateAdPreview = async (adCreative, updatedMessages) => {
-    try {
-      const response = await fetch(
-        `/api/facebook/generatePreview/${session.user.id}`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ adCreative }),
-        }
-      );
-
-      const result = await response.json();
-
-      setMessages([
-        ...updatedMessages,
-        {
-          role: "assistant",
-          content: "Here is your ad preview:",
-          preview: result,
-        },
-      ]);
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
-
-  const handleApprove = async () => {
-    if (!currentCreative) {
-      console.error("No creative found for approval.");
-      return;
-    }
-
-    try {
-      const response = await fetch(
-        `/api/facebook/createAd/${session.user.id}`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ creative: currentCreative }),
-        }
-      );
-
-      const result = await response.json();
-
-      setMessages((prev) => [
-        ...prev,
-        {
-          role: "assistant",
-          content:
-            result.status === "success"
-              ? "Your ad has been successfully created! 🎉"
-              : `Error creating ad: ${result.message}`,
-        },
-      ]);
-    } catch (error) {
-      console.error("Error creating ad:", error);
-    }
-  };
-
-  const handleModify = () => {
-    setMessages((prev) => [
-      ...prev,
-      { role: "assistant", content: "Sure! What would you like to change?" },
-    ]);
-  };
 
   return (
     <main className="page-wrapper rbt-dashboard-page">
@@ -177,9 +79,8 @@ const TextGeneratorPage = () => {
                   <div className="chat-box-section">
                     <TextGenerator
                       messages={messages}
-                      handleApprove={handleApprove}
-                      handleModify={handleModify}
                       reload={reload}
+                      addToolResult={addToolResult}
                     />
                     <StaticbarDashboard
                       input={input}

@@ -4,7 +4,7 @@ import Account from "@/models/Account";
 import dbConnect from "@/utils/dbConnect";
 
 export async function POST(req, { params }) {
-  const { creative } = await req.json();
+  const { adCreative } = await req.json();
   const { id } = params;
 
   await dbConnect();
@@ -14,7 +14,7 @@ export async function POST(req, { params }) {
   });
 
   try {
-    if (!creative) {
+    if (!adCreative) {
       return NextResponse.json({
         status: "error",
         message: "Missing ad creative data.",
@@ -23,15 +23,14 @@ export async function POST(req, { params }) {
 
     // Prepare the ad creative payload
     const adCreativePayload = {
-      name: creative.name,
+      name: adCreative.name,
       object_story_spec: {
         link_data: {
-          message: creative.message,
-          link: creative.link,
-          //   description: creative.description,
+          message: adCreative.message,
+          link: adCreative.link,
           call_to_action: {
-            type: creative.call_to_action,
-            value: { link: creative.link },
+            type: adCreative.call_to_action,
+            value: { link: adCreative.link },
           },
         },
         page_id: user.facebook.pageId,
@@ -59,7 +58,7 @@ export async function POST(req, { params }) {
 
     // Step 2: Create the Ad using the Ad Creative ID
     const adPayload = {
-      name: creative.name,
+      name: adCreative.name,
       status: "PAUSED",
       adset_id: user.facebook.adSetId, // Make sure this is set in your environment variables
       creative: { creative_id: creativeResult.id },
@@ -90,7 +89,7 @@ export async function POST(req, { params }) {
     console.error("Error creating Facebook ad:", error);
     return NextResponse.json({
       status: "error",
-      message: error.message || "An error occurred while creating the ad.",
+      message: "An error occurred while creating the ad.",
     });
   }
 }

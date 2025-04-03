@@ -1,6 +1,6 @@
-import { NextResponse } from "next/server";
 import { openai } from "@ai-sdk/openai";
 import { generateText, streamText } from "ai";
+import z from "zod";
 
 const validCTAOptions = [
   "BOOK_TRAVEL",
@@ -50,6 +50,8 @@ export async function POST(req) {
   const validationText = response.text;
 
   if (validationText === "no") {
+    console.log("unrelated");
+
     // Generate a polite response for unrelated prompts
     const unrelatedResponse = streamText({
       model: openai("gpt-4o-mini"),
@@ -67,6 +69,7 @@ export async function POST(req) {
   }
 
   if (validationText === "clarification") {
+    console.log("clarification");
     // **Step 1A: AI-generated clarification message**
     const clarificationResponse = streamText({
       model: openai("gpt-4o-mini"),
@@ -76,6 +79,7 @@ export async function POST(req) {
           content: `The user input was too vague to create an ad. Ask the user to clarify their request in a natural and helpful way.
           - Tailor the response based on what is missing.
           - Keep it polite and concise.
+          - You DON'T create an ad.
           - Example: "Could you provide more details? Are you selling a product or offering a service?"`,
         },
         ...messages,
@@ -86,70 +90,68 @@ export async function POST(req) {
     return clarificationResponse.toDataStreamResponse();
   }
 
+  console.log("YES");
+
   // **Step 2: Try to infer missing details before generating the ad**
   const inferenceResponse = streamText({
     model: openai("gpt-4o-mini"),
     messages: [
       {
         role: "system",
-        content: `You generate a Facebook ad JSON object. The response **must be valid JSON**.
+        content: `You generate a Facebook ad JSON object.
+          The response should not create the ad and should not contain any aditional text, other then the tool responses.
           The user has already set their campaign and ad set, so **do not ask about objectives or audience**.
-  
-          **Your job:**
-          - Try to infer missing ad details if possible.
-          - If critical details are missing, do NOT assume—ask for them instead.
-  
+
           **Required ad details:**
           - "name" (creative title)
           - "description" (short, engaging)
           - "message" (persuasive ad text)
           - "call_to_action" (one of: ${validCTAOptions.join(", ")})
-          - "link" (use a placeholder if missing)
-  
-          **Respond strictly in this JSON format:**
-          {
-            "name": "string",
-            "description": "string",
-            "message": "string",
-            "call_to_action": "string",
-            "link": "string"
-          }`,
+          - "link" (use a real URL placeholder if missing)
+
+          **Your job:**
+          - Try to infer missing ad details if possible.
+          - Only if critical details are missing and can't be inferred, do NOT assume and ask for them instead, but in a natural way.
+          - If you can infer all required details, call the generateAdPreview tool, with the ad details as parameters.
+          - After generating the ad preview, call the askForConfirmation tool.
+          - If the response is "approved", immediately call the createAd tool with the given ad details.
+          - If the response is "rejected", ask the user what they would like to modify before retrying.
+          - DON'T respond with the JSON object.
+          - DON'T create the ad, just call the tools.`,
       },
       ...messages,
     ],
+    tools: {
+      generateAdPreview: {
+        description: "Generate a Facebook ad preview",
+        parameters: z.object({
+          name: z.string(),
+          description: z.string(),
+          message: z.string(),
+          call_to_action: z.enum(validCTAOptions),
+          link: z.string().optional(),
+        }),
+      },
+      askForConfirmation: {
+        description: "Ask the user for confirmation.",
+        parameters: z.object({
+          message: z.string().describe("The message to ask for confirmation."),
+        }),
+      },
+      createAd: {
+        description: "Create a Facebook ad.",
+        parameters: z.object({
+          name: z.string(),
+          description: z.string(),
+          message: z.string(),
+          call_to_action: z.enum(validCTAOptions),
+          link: z.string().optional(),
+        }),
+      },
+    },
+    toolCallStreaming: true,
     max_tokens: 200,
-    response_format: { type: "json_object" },
   });
-
-  let inferredAd = inferenceResponse.choices[0]?.message?.content;
-
-  if (typeof inferredAd === "string") {
-    try {
-      inferredAd = JSON.parse(inferredAd);
-    } catch (error) {
-      return NextResponse.json({
-        status: "error",
-        message: "Failed to parse AI response as JSON.",
-      });
-    }
-  }
-
-  // **Step 2A: Validate inferred ad details**
-  let missingFields = [];
-  if (!inferredAd.name) missingFields.push("name");
-  if (!inferredAd.description) missingFields.push("description");
-  if (!inferredAd.message) missingFields.push("message");
-  if (!validCTAOptions.includes(inferredAd.call_to_action))
-    missingFields.push("call_to_action");
-
-  if (missingFields.length > 0) {
-    return NextResponse.json({
-      status: "clarification",
-      message: `I inferred some details, but I still need: ${missingFields.join(
-        ", "
-      )}. Could you provide them?`,
-    });
-  }
 
   return inferenceResponse.toDataStreamResponse();
 }
