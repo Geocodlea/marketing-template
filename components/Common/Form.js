@@ -3,20 +3,7 @@
 import React, { useState } from "react";
 import { Tooltip } from "react-tooltip";
 
-const Form = ({ onSendMessage }) => {
-  const [input, setInput] = useState("");
-  const [loading, setLoading] = useState(false);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!input.trim() || loading) return;
-
-    setLoading(true);
-    await onSendMessage(input);
-    setInput("");
-    setLoading(false);
-  };
-
+const Form = ({ input, handleInputChange, handleSubmit, status, stop }) => {
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault(); // Prevent new line in textarea
@@ -32,21 +19,29 @@ const Form = ({ onSendMessage }) => {
           rows="1"
           placeholder="Send a message..."
           value={input}
-          onChange={(e) => setInput(e.target.value)}
+          onChange={handleInputChange}
           onKeyDown={handleKeyDown} // Listen for Enter key press
-          disabled={loading}
         ></textarea>
 
         <div className="right-icons">
-          <button
-            type="submit"
-            className="form-icon icon-send"
-            data-tooltip-id="my-tooltip"
-            data-tooltip-content="Send message"
-            disabled={loading}
-          >
-            <i className="fa-sharp fa-solid fa-paper-plane-top"></i>
-          </button>
+          {status === "ready" || status === "error" ? (
+            <button
+              type="submit"
+              className="form-icon icon-send"
+              data-tooltip-id="my-tooltip"
+              data-tooltip-content="Send message"
+            >
+              <i className="fa-sharp fa-solid fa-paper-plane-top"></i>
+            </button>
+          ) : (
+            <button
+              type="submit"
+              className="form-icon icon-send"
+              onClick={stop}
+            >
+              <i className="fa-sharp fa-solid fa-stop"></i>
+            </button>
+          )}
         </div>
       </form>
     </>

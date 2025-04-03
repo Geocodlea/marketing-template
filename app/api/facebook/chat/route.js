@@ -1,12 +1,6 @@
 import { NextResponse } from "next/server";
-import OpenAI from "openai";
-
 import { openai } from "@ai-sdk/openai";
-import { streamText } from "ai";
-
-const openaix = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+import { generateText, streamText } from "ai";
 
 const validCTAOptions = [
   "BOOK_TRAVEL",
@@ -33,12 +27,11 @@ const validCTAOptions = [
 ];
 
 export async function POST(req) {
-  const { message, history } = await req.json();
-  let conversation = [...history, { role: "user", content: message }];
+  const { messages } = await req.json();
 
   // **Step 1: Determine if input is ad-related, vague, or unrelated**
-  const validationResponse = await openaix.chat.completions.create({
-    model: "gpt-4o-mini",
+  const validationResponse = generateText({
+    model: openai("gpt-4o-mini"),
     messages: [
       {
         role: "system",
@@ -48,19 +41,17 @@ export async function POST(req) {
         - "no" if it is unrelated.
         - "clarification" if it is missing key creative details (too vague).`,
       },
-      ...conversation,
+      ...messages,
     ],
     max_tokens: 10,
-    response_format: { type: "text" },
   });
 
-  const validationText = validationResponse.choices[0]?.message?.content
-    ?.toLowerCase()
-    .trim();
+  const response = await validationResponse;
+  const validationText = response.text;
 
   if (validationText === "no") {
     // Generate a polite response for unrelated prompts
-    const result = streamText({
+    const unrelatedResponse = streamText({
       model: openai("gpt-4o-mini"),
       messages: [
         { role: "system", content: "You guide users to create Facebook ads." },
@@ -72,20 +63,13 @@ export async function POST(req) {
       max_tokens: 50,
     });
 
-    // return NextResponse.json({
-    //   status: "error",
-    //   message:
-    //     unrelatedResponse.choices[0]?.message?.content ||
-    //     "I'm here to assist with Facebook ads! What do you need an ad for?",
-    // });
-
-    return result.toDataStreamResponse();
+    return unrelatedResponse.toDataStreamResponse();
   }
 
   if (validationText === "clarification") {
     // **Step 1A: AI-generated clarification message**
-    const clarificationResponse = await openai.chat.completions.create({
-      model: "gpt-4o-mini",
+    const clarificationResponse = streamText({
+      model: openai("gpt-4o-mini"),
       messages: [
         {
           role: "system",
@@ -94,22 +78,17 @@ export async function POST(req) {
           - Keep it polite and concise.
           - Example: "Could you provide more details? Are you selling a product or offering a service?"`,
         },
-        { role: "user", content: message },
+        ...messages,
       ],
       max_tokens: 200,
     });
 
-    return NextResponse.json({
-      status: "clarification",
-      message:
-        clarificationResponse.choices[0]?.message?.content ||
-        "Could you clarify your ad request with more details?",
-    });
+    return clarificationResponse.toDataStreamResponse();
   }
 
   // **Step 2: Try to infer missing details before generating the ad**
-  const inferenceResponse = await openai.chat.completions.create({
-    model: "gpt-4o-mini",
+  const inferenceResponse = streamText({
+    model: openai("gpt-4o-mini"),
     messages: [
       {
         role: "system",
@@ -136,7 +115,7 @@ export async function POST(req) {
             "link": "string"
           }`,
       },
-      ...conversation,
+      ...messages,
     ],
     max_tokens: 200,
     response_format: { type: "json_object" },
@@ -172,8 +151,5 @@ export async function POST(req) {
     });
   }
 
-  return NextResponse.json({
-    status: "ready",
-    adCreative: inferredAd,
-  });
+  return inferenceResponse.toDataStreamResponse();
 }

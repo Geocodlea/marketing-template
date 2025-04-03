@@ -16,19 +16,26 @@ import { useRouter } from "next/navigation";
 import { useChat } from "@ai-sdk/react";
 
 const TextGeneratorPage = () => {
-  //  const [messages, setMessages] = useState([]);
   const [currentCreative, setCurrentCreative] = useState(null);
-  const { data: session, status } = useSession();
+  const { data: session, status: sessionStatus } = useSession();
   const router = useRouter();
 
-  // const { messages, setMessages, input, handleInputChange, handleSubmit } =
-  //   useChat("/api/facebook/chat");
+  const {
+    messages,
+    setMessages,
+    input,
+    handleInputChange,
+    handleSubmit,
+    status,
+    stop,
+    reload,
+  } = useChat({ api: "/api/facebook/chat" });
 
   useEffect(() => {
-    if (status === "unauthenticated") {
+    if (sessionStatus === "unauthenticated") {
       router.push("/signin");
     }
-  }, [status]);
+  }, [sessionStatus]);
 
   const sendMessage = async (inputText) => {
     const newMessage = { role: "user", content: inputText };
@@ -172,8 +179,15 @@ const TextGeneratorPage = () => {
                       messages={messages}
                       handleApprove={handleApprove}
                       handleModify={handleModify}
+                      reload={reload}
                     />
-                    <StaticbarDashboard onSendMessage={sendMessage} />
+                    <StaticbarDashboard
+                      input={input}
+                      handleInputChange={handleInputChange}
+                      handleSubmit={handleSubmit}
+                      status={status}
+                      stop={stop}
+                    />
                   </div>
                 </div>
               </div>

@@ -6,10 +6,8 @@ import TopBar from "../Common/TopBar";
 import DocImg from "../../public/images/icons/document-file.png";
 import Reaction from "../Common/Reaction";
 
-const TextGenerator = ({ messages, handleApprove, handleModify }) => {
+const TextGenerator = ({ messages, handleApprove, handleModify, reload }) => {
   const { data: session } = useSession();
-
-  console.log("messages: ", messages);
 
   return (
     <>
@@ -21,19 +19,7 @@ const TextGenerator = ({ messages, handleApprove, handleModify }) => {
         msg={messages.length}
       />
 
-      {messages.map((message) => (
-        <div key={message.id} className="whitespace-pre-wrap">
-          {message.role === "user" ? "User: " : "AI: "}
-          {message.parts.map((part, i) => {
-            switch (part.type) {
-              case "text":
-                return <div key={`${message.id}-${i}`}>{part.text}</div>;
-            }
-          })}
-        </div>
-      ))}
-
-      {/* {messages.map((msg, index) => (
+      {messages.map((msg, index) => (
         <div className="chat-box-list pb-0" key={index}>
           <div
             className={`chat-box ${
@@ -59,7 +45,12 @@ const TextGenerator = ({ messages, handleApprove, handleModify }) => {
                   <h6 className="title">
                     {msg.role === "user" ? "User" : "AI"}
                   </h6>
-                  <p>{msg.content}</p>
+                  {msg.parts.map((part, i) => {
+                    switch (part.type) {
+                      case "text":
+                        return <div key={`${msg.id}-${i}`}>{part.text}</div>;
+                    }
+                  })}
 
                   {msg.preview && (
                     <div style={{ marginTop: "10px" }}>
@@ -91,13 +82,13 @@ const TextGenerator = ({ messages, handleApprove, handleModify }) => {
                     </div>
                   )}
 
-                  {msg.role === "assistant" && <Reaction />}
+                  {msg.role === "assistant" && <Reaction reload={reload} />}
                 </div>
               </div>
             </div>
           </div>
         </div>
-      ))} */}
+      ))}
     </>
   );
 };

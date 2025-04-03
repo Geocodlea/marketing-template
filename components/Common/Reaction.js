@@ -1,6 +1,6 @@
 import React from "react";
 
-const Reaction = () => {
+const Reaction = ({ reload }) => {
   return (
     <>
       <div className="reaction-section">
@@ -59,7 +59,10 @@ const Reaction = () => {
             </ul>
           </div>
           <div className="right-side-btn">
-            <button className="react-btn btn-default btn-small btn-border">
+            <button
+              className="react-btn btn-default btn-small btn-border"
+              onClick={reload}
+            >
               <i className="feather-repeat"></i>
               <span>Regenerate</span>
             </button>
