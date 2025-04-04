@@ -4,24 +4,83 @@ import Account from "@/models/Account";
 import dbConnect from "@/utils/dbConnect";
 
 export async function POST(req, { params }) {
-  const { adCreative } = await req.json();
+  const { adCreative, campaignData, adSetData } = await req.json();
   const { id } = params;
 
   await dbConnect();
   const user = await User.findOne({ _id: id });
-  const account = await Account.findOne({
-    userId: id,
-  });
+  const account = await Account.findOne({ userId: id });
 
   try {
-    if (!adCreative) {
+    if (!adCreative || !campaignData || !adSetData) {
       return NextResponse.json({
         status: "error",
-        message: "Missing ad creative data.",
+        message: "Missing required data (ad creative, campaign, or ad set).",
       });
     }
 
-    // Prepare the ad creative payload
+    const accessToken = account.access_token;
+    const adAccountId = user.facebook.adAccountId;
+    const apiBaseUrl = process.env.FACEBOOK_API_URL;
+
+    // Step 1: Create Campaign
+    const campaignPayload = {
+      name: campaignData.name,
+      objective: campaignData.objective, // e.g., "LINK_CLICKS"
+      status: "PAUSED",
+      special_ad_categories: ["NONE"],
+      access_token: accessToken,
+    };
+
+    const campaignResponse = await fetch(
+      `${apiBaseUrl}/act_${adAccountId}/campaigns`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(campaignPayload),
+      }
+    );
+
+    const campaignResult = await campaignResponse.json();
+
+    if (!campaignResult.id) {
+      throw new Error(
+        campaignResult.error?.message || "Failed to create campaign."
+      );
+    }
+
+    const campaignId = campaignResult.id;
+
+    // Step 2: Create Ad Set
+    const adSetPayload = {
+      name: adSetData.name,
+      campaign_id: campaignId,
+      billing_event: adSetData.billing_event, // e.g., "IMPRESSIONS"
+      optimization_goal: adSetData.optimization_goal, // e.g., "LINK_CLICKS"
+      targeting: adSetData.targeting,
+      status: "PAUSED",
+      daily_budget: adSetData.daily_budget,
+      access_token: accessToken,
+    };
+
+    const adSetResponse = await fetch(
+      `${apiBaseUrl}/act_${adAccountId}/adsets`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(adSetPayload),
+      }
+    );
+
+    const adSetResult = await adSetResponse.json();
+
+    if (!adSetResult.id) {
+      throw new Error(adSetResult.error?.message || "Failed to create ad set.");
+    }
+
+    const adSetId = adSetResult.id;
+
+    // Step 3: Create Ad Creative
     const adCreativePayload = {
       name: adCreative.name,
       object_story_spec: {
@@ -35,12 +94,11 @@ export async function POST(req, { params }) {
         },
         page_id: user.facebook.pageId,
       },
-      access_token: account.access_token,
+      access_token: accessToken,
     };
 
-    // Step 1: Create Ad Creative
     const creativeResponse = await fetch(
-      `${process.env.FACEBOOK_API_URL}/act_${user.facebook.adAccountId}/adcreatives`,
+      `${apiBaseUrl}/act_${adAccountId}/adcreatives`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -56,23 +114,22 @@ export async function POST(req, { params }) {
       );
     }
 
-    // Step 2: Create the Ad using the Ad Creative ID
+    const creativeId = creativeResult.id;
+
+    // Step 4: Create Ad
     const adPayload = {
       name: adCreative.name,
       status: "PAUSED",
-      adset_id: user.facebook.adSetId, // Make sure this is set in your environment variables
-      creative: { creative_id: creativeResult.id },
-      access_token: account.access_token,
+      adset_id: adSetId,
+      creative: { creative_id: creativeId },
+      access_token: accessToken,
     };
 
-    const adResponse = await fetch(
-      `${process.env.FACEBOOK_API_URL}/act_${user.facebook.adAccountId}/ads`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(adPayload),
-      }
-    );
+    const adResponse = await fetch(`${apiBaseUrl}/act_${adAccountId}/ads`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(adPayload),
+    });
 
     const adResult = await adResponse.json();
 
@@ -82,14 +139,17 @@ export async function POST(req, { params }) {
 
     return NextResponse.json({
       status: "success",
-      message: "Ad created successfully!",
+      message: "Ad campaign, ad set, and ad created successfully!",
+      campaignId,
+      adSetId,
       adId: adResult.id,
     });
   } catch (error) {
-    console.error("Error creating Facebook ad:", error);
+    console.error("Error creating Facebook ad campaign:", error);
     return NextResponse.json({
       status: "error",
-      message: "An error occurred while creating the ad.",
+      message:
+        error.message || "An error occurred while creating the ad campaign.",
     });
   }
 }

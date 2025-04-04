@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import Context from "@/context/Context";
 import PopupMobileMenu from "@/components/Header/PopUpMobileMenu";
 import BackToTop from "../backToTop";
@@ -31,6 +31,8 @@ const adFetch = async (adCreative, session, api) => {
 
 const TextGeneratorPage = () => {
   const { data: session, status: sessionStatus } = useSession();
+  const [step, setStep] = useState("validation");
+  const [adDetails, setAdDetails] = useState({});
   const router = useRouter();
 
   const {
@@ -42,8 +44,10 @@ const TextGeneratorPage = () => {
     stop,
     reload,
     addToolResult,
+    data,
   } = useChat({
     api: "/api/facebook/chat",
+    body: { step, adDetails },
     maxSteps: 5,
     async onToolCall({ toolCall }) {
       if (toolCall.toolName === "generateAdPreview") {
@@ -58,9 +62,16 @@ const TextGeneratorPage = () => {
   });
 
   useEffect(() => {
-    if (sessionStatus === "unauthenticated") {
-      router.push("/signin");
+    if (data) {
+      setStep(data?.at(-1)?.step);
+      setAdDetails(data?.at(-1)?.adDetails || {});
     }
+  }, [data]);
+
+  console.log(data);
+
+  useEffect(() => {
+    if (sessionStatus === "unauthenticated") router.push("/signin");
   }, [sessionStatus]);
 
   return (
