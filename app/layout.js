@@ -1,10 +1,9 @@
-"use client";
-
-import React, { useEffect } from "react";
+import React from "react";
 import { Sora } from "next/font/google";
 
 import "bootstrap/scss/bootstrap.scss";
 import AuthProvider from "@/context/AuthProvider";
+import Bootstrap from "@/context/Bootstrap";
 
 // ========= Plugins CSS START =========
 import "../public/css/plugins/feature.css";
@@ -24,14 +23,11 @@ const sora = Sora({
 import "../public/scss/style.scss";
 
 export default function RootLayout({ children }) {
-  useEffect(() => {
-    require("bootstrap/dist/js/bootstrap.bundle.min.js");
-  }, []);
-
   return (
     <html lang="en">
       <body className={sora.className}>
         <AuthProvider>{children}</AuthProvider>
+        <Bootstrap />
       </body>
     </html>
   );
