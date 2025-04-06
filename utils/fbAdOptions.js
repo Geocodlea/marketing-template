@@ -1,0 +1,91 @@
+const requiredFields = {
+  campaign: ["name", "objective"],
+  ad_set: [
+    "name",
+    "billing_event",
+    "optimization_goal",
+    "daily_budget",
+    "targeting",
+  ],
+  ad_creative: ["headline", "copy", "image_video", "call_to_action"],
+};
+
+const CTAs = [
+  "BOOK_TRAVEL",
+  "CONTACT_US",
+  "DONATE",
+  "DOWNLOAD",
+  "GET_DIRECTIONS",
+  "GO_LIVE",
+  "LEARN_MORE",
+  "LIKE_PAGE",
+  "MESSAGE_PAGE",
+  "SHOP_NOW",
+  "SIGN_UP",
+  "VIEW_INSTAGRAM_PROFILE",
+  "INSTAGRAM_MESSAGE",
+  "PURCHASE_GIFT_CARDS",
+  "ORDER_NOW",
+  "WHATSAPP_MESSAGE",
+  "PLAY_GAME",
+  "WATCH_VIDEO",
+  "BUY_NOW",
+  "BUY_TICKETS",
+  "SUBSCRIBE",
+];
+
+const campaignObjectives = [
+  "OUTCOME_LEADS",
+  "OUTCOME_SALES",
+  "OUTCOME_ENGAGEMENT",
+  "OUTCOME_AWARENESS",
+  "OUTCOME_TRAFFIC",
+  "OUTCOME_APP_PROMOTION",
+];
+
+const billingEvents = [
+  "APP_INSTALLS",
+  "CLICKS",
+  "IMPRESSIONS",
+  "LINK_CLICKS",
+  "OFFER_CLAIMS",
+  "PAGE_LIKES",
+  "POST_ENGAGEMENT",
+  "THRUPLAY",
+  "PURCHASE",
+  "LISTING_INTERACTION",
+];
+
+const optimizationGoals = [
+  "APP_INSTALLS",
+  "AD_RECALL_LIFT",
+  "ENGAGED_USERS",
+  "EVENT_RESPONSES",
+  "IMPRESSIONS",
+  "LEAD_GENERATION",
+  "QUALITY_LEAD",
+  "LINK_CLICKS",
+  "OFFSITE_CONVERSIONS",
+  "PAGE_LIKES",
+  "POST_ENGAGEMENT",
+  "QUALITY_CALL",
+  "REACH",
+  "LANDING_PAGE_VIEWS",
+  "VISIT_INSTAGRAM_PROFILE",
+  "VALUE",
+  "THRUPLAY",
+  "DERIVED_EVENTS",
+  "APP_INSTALLS_AND_OFFSITE_CONVERSIONS",
+  "CONVERSATIONS",
+  "IN_APP_VALUE",
+  "MESSAGING_PURCHASE_CONVERSION",
+  "SUBSCRIBERS",
+  "REMINDERS_SET",
+  "MEANINGFUL_CALL_ATTEMPT",
+  "PROFILE_VISIT",
+  "PROFILE_AND_PAGE_ENGAGEMENT",
+  "ADVERTISER_SILOED_VALUE",
+  "MESSAGING_APPOINTMENT_CONVERSION",
+];
+
+export { requiredFields, CTAs, campaignObjectives };
