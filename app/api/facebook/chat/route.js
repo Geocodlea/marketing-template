@@ -2,12 +2,19 @@ import { openai } from "@ai-sdk/openai";
 import { streamText, generateObject, createDataStreamResponse } from "ai";
 import { NextResponse } from "next/server";
 import z from "zod";
-import { requiredFields, CTAOptions } from "@/utils/fbAdOptions";
+import {
+  findEmptyFields,
+  campaignObjectives,
+  adSetBillingEvents,
+  adSetOptimizationGoals,
+  adSetBidStrategys,
+  adCreativeCTAs,
+} from "@/utils/fbAdOptions";
 
 export async function POST(req) {
   let { messages, step, adDetails } = await req.json();
   console.log("Step: ", step);
-  console.log("Ad Details: ", adDetails);
+  console.log("Ad Details: ", JSON.stringify(adDetails, null, 2));
 
   if (step === "validation") {
     console.log("validation");
@@ -15,13 +22,13 @@ export async function POST(req) {
     const validationResponse = await generateObject({
       model: openai("gpt-4o-mini"),
       output: "enum",
-      enum: ["ad-related", "unrelated", "clarification"],
+      enum: ["details", "unrelated", "clarification"],
       messages: [
         {
           role: "system",
           content: `You determine if a user request is for Facebook ad creation.
         Respond with:
-        - "ad" if the input contains enough details to generate an ad.
+        - "details" if the input contains enough details to generate an ad.
         - "unrelated" if the input is unrelated.
         - "clarification" if the input is missing key ad creation details (too vague).`,
         },
@@ -85,7 +92,8 @@ export async function POST(req) {
     }
   }
 
-  if (step === "details") {
+  if (step === "details" || step === "validation") {
+    step = "details";
     console.log("Request is ad-related.");
 
     // **Step 3: Extract Campaign & Ad Set Details from Messages**
@@ -95,40 +103,60 @@ export async function POST(req) {
         {
           role: "system",
           content: `
-              Based on the previous messages and ${adDetails}, identify any missing details for the campaign, ad set, and ad creative.
+            You are a helpful assistant. Your task is to return a complete JSON object matching the schema provided using the prrevious messages and ${JSON.stringify(
+              adDetails
+            )}. Do not include any explanation, description, or extra text.
               
+            Strict output rule:
+            - Return ONLY the JSON object.
+            - Do NOT wrap it in markdown.
+            - Do NOT add any headings or comments.
+
+             Guidelines:
               - **Do NOT infer the following critical details:**
                 - Campaign objective
-                - Ad set daily budget
-                - Targeting audience (location, interests, age range, etc.)
                 - Ad set billing event
                 - Ad set optimization goal
+                - Ad set daily budget
+                - Ad set targeting audience
               
               - **Check for missing fields in the provided object and ask the user directly for them.**  
                 - If any of the following fields are missing or null, request them explicitly:
                   - Campaign objective: ${
                     adDetails?.campaign?.objective === null
                   } ? 'Missing' : 'Provided'}
+                  - Ad set billing event: ${
+                    adDetails?.adSet?.billingEvent === null
+                  } ? 'Missing' : 'Provided'}
+                  - Ad set optimization goal: ${
+                    adDetails?.adSet?.optimizationGoal === null
+                  } ? 'Missing' : 'Provided'}
+                  - Ad set bid strategy: ${
+                    adDetails?.adSet?.bidStrategy === null
+                  } ? 'Missing' : 'Provided'}
                   - Ad set daily budget: ${
-                    adDetails?.ad_set?.daily_budget === null
+                    adDetails?.adSet?.dailyBudget === null
                   } ? 'Missing' : 'Provided'}
-                  - Targeting: ${
-                    adDetails?.ad_set?.targeting === null
+                  - Ad set targeting location (distanceUnit in km): ${
+                    adDetails?.adSet?.targeting?.geoLocations?.cities
+                      ?.length === 0
                   } ? 'Missing' : 'Provided'}
-                  - Billing event: ${
-                    adDetails?.ad_set?.billing_event === null
+                  - Ad set targeting interests: ${
+                    adDetails?.adSet?.targeting?.interests?.length === 0
                   } ? 'Missing' : 'Provided'}
-                  - Optimization goal: ${
-                    adDetails?.ad_set?.optimization_goal === null
-                  } ? 'Missing' : 'Provided'}
+                  
+              - **Infer all the following fields:**
+                - Campaign: name
+                - Ad set: name
+                - Ad creative:
+                - name
+                - objectStorySpec.linkData.message: A compelling ad message
+                - objectStorySpec.linkData.link: Use a placeholder like https://example.com
+                - objectStorySpec.linkData.CTA.type: Choose a valid CTA from the enum
+                - objectStorySpec.linkData.CTA.value.link: Same as above link or another relevant one
+              - If adCreative already exists, preserve existing fields.
             
-              - **You can infer other ad details such as:**
-                - Campaign name
-                - Ad set name
-                - Ad creative elements (headline, copy, image/video, call to action)
-            
-              - **Return null for any missing details you cannot infer and ask the user for those specific details.**  
-              - Ensure that the missing fields (objective, daily budget, targeting, billing event, and optimization goal) are explicitly requested from the user before proceeding.
+              - **Return null for any missing details you cannot infer.**
             `,
         },
         ...messages,
@@ -136,37 +164,62 @@ export async function POST(req) {
       schema: z.object({
         campaign: z.object({
           name: z.string().nullable(),
-          objective: z.string().nullable(),
+          objective: z.enum(campaignObjectives).nullable(),
         }),
-        ad_set: z.object({
+        adSet: z.object({
           name: z.string().nullable(),
-          billing_event: z.string().nullable(),
-          optimization_goal: z.string().nullable(),
-          daily_budget: z.number().nullable(),
-          targeting: z.string().nullable(),
+          billingEvent: z.enum(adSetBillingEvents).nullable(),
+          optimizationGoal: z.enum(adSetOptimizationGoals).nullable(),
+          bidStrategy: z.enum(adSetBidStrategys).nullable(),
+          bidAmount: z.string().nullable(),
+          dailyBudget: z.string().nullable(),
+          targeting: z.object({
+            geoLocations: z.object({
+              cities: z.array(
+                z.object({
+                  key: z.string().nullable(),
+                  radius: z.number().nullable(),
+                  distanceUnit: z.string().nullable(),
+                })
+              ),
+            }),
+            interests: z.array(
+              z.object({
+                id: z.string().nullable(),
+                name: z.string().nullable(),
+              })
+            ),
+          }),
         }),
-        ad_creative: z.object({
-          headline: z.string().nullable(),
-          copy: z.string().nullable(),
-          image_video: z.string().nullable(),
-          call_to_action: z.string().nullable(),
+        adCreative: z.object({
+          name: z.string().nullable(),
+          objectStorySpec: z.object({
+            linkData: z.object({
+              message: z.string().nullable(),
+              link: z.string().url().nullable(),
+              CTA: z.object({
+                type: z.enum(adCreativeCTAs).nullable(),
+                value: z.object({
+                  link: z.string().url().nullable(),
+                }),
+              }),
+            }),
+          }),
         }),
       }),
     });
 
     adDetails = detailsResponse.object;
+    console.log("NEW adDetails: ", JSON.stringify(adDetails, null, 2));
 
-    let missingFields = [];
+    const missingFields = findEmptyFields(adDetails);
 
-    for (const section in requiredFields) {
-      requiredFields[section].forEach((field) => {
-        if (!adDetails[section][field]) {
-          missingFields.push(`${section}.${field}`);
-        }
-      });
+    if (missingFields.length === 0) {
+      console.log("✅ All fields are filled!");
+    } else {
+      console.log("❌ Missing fields:");
+      console.log(missingFields);
     }
-
-    console.log(missingFields);
 
     if (missingFields.length > 0) {
       console.log("Ask for missing fields.");
@@ -232,7 +285,7 @@ export async function POST(req) {
               - "name": a short creative title
               - "description": a short and catchy description
               - "message": the persuasive ad text
-              - "call_to_action": must be one of [${CTAOptions.join(", ")}]
+              - "CTA": must be one of [${adCreativeCTAs.join(", ")}]
               - "link": use "https://example.com" if missing
             
             STRICT output rules:
@@ -253,70 +306,15 @@ export async function POST(req) {
                 name: z.string(),
                 description: z.string(),
                 message: z.string(),
-                call_to_action: z.enum(CTAOptions),
-                link: z.string().optional(),
+                link: z.string().url(),
+                CTA: z.object({
+                  type: z.enum(adCreativeCTAs),
+                  value: z.object({
+                    link: z.string().url(),
+                  }),
+                }),
               }),
             },
-            // askForConfirmation: {
-            //   description: "Ask the user for confirmation.",
-            //   parameters: z.object({
-            //     message: z
-            //       .string()
-            //       .describe("The message to ask for confirmation."),
-            //   }),
-            // },
-            // createAd: {
-            //   description: "Create a Facebook ad.",
-            //   parameters: z.object({
-            //     campaign: z.object({
-            //       name: z.string(),
-            //       objective: z.string(),
-            //     }),
-            //     ad_set: z.object({
-            //       name: z.string(),
-            //       billing_event: z.string(),
-            //       optimization_goal: z.string(),
-            //       daily_budget: z.number(),
-            //       targeting: z.string(),
-            //     }),
-            //     ad_creative: z.object({
-            //       headline: z.string(),
-            //       copy: z.string(),
-            //       image_video: z.string(),
-            //       call_to_action: z.enum(CTAOptions),
-            //     }),
-            // campaign: z.object({
-            //   name: z.string(),
-            //   objective: z.enum(validObjectives),
-            // }),
-            // ad_set: z.object({
-            //   name: z.string(),
-            //   objective: z.enum(validObjectives),
-            //   bid_strategy: z.enum(validBidStrategies),
-            //   daily_budget: z.number(),
-            //   targeting: z.object({
-            //     location: z.object({
-            //       countries: z.array(z.string()),
-            //       regions: z.array(z.string()),
-            //       cities: z.array(z.string()),
-            //     }),
-            //     age_min: z.number(),
-            //     age_max: z.number(),
-            //     gender: z.enum(["male", "female"]),
-            //     interests: z.array(z.string()),
-            //     keywords: z.array(z.string()),
-            //     languages: z.array(z.string()),
-            //   })
-            // }),
-            // ad_creative: z.object({
-            //   name: z.string(),
-            //   description: z.string(),
-            //   message: z.string(),
-            //   call_to_action: z.enum(CTAOptions),
-            //   link: z.string().optional(),
-            // }),
-            // }),
-            // },
           },
           toolCallStreaming: true,
           toolChoice: "required",
@@ -380,65 +378,108 @@ export async function POST(req) {
   if (step === "adCreation") {
     console.log("Create Ad");
 
-    console.log("last message: ", messages[messages.length - 1]);
+    const toolInvocations = messages[messages.length - 1].toolInvocations;
+    const confirmationResult =
+      toolInvocations[toolInvocations.length - 1].result;
 
-    step = "end";
+    if (confirmationResult === "approve") {
+      step = "end";
+    } else {
+      step = "details";
+    }
 
     return createDataStreamResponse({
       execute: (dataStream) => {
-        dataStream.writeData({
-          step,
-          adDetails,
-        });
+        try {
+          dataStream.writeData({
+            step,
+            adDetails,
+          });
 
-        const createAdResponse = streamText({
-          model: openai("gpt-4o-mini"),
-          messages: [
-            {
-              role: "system",
-              content: `You are a tool-using assistant.
+          const createAdResponse = streamText({
+            model: openai("gpt-4o-mini"),
+            messages: [
+              {
+                role: "system",
+                content: `You are a tool-using assistant that helps generate Facebook ads.
             
             STRICT output rules:
-            - Do not generate text.
             - Do not describe the ad.
             - Do not wrap the tool call in markdown or text.
             - Do not explain anything.
-            - DO NOT respond with JSON or text.
-            - Your ONLY task is to immediately call the 'createAd' tool with the ad details: ${adDetails}.
-            - If the 'createAd' tool returns a successful response, respond with the success message "Ad created successfully."`,
+            - ${
+              confirmationResult === "approve"
+                ? "Immediately call the 'createAd' tool with the following parameters:" +
+                  JSON.stringify(adDetails)
+                : "Ask the user what details they want to modify."
+            }
+            - If the 'createAd' tool returns a successful response, respond with the success message "Ad created successfully", else respond with the error message "Ad creation failed."`,
+              },
+              ...messages,
+            ],
+            tools: {
+              createAd: {
+                description: "Create a Facebook ad.",
+                parameters: z.object({
+                  campaign: z.object({
+                    name: z.string(),
+                    objective: z.enum(campaignObjectives),
+                  }),
+                  adSet: z.object({
+                    name: z.string(),
+                    billingEvent: z.enum(adSetBillingEvents),
+                    optimizationGoal: z.enum(adSetOptimizationGoals),
+                    bidStrategy: z.enum(adSetBidStrategys),
+                    bidAmount: z.string(),
+                    dailyBudget: z.string(),
+                    targeting: z.object({
+                      geoLocations: z.object({
+                        cities: z.array(
+                          z.object({
+                            key: z.string(),
+                            radius: z.number(),
+                            distanceUnit: z.string(),
+                          })
+                        ),
+                      }),
+                      interests: z.array(
+                        z.object({
+                          id: z.string(),
+                          name: z.string(),
+                        })
+                      ),
+                    }),
+                  }),
+                  adCreative: z.object({
+                    name: z.string(),
+                    objectStorySpec: z.object({
+                      linkData: z.object({
+                        message: z.string(),
+                        link: z.string().url(),
+                        CTA: z.object({
+                          type: z.enum(adCreativeCTAs),
+                          value: z.object({
+                            link: z.string().url(),
+                          }),
+                        }),
+                      }),
+                    }),
+                  }),
+                }),
+              },
             },
-            ...messages,
-          ],
-          tools: {
-            createAd: {
-              description: "Create a Facebook ad.",
-              parameters: z.object({
-                campaign: z.object({
-                  name: z.string(),
-                  objective: z.string(),
-                }),
-                ad_set: z.object({
-                  name: z.string(),
-                  billing_event: z.string(),
-                  optimization_goal: z.string(),
-                  daily_budget: z.number(),
-                  targeting: z.string(),
-                }),
-                ad_creative: z.object({
-                  headline: z.string(),
-                  copy: z.string(),
-                  image_video: z.string(),
-                  call_to_action: z.enum(CTAOptions),
-                }),
-              }),
-            },
-          },
-          toolCallStreaming: true,
-          toolChoice: "required",
-          max_tokens: 200,
-        });
+            toolCallStreaming: true,
+            max_tokens: 200,
+          });
 
-        createAdResponse.mergeIntoDataStream(dataStream);
+          createAdResponse.mergeIntoDataStream(dataStream);
+        } catch (error) {
+          console.error("Error in tool call:", error);
+          dataStream.writeData({
+            step: "error",
+            error: "Tool execution failed.",
+          });
+        }
       },
     });
   }

@@ -1,6 +1,5 @@
 "use client";
 
-import React, { useState } from "react";
 import { Tooltip } from "react-tooltip";
 
 const Form = ({ input, handleInputChange, handleSubmit, status, stop }) => {

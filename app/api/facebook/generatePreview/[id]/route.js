@@ -4,7 +4,7 @@ import Account from "@/models/Account";
 import dbConnect from "@/utils/dbConnect";
 
 export async function POST(req, { params }) {
-  const { adCreative } = await req.json();
+  const { adDetails } = await req.json();
   const { id } = params;
 
   await dbConnect();
@@ -14,27 +14,22 @@ export async function POST(req, { params }) {
   });
 
   // Prepare the Facebook API request payload
-  const facebookAdRequest = {
-    creative: {
-      object_story_spec: {
-        link_data: {
-          call_to_action: {
-            type: adCreative.call_to_action,
-            value: { link: adCreative.link },
-          },
-          description: adCreative.description,
-          link: adCreative.link,
-          message: adCreative.message,
-          name: adCreative.name,
-        },
-        page_id: user.facebook.pageId,
+  const creative = {
+    object_story_spec: {
+      link_data: {
+        name: adDetails.name,
+        message: adDetails.message,
+        link: adDetails.link,
+        description: adDetails.description,
+        call_to_action: adDetails.CTA,
       },
+      page_id: user.facebook.pageId,
     },
   };
 
   // Make the GET request to Facebook to generate the ad preview
   const queryParams = new URLSearchParams({
-    creative: JSON.stringify(facebookAdRequest.creative),
+    creative: JSON.stringify(creative),
     ad_format: "DESKTOP_FEED_STANDARD",
     access_token: account.access_token,
   });

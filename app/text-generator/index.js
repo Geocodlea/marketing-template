@@ -14,6 +14,7 @@ import StaticbarDashboard from "@/components/Common/StaticBarDashboard";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useChat } from "@ai-sdk/react";
+import { initialAdDetails } from "@/utils/fbAdOptions";
 
 const adFetch = async (adDetails, session, api) => {
   try {
@@ -32,7 +33,7 @@ const adFetch = async (adDetails, session, api) => {
 const TextGeneratorPage = () => {
   const { data: session, status: sessionStatus } = useSession();
   const [step, setStep] = useState("validation");
-  const [adDetails, setAdDetails] = useState({});
+  const [adDetails, setAdDetails] = useState(initialAdDetails);
   const router = useRouter();
 
   const {
@@ -55,6 +56,8 @@ const TextGeneratorPage = () => {
         return result;
       }
       if (toolCall.toolName === "createAd") {
+        console.log("toolCall.args: ", toolCall.args);
+
         const result = await adFetch(toolCall.args, session, "createAd");
 
         console.log("result: ", result);
@@ -62,56 +65,10 @@ const TextGeneratorPage = () => {
         return result.message;
       }
     },
+    async onError(error) {
+      console.log("response: ", error);
+    },
   });
-
-  // useEffect(() => {
-  //   const createAd = async () => {
-  //     if (session) {
-  //       await adFetch(
-  //         {
-  //           campaign: {
-  //             name: "Dog Food Promotion",
-  //             objective: "OUTCOME_SALES",
-  //           },
-  //           adSet: {
-  //             name: "Dog Owners in Iasi",
-  //             billing_event: "IMPRESSIONS",
-  //             optimization_goal: "REACH",
-  //             bid_strategy: "LOWEST_COST_WITHOUT_CAP",
-  //             bid_amount: "100",
-  //             daily_budget: "1000",
-  //             targeting: {
-  //               geo_locations: {
-  //                 cities: [
-  //                   { key: "2420913", radius: 10, distance_unit: "mile" },
-  //                 ], // Example: Iasi, Romania
-  //               },
-  //               interests: [{ id: "6003139266461", name: "Dogs" }],
-  //             },
-  //           },
-  //           adCreative: {
-  //             name: "Nourish Your Best Friend!",
-  //             object_story_spec: {
-  //               link_data: {
-  //                 message:
-  //                   "Give your dog the best with our premium dog food. Packed with nutrients and flavor, it's time to treat your furry companion!",
-  //                 link: "https://example.com/",
-  //                 call_to_action: {
-  //                   type: "SHOP_NOW",
-  //                   value: { link: "https://example.com/" },
-  //                 },
-  //               },
-  //             },
-  //           },
-  //         },
-  //         session,
-  //         "createAd"
-  //       );
-  //     }
-  //   };
-
-  //   createAd();
-  // }, [session]);
 
   useEffect(() => {
     if (data) {
@@ -119,8 +76,6 @@ const TextGeneratorPage = () => {
       setAdDetails(data?.at(-1)?.adDetails || {});
     }
   }, [data]);
-
-  // console.log(data);
 
   useEffect(() => {
     if (sessionStatus === "unauthenticated") router.push("/signin");

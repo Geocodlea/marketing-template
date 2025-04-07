@@ -99,7 +99,7 @@ const TextGenerator = ({ messages, reload, addToolResult }) => {
                                         onClick={() =>
                                           addToolResult({
                                             toolCallId: callId,
-                                            result: "approved",
+                                            result: "approve",
                                           })
                                         }
                                         className="btn btn-default btn-border btn-small"
@@ -110,7 +110,7 @@ const TextGenerator = ({ messages, reload, addToolResult }) => {
                                         onClick={() =>
                                           addToolResult({
                                             toolCallId: callId,
-                                            result: "rejected",
+                                            result: "modify",
                                           })
                                         }
                                         className="btn btn-default btn-border btn-small"
@@ -131,7 +131,7 @@ const TextGenerator = ({ messages, reload, addToolResult }) => {
                               case "call":
                                 return <div key={callId}>Creating ad...</div>;
                               case "result":
-                                return null;
+                                return part.toolInvocation.result;
                             }
                             break;
                           }
