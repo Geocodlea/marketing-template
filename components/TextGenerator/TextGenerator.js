@@ -9,7 +9,7 @@ import Reaction from "../Common/Reaction";
 
 import { MemoizedMarkdown } from "@/components/Common/Markdown";
 
-const TextGenerator = ({ messages, reload, addToolResult }) => {
+const TextGenerator = ({ messages, reload, addToolResult, showAdPreview }) => {
   const { data: session } = useSession();
   const messagesEndRef = useRef(null);
 
@@ -74,18 +74,16 @@ const TextGenerator = ({ messages, reload, addToolResult }) => {
                                   <div key={callId}>Generating preview...</div>
                                 );
                               case "result":
-                                return (
-                                  <div key={callId}>
-                                    <p>Here is your ad preview:</p>
-                                    <div
-                                      dangerouslySetInnerHTML={{
-                                        __html:
-                                          part.toolInvocation.result.data[0]
-                                            .body,
-                                      }}
-                                    />
-                                  </div>
-                                );
+                                return null;
+                              // <div key={callId}>
+                              //   <p>Here is your ad preview:</p>
+                              //   <div
+                              //     dangerouslySetInnerHTML={{
+                              //       __html:
+                              //         part.toolInvocation.result.data[0].body,
+                              //     }}
+                              //   />
+                              // </div>;
                             }
                             break;
                           }
@@ -142,7 +140,9 @@ const TextGenerator = ({ messages, reload, addToolResult }) => {
                     }
                   })}
 
-                  {msg.role === "assistant" && <Reaction reload={reload} />}
+                  {msg.role === "assistant" && (
+                    <Reaction reload={reload} showAdPreview={showAdPreview} />
+                  )}
                 </div>
               </div>
             </div>

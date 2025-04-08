@@ -7,6 +7,7 @@ const StaticbarDashboard = ({
   handleSubmit,
   status,
   stop,
+  disabledChat,
 }) => {
   return (
     <>
@@ -17,6 +18,7 @@ const StaticbarDashboard = ({
           handleSubmit={handleSubmit}
           status={status}
           stop={stop}
+          disabledChat={disabledChat}
         />
         <p className="b3 small-text">
           AiWave can make mistakes. Consider checking important information.

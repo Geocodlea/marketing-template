@@ -73,15 +73,16 @@ export async function POST(req, { params }) {
       name: adSet.name,
       campaign_id: campaignId,
       billing_event: adSet.billingEvent,
-      // optimization_goal: adSet.optimization_goal,
+      optimization_goal: adSet.optimizationGoal,
+      daily_budget: adSet.dailyBudget.toString(),
+      bid_strategy: adSet.bidStrategy,
       targeting: {
         geo_locations: {
           countries: adSet.targeting.geoLocations.countries,
         },
       },
       // status: "PAUSED",
-      daily_budget: adSet.dailyBudget,
-      // bid_strategy: adSet.bid_strategy,
+
       access_token: accessToken,
     };
 

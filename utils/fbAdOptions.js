@@ -9,7 +9,6 @@ const initialAdDetails = {
     billingEvent: null,
     optimizationGoal: null,
     bidStrategy: null,
-    bidAmount: null,
     dailyBudget: null,
     targeting: {
       geoLocations: {

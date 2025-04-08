@@ -1,6 +1,15 @@
-import React from "react";
+import { useEffect, useRef } from "react";
 
-const Reaction = ({ reload }) => {
+const Reaction = ({ reload, showAdPreview }) => {
+  const modalButtonRef = useRef(null); // Reference to the button we will trigger
+
+  // Trigger the modal when showAdPreview becomes true
+  useEffect(() => {
+    if (showAdPreview && modalButtonRef.current) {
+      modalButtonRef.current.click(); // Programmatically trigger a click
+    }
+  }, [showAdPreview]); // This effect runs when showAdPreview changes
+
   return (
     <>
       <div className="reaction-section">
@@ -69,6 +78,17 @@ const Reaction = ({ reload }) => {
           </div>
         </div>
       </div>
+
+      {showAdPreview && (
+        <button
+          ref={modalButtonRef}
+          data-bs-toggle="modal"
+          data-bs-target="#adPreviewModal"
+          style={{ display: "none" }} // Hide it, no need to show
+        >
+          Ad Preview
+        </button>
+      )}
     </>
   );
 };

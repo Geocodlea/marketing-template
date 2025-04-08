@@ -2,10 +2,18 @@
 
 import { Tooltip } from "react-tooltip";
 
-const Form = ({ input, handleInputChange, handleSubmit, status, stop }) => {
+const Form = ({
+  input,
+  handleInputChange,
+  handleSubmit,
+  status,
+  stop,
+  disabledChat,
+}) => {
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault(); // Prevent new line in textarea
+      if (disabledChat) return;
       handleSubmit(e);
     }
   };
@@ -29,6 +37,7 @@ const Form = ({ input, handleInputChange, handleSubmit, status, stop }) => {
               className="form-icon icon-send"
               data-tooltip-id="my-tooltip"
               data-tooltip-content="Send message"
+              disabled={disabledChat}
             >
               <i className="fa-sharp fa-solid fa-paper-plane-top"></i>
             </button>

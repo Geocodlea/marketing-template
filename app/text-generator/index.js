@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Context from "@/context/Context";
 import PopupMobileMenu from "@/components/Header/PopUpMobileMenu";
 import BackToTop from "../backToTop";
@@ -35,6 +35,9 @@ const TextGeneratorPage = () => {
   const { data: session, status: sessionStatus } = useSession();
   const [step, setStep] = useState("validation");
   const [adDetails, setAdDetails] = useState(initialAdDetails);
+  const [disabledChat, setDisabledChat] = useState(false);
+  const [showAdPreview, setShowAdPreview] = useState(false);
+  const [adPreview, setAdPreview] = useState(null);
   const router = useRouter();
 
   const {
@@ -89,6 +92,48 @@ const TextGeneratorPage = () => {
     if (sessionStatus === "unauthenticated") router.push("/signin");
   }, [sessionStatus]);
 
+  useEffect(() => {
+    // Loop through messages to find the result state
+    const resultMessage = messages.find((msg) =>
+      msg.parts.some(
+        (part) =>
+          part.type === "tool-invocation" &&
+          part.toolInvocation.toolName === "generateAdPreview" &&
+          part.toolInvocation.state === "result"
+      )
+    );
+
+    // If a result message is found, set showAdPreview to true
+    if (resultMessage) {
+      const iframe = resultMessage.parts.filter(
+        (part) =>
+          part.type === "tool-invocation" &&
+          part.toolInvocation.toolName === "generateAdPreview" &&
+          part.toolInvocation.state === "result"
+      );
+
+      setShowAdPreview(true);
+      setAdPreview(iframe[0].toolInvocation.result.data[0].body);
+    }
+  }, [messages]); // This will trigger when messages change
+
+  useEffect(() => {
+    const isAskForConfirmation = messages.some((msg) =>
+      msg.parts?.some(
+        (part) =>
+          part.type === "tool-invocation" &&
+          part.toolInvocation.toolName === "askForConfirmation" &&
+          part.toolInvocation.state === "call"
+      )
+    );
+
+    if (isAskForConfirmation) {
+      setDisabledChat(true);
+    } else {
+      setDisabledChat(false);
+    }
+  }, [messages]);
+
   return (
     <main className="page-wrapper rbt-dashboard-page">
       <div className="rbt-panel-wrapper">
@@ -96,7 +141,7 @@ const TextGeneratorPage = () => {
           <LeftDashboardSidebar />
           <HeaderDashboard display="" />
           <RightDashboardSidebar />
-          <Modal />
+          <Modal adPreview={adPreview} />
           <PopupMobileMenu />
           <div className="rbt-main-content">
             <div className="rbt-daynamic-page-content">
@@ -107,6 +152,7 @@ const TextGeneratorPage = () => {
                       messages={messages}
                       reload={reload}
                       addToolResult={addToolResult}
+                      showAdPreview={showAdPreview}
                     />
                     <StaticbarDashboard
                       input={input}
@@ -114,6 +160,7 @@ const TextGeneratorPage = () => {
                       handleSubmit={handleSubmit}
                       status={status}
                       stop={stop}
+                      disabledChat={disabledChat}
                     />
                   </div>
                 </div>

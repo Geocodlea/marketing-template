@@ -120,7 +120,21 @@ export async function POST(req) {
                 - Ad set optimization goal
                 - Ad set daily budget
                 - Ad set targeting audience
-              
+
+              - **⚠️ Critical Field Compatibility Rules**:
+                When generating values, ensure that the following **field pairs are logically valid together**. If any pair does not match a valid combination, return both fields as null
+                1. **billingEvent and optimizationGoal must be a valid combination.** Valid pairs include:
+                  - billingEvent: "IMPRESSIONS", optimizationGoal: "REACH"
+                  - billingEvent: "LINK_CLICKS", optimizationGoal: "LINK_CLICKS"
+                  - billingEvent: "THRUPLAY", optimizationGoal: "VIDEO_VIEWS"
+                  - billingEvent: "IMPRESSIONS", optimizationGoal: "VIDEO_VIEWS"
+                  - billingEvent: "IMPRESSIONS", optimizationGoal: "POST_ENGAGEMENT"
+                  - billingEvent: "IMPRESSIONS", optimizationGoal: "LEAD_GENERATION"
+                2. If billingEvent is not valid for the selected optimizationGoal, return BOTH fields as null and wait for the user to clarify.
+                3. If bidStrategy is "LOWEST_COST_WITHOUT_CAP", do NOT provide bidAmount.
+              - You MUST enforce these compatibility rules before returning any values.
+
+              - If any of the following fields are missing or null, request them explicitly:
               - **Check for missing fields in the provided object and ask the user directly for them.**  
                 - If any of the following fields are missing or null, request them explicitly:
                   - Campaign objective: ${
@@ -161,7 +175,6 @@ export async function POST(req) {
                   - name
                   - optimizationGoal
                   - bidStrategy
-                  - bidAmount
                 - Ad creative:
                   - name
                   - objectStorySpec.linkData.message: A compelling ad message
@@ -171,6 +184,7 @@ export async function POST(req) {
               - If adCreative already exists, preserve existing fields.
             
               - **Return null for any missing details you cannot infer.**
+              - **Final Rule**: Validate field compatibility before returning the object. If a field is invalid in context, return it as null and await clarification from the user.
             `,
         },
         ...messages,
@@ -186,8 +200,8 @@ export async function POST(req) {
           billingEvent: z.enum(adSetBillingEvents).nullable(),
           optimizationGoal: z.enum(adSetOptimizationGoals).nullable(),
           bidStrategy: z.enum(adSetBidStrategies).nullable(),
-          bidAmount: z.string().nullable(),
-          dailyBudget: z.string().nullable(),
+          // bidAmount: z.string().nullable(),
+          dailyBudget: z.number().nullable(),
           targeting: z.object({
             geoLocations: z.object({
               countries: z.array(z.string().nullable()),
@@ -380,16 +394,11 @@ export async function POST(req) {
 
   if (step === "adCreation") {
     console.log("Create Ad");
+    step = "details";
 
     const toolInvocations = messages[messages.length - 1].toolInvocations;
     const confirmationResult =
       toolInvocations[toolInvocations.length - 1].result;
-
-    if (confirmationResult === "approve") {
-      step = "end";
-    } else {
-      step = "details";
-    }
 
     return createDataStreamResponse({
       execute: (dataStream) => {
@@ -434,7 +443,7 @@ export async function POST(req) {
                     billingEvent: z.enum(adSetBillingEvents),
                     optimizationGoal: z.enum(adSetOptimizationGoals),
                     bidStrategy: z.enum(adSetBidStrategies),
-                    bidAmount: z.string(),
+                    // bidAmount: z.string(),
                     dailyBudget: z.string(),
                     targeting: z.object({
                       geoLocations: z.object({
