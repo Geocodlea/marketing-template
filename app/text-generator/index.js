@@ -15,6 +15,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useChat } from "@ai-sdk/react";
 import { initialAdDetails } from "@/utils/fbAdOptions";
+import isEqual from "lodash/isEqual";
 
 const adFetch = async (adDetails, session, api) => {
   try {
@@ -65,15 +66,22 @@ const TextGeneratorPage = () => {
         return result.message;
       }
     },
-    async onError(error) {
-      console.log("response: ", error);
-    },
+    // async onError(error) {
+    //   console.log("error: ", error);
+    // },
   });
 
   useEffect(() => {
     if (data) {
-      setStep(data?.at(-1)?.step);
-      setAdDetails(data?.at(-1)?.adDetails || {});
+      const latest = data.at(-1);
+      if (!latest) return;
+
+      if (latest.step !== step) {
+        setStep(latest.step);
+      }
+      if (!isEqual(latest.adDetails, adDetails)) {
+        setAdDetails(latest.adDetails || initialAdDetails);
+      }
     }
   }, [data]);
 

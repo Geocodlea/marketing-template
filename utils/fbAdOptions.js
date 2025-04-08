@@ -2,6 +2,7 @@ const initialAdDetails = {
   campaign: {
     name: null,
     objective: null,
+    status: null,
   },
   adSet: {
     name: null,
@@ -12,20 +13,8 @@ const initialAdDetails = {
     dailyBudget: null,
     targeting: {
       geoLocations: {
-        cities: [
-          {
-            key: null,
-            radius: null,
-            distanceUnit: "km",
-          },
-        ],
+        countries: ["RO"],
       },
-      interests: [
-        {
-          id: null,
-          name: null,
-        },
-      ],
     },
   },
   adCreative: {
@@ -80,6 +69,8 @@ const campaignObjectives = [
   "OUTCOME_APP_PROMOTION",
 ];
 
+const campaignStatuses = ["ACTIVE", "PAUSED", "DELETED", "ARCHIVED"];
+
 const adSetBillingEvents = [
   "APP_INSTALLS",
   "CLICKS",
@@ -126,7 +117,7 @@ const adSetOptimizationGoals = [
   "MESSAGING_APPOINTMENT_CONVERSION",
 ];
 
-const adSetBidStrategys = [
+const adSetBidStrategies = [
   "LOWEST_COST_WITHOUT_CAP",
   "LOWEST_COST_WITH_BID_CAP",
   "COST_CAP",
@@ -245,8 +236,9 @@ export {
   initialAdDetails,
   findEmptyFields,
   campaignObjectives,
+  campaignStatuses,
   adSetBillingEvents,
   adSetOptimizationGoals,
-  adSetBidStrategys,
+  adSetBidStrategies,
   adCreativeCTAs,
 };

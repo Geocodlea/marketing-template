@@ -39,7 +39,7 @@ export async function POST(req, { params }) {
     const campaignPayload = {
       name: campaign.name,
       objective: campaign.objective,
-      status: "PAUSED",
+      status: campaign.status,
       special_ad_categories: ["NONE"],
       access_token: accessToken,
     };
@@ -72,12 +72,16 @@ export async function POST(req, { params }) {
     const adSetPayload = {
       name: adSet.name,
       campaign_id: campaignId,
-      billing_event: adSet.billing_event,
-      optimization_goal: adSet.optimization_goal,
-      targeting: adSet.targeting,
-      status: "PAUSED",
-      daily_budget: adSet.daily_budget,
-      bid_strategy: adSet.bid_strategy,
+      billing_event: adSet.billingEvent,
+      // optimization_goal: adSet.optimization_goal,
+      targeting: {
+        geo_locations: {
+          countries: adSet.targeting.geoLocations.countries,
+        },
+      },
+      // status: "PAUSED",
+      daily_budget: adSet.dailyBudget,
+      // bid_strategy: adSet.bid_strategy,
       access_token: accessToken,
     };
 
@@ -108,13 +112,12 @@ export async function POST(req, { params }) {
       name: adCreative.name,
       object_story_spec: {
         link_data: {
-          message: adCreative.object_story_spec.link_data.message,
-          link: adCreative.object_story_spec.link_data.link,
+          message: adCreative.objectStorySpec.linkData.message,
+          link: adCreative.objectStorySpec.linkData.link,
           call_to_action: {
-            type: adCreative.object_story_spec.link_data.call_to_action.type,
+            type: adCreative.objectStorySpec.linkData.CTA.type,
             value: {
-              link: adCreative.object_story_spec.link_data.call_to_action.value
-                .link,
+              link: adCreative.objectStorySpec.linkData.CTA.value.link,
             },
           },
         },
@@ -150,7 +153,7 @@ export async function POST(req, { params }) {
     // Step 4: Create Ad
     const adPayload = {
       name: adCreative.name,
-      status: "PAUSED",
+      // status: "PAUSED",
       adset_id: adSetId,
       creative: { creative_id: creativeId },
       access_token: accessToken,

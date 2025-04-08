@@ -7,6 +7,8 @@ import TopBar from "../Common/TopBar";
 import DocImg from "../../public/images/icons/document-file.png";
 import Reaction from "../Common/Reaction";
 
+import { MemoizedMarkdown } from "@/components/Common/Markdown";
+
 const TextGenerator = ({ messages, reload, addToolResult }) => {
   const { data: session } = useSession();
   const messagesEndRef = useRef(null);
@@ -57,7 +59,7 @@ const TextGenerator = ({ messages, reload, addToolResult }) => {
                       case "text":
                         return (
                           <div className="my-4" key={`${msg.id}-${i}`}>
-                            {part.text}
+                            <MemoizedMarkdown id={msg.id} content={part.text} />
                           </div>
                         );
 

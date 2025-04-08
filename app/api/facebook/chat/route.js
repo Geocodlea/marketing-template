@@ -5,9 +5,10 @@ import z from "zod";
 import {
   findEmptyFields,
   campaignObjectives,
+  campaignStatuses,
   adSetBillingEvents,
   adSetOptimizationGoals,
-  adSetBidStrategys,
+  adSetBidStrategies,
   adCreativeCTAs,
 } from "@/utils/fbAdOptions";
 
@@ -123,37 +124,50 @@ export async function POST(req) {
               - **Check for missing fields in the provided object and ask the user directly for them.**  
                 - If any of the following fields are missing or null, request them explicitly:
                   - Campaign objective: ${
-                    adDetails?.campaign?.objective === null
-                  } ? 'Missing' : 'Provided'}
-                  - Ad set billing event: ${
-                    adDetails?.adSet?.billingEvent === null
-                  } ? 'Missing' : 'Provided'}
-                  - Ad set optimization goal: ${
-                    adDetails?.adSet?.optimizationGoal === null
-                  } ? 'Missing' : 'Provided'}
-                  - Ad set bid strategy: ${
-                    adDetails?.adSet?.bidStrategy === null
-                  } ? 'Missing' : 'Provided'}
+                    adDetails.campaign.objective ? "Provided" : "Missing"
+                  }
+                  - Campaign status: ${
+                    adDetails.campaign.status ? "Provided" : "Missing"
+                  }
                   - Ad set daily budget: ${
-                    adDetails?.adSet?.dailyBudget === null
-                  } ? 'Missing' : 'Provided'}
-                  - Ad set targeting location (distanceUnit in km): ${
-                    adDetails?.adSet?.targeting?.geoLocations?.cities
-                      ?.length === 0
-                  } ? 'Missing' : 'Provided'}
-                  - Ad set targeting interests: ${
-                    adDetails?.adSet?.targeting?.interests?.length === 0
-                  } ? 'Missing' : 'Provided'}
+                    adDetails.adSet.dailyBudget ? "Provided" : "Missing"
+                  }
                   
+              - **Enum rules:**
+                - The following fields MUST match EXACTLY one of the valid enum values listed below or be null if unknown or not provided. DO NOT invent or infer new values outside of these lists:
+                - Campaign objective: Must match EXACTLY one of the valid enum values: ${campaignObjectives.join(
+                  ", "
+                )}
+                - Campaign status: Must match EXACTLY one of the valid enum values: ${campaignStatuses.join(
+                  ", "
+                )}
+                - Ad set billing event: Must match EXACTLY one of the valid enum values: ${adSetBillingEvents.join(
+                  ", "
+                )}
+                - Ad set optimization goal: Must match EXACTLY one of the valid enum values: ${adSetOptimizationGoals.join(
+                  ", "
+                )}
+                - Ad set bid strategy: Must match EXACTLY one of the valid enum values: ${adSetBidStrategies.join(
+                  ", "
+                )}
+                - Ad creative CTA type: Must match EXACTLY one of the valid enum values: ${adCreativeCTAs.join(
+                  ", "
+                )}
+                - If the correct value is not available or cannot be inferred, return null.
+
               - **Infer all the following fields:**
                 - Campaign: name
-                - Ad set: name
+                - Ad set: 
+                  - name
+                  - optimizationGoal
+                  - bidStrategy
+                  - bidAmount
                 - Ad creative:
-                - name
-                - objectStorySpec.linkData.message: A compelling ad message
-                - objectStorySpec.linkData.link: Use a placeholder like https://example.com
-                - objectStorySpec.linkData.CTA.type: Choose a valid CTA from the enum
-                - objectStorySpec.linkData.CTA.value.link: Same as above link or another relevant one
+                  - name
+                  - objectStorySpec.linkData.message: A compelling ad message
+                  - objectStorySpec.linkData.link: Use a placeholder like https://example.com
+                  - objectStorySpec.linkData.CTA.type: Choose a valid CTA from the enum
+                  - objectStorySpec.linkData.CTA.value.link: Same as above link or another relevant one
               - If adCreative already exists, preserve existing fields.
             
               - **Return null for any missing details you cannot infer.**
@@ -165,30 +179,19 @@ export async function POST(req) {
         campaign: z.object({
           name: z.string().nullable(),
           objective: z.enum(campaignObjectives).nullable(),
+          status: z.enum(campaignStatuses).nullable(),
         }),
         adSet: z.object({
           name: z.string().nullable(),
           billingEvent: z.enum(adSetBillingEvents).nullable(),
           optimizationGoal: z.enum(adSetOptimizationGoals).nullable(),
-          bidStrategy: z.enum(adSetBidStrategys).nullable(),
+          bidStrategy: z.enum(adSetBidStrategies).nullable(),
           bidAmount: z.string().nullable(),
           dailyBudget: z.string().nullable(),
           targeting: z.object({
             geoLocations: z.object({
-              cities: z.array(
-                z.object({
-                  key: z.string().nullable(),
-                  radius: z.number().nullable(),
-                  distanceUnit: z.string().nullable(),
-                })
-              ),
+              countries: z.array(z.string().nullable()),
             }),
-            interests: z.array(
-              z.object({
-                id: z.string().nullable(),
-                name: z.string().nullable(),
-              })
-            ),
           }),
         }),
         adCreative: z.object({
@@ -223,7 +226,7 @@ export async function POST(req) {
 
     if (missingFields.length > 0) {
       console.log("Ask for missing fields.");
-      console.log(adDetails, step);
+      console.log(adDetails);
 
       // **Step 4: Ask for Missing Campaign, Ad Set, or Ad Creative Details**
       return createDataStreamResponse({
@@ -424,30 +427,19 @@ export async function POST(req) {
                   campaign: z.object({
                     name: z.string(),
                     objective: z.enum(campaignObjectives),
+                    status: z.enum(campaignStatuses),
                   }),
                   adSet: z.object({
                     name: z.string(),
                     billingEvent: z.enum(adSetBillingEvents),
                     optimizationGoal: z.enum(adSetOptimizationGoals),
-                    bidStrategy: z.enum(adSetBidStrategys),
+                    bidStrategy: z.enum(adSetBidStrategies),
                     bidAmount: z.string(),
                     dailyBudget: z.string(),
                     targeting: z.object({
                       geoLocations: z.object({
-                        cities: z.array(
-                          z.object({
-                            key: z.string(),
-                            radius: z.number(),
-                            distanceUnit: z.string(),
-                          })
-                        ),
+                        countries: z.array(z.string()),
                       }),
-                      interests: z.array(
-                        z.object({
-                          id: z.string(),
-                          name: z.string(),
-                        })
-                      ),
                     }),
                   }),
                   adCreative: z.object({
