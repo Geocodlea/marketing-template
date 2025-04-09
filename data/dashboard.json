@@ -620,33 +620,53 @@
   ],
   "accordion": [
     {
-      "title": "Ce este AiWave? Cum funcționează?",
-      "desc": "AiWave este o platformă de mesagerie alimentată de AI care înțelege și răspunde la întrebările tale în limbaj natural. Întreabă orice ai întreba un asistent uman—primește actualizări meteo, știri, recomandări de restaurante și multe altele!",
+      "title": "Cum funcționează sistemul de reclame automate cu AI?",
+      "desc": "AI-ul analizează afacerea ta, creează reclame personalizate și le publică direct în contul tău de Facebook Ads. Totul automat, fără intervenție manuală.",
       "isExpand": true
     },
     {
-      "title": "Ce fel de întrebări pot pune AiWave?",
-      "desc": "AiWave, o platformă de mesagerie bazată pe AI, comunică eficient cu utilizatorii folosind înțelegerea limbajului natural. Oferă răspunsuri utile la întrebările și cererile tale.",
+      "title": "Trebuie să am deja un cont de reclame pe Facebook?",
+      "desc": "Da, dar procesul de conectare e simplu și durează doar câteva minute. Te ghidăm pas cu pas!",
       "isExpand": false
     },
     {
-      "title": "Pot primi actualizări regulate și pentru cât timp primesc actualizări?",
-      "desc": "Da, vom actualiza AiWave. Și poți primi actualizările oricând. Data viitoare vom veni cu mai multe funcționalități. Poți primi actualizări de un număr nelimitat de ori. Echipa noastră dedicată lucrează pentru actualizări.",
+      "title": "Reclamele sunt cu adevărat eficiente?",
+      "desc": "Da. AI-ul învață din datele campaniilor și îmbunătățește constant performanța – astfel cheltui mai puțin pe reclame care nu funcționează.",
       "isExpand": false
     },
     {
-      "title": "Cum pot obține suportul pentru clienți?",
-      "desc": "După achiziționarea produsului, dacă ai nevoie de suport, ne poți contacta trimițând un e-mail la rainbowit10@gmail.com.",
+      "title": "Pot vedea sau modifica reclamele?",
+      "desc": "Desigur! Ai acces la toate campaniile tale și poți ajusta oricând textul, imaginile sau bugetul dacă dorești.",
       "isExpand": false
     },
     {
-      "title": "Datele mele sunt în siguranță cu AiWave?",
-      "desc": "Simte-te liber să adresezi orice întrebare către AiWave, la fel cum ai face cu un ajutor uman—fie că este vorba despre vreme, ultimele știri, sugestii de restaurante sau orice altceva îți dorești!",
+      "title": "Ce tipuri de afaceri pot folosi acest sistem?",
+      "desc": "Funcționează excelent pentru servicii locale, coaching, imobiliare, saloane, cabinete, și multe altele.",
       "isExpand": false
     },
     {
-      "title": "Este AiWave disponibil în mai multe limbi?",
-      "desc": "Da, AiWave este conceput pentru a suporta mai multe limbi, oferind o experiență de comunicare versatilă și incluzivă pentru utilizatorii din întreaga lume.",
+      "title": "Este nevoie să am cunoștințe de marketing sau advertising?",
+      "desc": "Nu. Totul este automatizat. Platforma noastră cu AI se ocupă de tot – tu doar îți conectezi contul și alegi obiectivul dorit.",
+      "isExpand": false
+    },
+    {
+      "title": "Pot alege eu bugetul pentru reclame?",
+      "desc": "Da, bugetul este 100% controlat de tine. Poți începe cu sume mici și poți crește pe măsură ce vezi rezultate.",
+      "isExpand": false
+    },
+    {
+      "title": "Cum știu că reclamele funcționează?",
+      "desc": "Primești rapoarte clare și ușor de înțeles cu rezultate: câți oameni au văzut, dat click sau cumpărat. Totul transparent.",
+      "isExpand": false
+    },
+    {
+      "title": "Cât de des sunt actualizate sau testate reclamele?",
+      "desc": "AI-ul optimizează constant reclamele. În funcție de rezultate, se testează noi variante pentru a îmbunătăți performanța fără intervenția ta.",
+      "isExpand": false
+    },
+    {
+      "title": "Ce se întâmplă dacă am o problemă sau o întrebare?",
+      "desc": "Ai suport rapid din partea noastră – prin email, WhatsApp sau chat. Te ajutăm la orice pas!",
       "isExpand": false
     }
   ]

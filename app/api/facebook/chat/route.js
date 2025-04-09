@@ -445,7 +445,7 @@ export async function POST(req) {
                   optimizationGoal: z.enum(adSetOptimizationGoals),
                   bidStrategy: z.enum(adSetBidStrategies),
                   // bidAmount: z.string(),
-                  dailyBudget: z.string(),
+                  dailyBudget: z.number(),
                   targeting: z.object({
                     geoLocations: z.object({
                       countries: z.array(z.string()),

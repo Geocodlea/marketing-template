@@ -188,7 +188,7 @@ const Home = () => {
                 data-sal-delay="100"
               >
                 <p className="b1 mb--0 small-title">
-                  De încredere pentru 800.000+ de companii extrem de productive
+                  De încredere pentru sute de companii extrem de productive
                 </p>
               </div>
             </div>

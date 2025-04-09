@@ -57,18 +57,10 @@ const TextGeneratorPage = () => {
     async onToolCall({ toolCall }) {
       if (toolCall.toolName === "generateAdPreview") {
         const result = await adFetch(toolCall.args, session, "generatePreview");
-
-        console.log(result);
-
         return result;
       }
       if (toolCall.toolName === "createAd") {
-        console.log("toolCall.args: ", toolCall.args);
-
         const result = await adFetch(toolCall.args, session, "createAd");
-
-        console.log("result: ", result);
-
         return result.message;
       }
     },
@@ -116,9 +108,6 @@ const TextGeneratorPage = () => {
       );
 
       const newAdPreview = iframe[0].toolInvocation.result.data[0].body;
-
-      console.log(newAdPreview === adPreview);
-
       if (newAdPreview === adPreview) return;
 
       setShowAdPreview(true);

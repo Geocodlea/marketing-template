@@ -1,14 +1,14 @@
 const initialAdDetails = {
   campaign: {
     name: null,
-    objective: null,
+    objective: "OUTCOME_LEADS",
     status: null,
   },
   adSet: {
     name: null,
-    billingEvent: null,
-    optimizationGoal: null,
-    bidStrategy: null,
+    billingEvent: "IMPRESSIONS",
+    optimizationGoal: "LEAD_GENERATION",
+    bidStrategy: "LOWEST_COST_WITHOUT_CAP",
     dailyBudget: null,
     targeting: {
       geoLocations: {

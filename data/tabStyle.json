@@ -1,25 +1,25 @@
 {
   "TabStyleOne": [
     {
-      "title": "AI-ul generează videoclipuri personalizate rapid și ușor.",
+      "title": "Creeaza Reclame Automate de inalta calitate cu AI avansat.",
       "img": "/images/generator-img/chat-export-vedio.png",
       "menuId": "video-generator",
-      "text": "Generator Video",
+      "text": "Reclame Automate",
       "target": "video-generate",
       "iconImg": "/images/icons/video-g.png",
       "isSelect": false,
       "subItem": [
         {
-          "text": "Modele Transformer"
+          "text": "Reclame create în câteva secunde, nu zile"
         },
         {
-          "text": "Modele Generative Condiționate"
+          "text": "Optimizare constantă"
         },
         {
-          "text": "Modele Pre-antrenate"
+          "text": "Creativitate nelimitată"
         },
         {
-          "text": "Autoencodere Variaționale"
+          "text": "Costuri mai mici, rezultate mai bune"
         }
       ]
     },
@@ -27,7 +27,7 @@
       "title": "Creează audio de înaltă calitate cu AI avansat.",
       "img": "/images/generator-img/chat-export-audio.png",
       "menuId": "audio-generator",
-      "text": "Generator Audio",
+      "text": "Email Marketing",
       "target": "audio-generate",
       "iconImg": "/images/icons/audio-g.png",
       "isSelect": true,
@@ -50,7 +50,7 @@
       "title": "Generează imagini uimitoare cu ajutorul AI-ului.",
       "img": "/images/generator-img/chat-export-photo.png",
       "menuId": "photo-generator",
-      "text": "Generator Foto",
+      "text": "Dezvoltare Vânzări",
       "target": "photo-generate",
       "iconImg": "/images/icons/photo-g.png",
       "isSelect": false,
@@ -73,7 +73,7 @@
       "title": "Scrie texte creative și convingătoare automat.",
       "img": "/images/generator-img/chat-export.png",
       "menuId": "text-generator",
-      "text": "Generator Text",
+      "text": "Mesaje Automate",
       "target": "text-generate",
       "iconImg": "/images/icons/text-g.png",
       "isSelect": false,
@@ -96,7 +96,7 @@
       "title": "Scrie cod eficient și optimizat folosind AI.",
       "img": "/images/generator-img/chat-export-code.png",
       "menuId": "code-generator",
-      "text": "Generator Cod",
+      "text": "Postări Automate",
       "target": "code-generate",
       "iconImg": "/images/icons/code-g.png",
       "isSelect": false,
