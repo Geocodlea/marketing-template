@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import TopBar from "../Common/TopBar";
@@ -8,8 +8,9 @@ import DocImg from "../../public/images/icons/document-file.png";
 import Reaction from "../Common/Reaction";
 
 import { MemoizedMarkdown } from "@/components/Common/Markdown";
+import AdPreview from "./AdPreview";
 
-const TextGenerator = ({ messages, reload, addToolResult, showAdPreview }) => {
+const TextGenerator = ({ messages, reload, addToolResult }) => {
   const { data: session } = useSession();
   const messagesEndRef = useRef(null);
 
@@ -74,16 +75,17 @@ const TextGenerator = ({ messages, reload, addToolResult, showAdPreview }) => {
                                   <div key={callId}>Generating preview...</div>
                                 );
                               case "result":
-                                return null;
-                              // <div key={callId}>
-                              //   <p>Here is your ad preview:</p>
-                              //   <div
-                              //     dangerouslySetInnerHTML={{
-                              //       __html:
-                              //         part.toolInvocation.result.data[0].body,
-                              //     }}
-                              //   />
-                              // </div>;
+                                // return null;
+                                return (
+                                  <div key={callId}>
+                                    <p>Here is your ad preview:</p>
+                                    <AdPreview
+                                      html={
+                                        part.toolInvocation.result.data[0].body
+                                      }
+                                    />
+                                  </div>
+                                );
                             }
                             break;
                           }
@@ -140,9 +142,7 @@ const TextGenerator = ({ messages, reload, addToolResult, showAdPreview }) => {
                     }
                   })}
 
-                  {msg.role === "assistant" && (
-                    <Reaction reload={reload} showAdPreview={showAdPreview} />
-                  )}
+                  {msg.role === "assistant" && <Reaction reload={reload} />}
                 </div>
               </div>
             </div>

@@ -400,20 +400,21 @@ export async function POST(req) {
     const confirmationResult =
       toolInvocations[toolInvocations.length - 1].result;
 
+    console.log("confirmationResult: ", confirmationResult);
+
     return createDataStreamResponse({
       execute: (dataStream) => {
-        try {
-          dataStream.writeData({
-            step,
-            adDetails,
-          });
+        dataStream.writeData({
+          step,
+          adDetails,
+        });
 
-          const createAdResponse = streamText({
-            model: openai("gpt-4o-mini"),
-            messages: [
-              {
-                role: "system",
-                content: `You are a tool-using assistant that helps generate Facebook ads.
+        const createAdResponse = streamText({
+          model: openai("gpt-4o-mini"),
+          messages: [
+            {
+              role: "system",
+              content: `You are a tool-using assistant that helps generate Facebook ads.
             
             STRICT output rules:
             - Do not describe the ad.
@@ -426,61 +427,54 @@ export async function POST(req) {
                 : "Ask the user what details they want to modify."
             }
             - If the 'createAd' tool returns a successful response, respond with the success message "Ad created successfully", else respond with the error message "Ad creation failed."`,
-              },
-              ...messages,
-            ],
-            tools: {
-              createAd: {
-                description: "Create a Facebook ad.",
-                parameters: z.object({
-                  campaign: z.object({
-                    name: z.string(),
-                    objective: z.enum(campaignObjectives),
-                    status: z.enum(campaignStatuses),
-                  }),
-                  adSet: z.object({
-                    name: z.string(),
-                    billingEvent: z.enum(adSetBillingEvents),
-                    optimizationGoal: z.enum(adSetOptimizationGoals),
-                    bidStrategy: z.enum(adSetBidStrategies),
-                    // bidAmount: z.string(),
-                    dailyBudget: z.string(),
-                    targeting: z.object({
-                      geoLocations: z.object({
-                        countries: z.array(z.string()),
-                      }),
+            },
+            ...messages,
+          ],
+          tools: {
+            createAd: {
+              description: "Create a Facebook ad.",
+              parameters: z.object({
+                campaign: z.object({
+                  name: z.string(),
+                  objective: z.enum(campaignObjectives),
+                  status: z.enum(campaignStatuses),
+                }),
+                adSet: z.object({
+                  name: z.string(),
+                  billingEvent: z.enum(adSetBillingEvents),
+                  optimizationGoal: z.enum(adSetOptimizationGoals),
+                  bidStrategy: z.enum(adSetBidStrategies),
+                  // bidAmount: z.string(),
+                  dailyBudget: z.string(),
+                  targeting: z.object({
+                    geoLocations: z.object({
+                      countries: z.array(z.string()),
                     }),
                   }),
-                  adCreative: z.object({
-                    name: z.string(),
-                    objectStorySpec: z.object({
-                      linkData: z.object({
-                        message: z.string(),
-                        link: z.string().url(),
-                        CTA: z.object({
-                          type: z.enum(adCreativeCTAs),
-                          value: z.object({
-                            link: z.string().url(),
-                          }),
+                }),
+                adCreative: z.object({
+                  name: z.string(),
+                  objectStorySpec: z.object({
+                    linkData: z.object({
+                      message: z.string(),
+                      link: z.string().url(),
+                      CTA: z.object({
+                        type: z.enum(adCreativeCTAs),
+                        value: z.object({
+                          link: z.string().url(),
                         }),
                       }),
                     }),
                   }),
                 }),
-              },
+              }),
             },
-            toolCallStreaming: true,
-            max_tokens: 200,
-          });
+          },
+          toolCallStreaming: true,
+          max_tokens: 200,
+        });
 
-          createAdResponse.mergeIntoDataStream(dataStream);
-        } catch (error) {
-          console.error("Error in tool call:", error);
-          dataStream.writeData({
-            step: "error",
-            error: "Tool execution failed.",
-          });
-        }
+        createAdResponse.mergeIntoDataStream(dataStream);
       },
     });
   }

@@ -6,7 +6,7 @@ import sal from "sal.js";
 
 import ModalProps from "../Header/HeaderProps/ModalProps";
 
-const Modal = ({ adPreview }) => {
+const Modal = () => {
   const [selectedValues, setSelectedValues] = useState([]);
 
   const handleChange = (event) => {
@@ -177,28 +177,6 @@ const Modal = ({ adPreview }) => {
             </div>
             <button className="close-button" data-bs-dismiss="modal">
               <i className="fa-sharp fa-regular fa-x"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* ==== Ad Preview Section Modal ==== */}
-      <div
-        id="adPreviewModal"
-        className="modal rbt-modal-box like-modal fade"
-        tabIndex="-1"
-      >
-        <div className="modal-dialog modal-dialog-centered">
-          <div className="modal-content wrapper">
-            <h5 className="title">Ad Preview</h5>
-
-            <div
-              dangerouslySetInnerHTML={{
-                __html: adPreview,
-              }}
-            />
-            <button className="close-button" data-bs-dismiss="modal">
-              <i className="feather-x"></i>
             </button>
           </div>
         </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Context from "@/context/Context";
 import PopupMobileMenu from "@/components/Header/PopUpMobileMenu";
 import BackToTop from "../backToTop";
@@ -57,6 +57,9 @@ const TextGeneratorPage = () => {
     async onToolCall({ toolCall }) {
       if (toolCall.toolName === "generateAdPreview") {
         const result = await adFetch(toolCall.args, session, "generatePreview");
+
+        console.log(result);
+
         return result;
       }
       if (toolCall.toolName === "createAd") {
@@ -112,6 +115,12 @@ const TextGeneratorPage = () => {
           part.toolInvocation.state === "result"
       );
 
+      const newAdPreview = iframe[0].toolInvocation.result.data[0].body;
+
+      console.log(newAdPreview === adPreview);
+
+      if (newAdPreview === adPreview) return;
+
       setShowAdPreview(true);
       setAdPreview(iframe[0].toolInvocation.result.data[0].body);
     }
@@ -141,7 +150,7 @@ const TextGeneratorPage = () => {
           <LeftDashboardSidebar />
           <HeaderDashboard display="" />
           <RightDashboardSidebar />
-          <Modal adPreview={adPreview} />
+          <Modal />
           <PopupMobileMenu />
           <div className="rbt-main-content">
             <div className="rbt-daynamic-page-content">
@@ -152,7 +161,6 @@ const TextGeneratorPage = () => {
                       messages={messages}
                       reload={reload}
                       addToolResult={addToolResult}
-                      showAdPreview={showAdPreview}
                     />
                     <StaticbarDashboard
                       input={input}
