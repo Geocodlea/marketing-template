@@ -1,25 +1,59 @@
-import React from "react";
+"use client";
+
+import { useState, useTransition } from "react";
+import { contact } from "@/app/actions/contact";
 
 const ContactForm = () => {
+  const [isPending, startTransition] = useTransition();
+  const [disabled, setDisabled] = useState(false);
+
+  const handleSubmit = (formData) => {
+    setDisabled(true);
+    startTransition(() => {
+      contact(formData);
+    });
+  };
+
   return (
     <>
-      <form action="#" className="rbt-profile-row rbt-default-form row row--15">
+      <form
+        action={handleSubmit}
+        className="rbt-profile-row rbt-default-form row row--15"
+      >
         <div className="col-lg-6 col-md-6 col-sm-6 col-12">
           <div className="form-group">
             <label htmlFor="name">Nume</label>
-            <input id="name" type="text" placeholder="Fazlay" />
+            <input
+              id="name"
+              name="name"
+              type="text"
+              required
+              placeholder="Nume..."
+            />
           </div>
         </div>
         <div className="col-lg-6 col-md-6 col-sm-6 col-12">
           <div className="form-group">
             <label htmlFor="email">Email</label>
-            <input id="email" type="text" placeholder="Rafi" />
+            <input
+              id="email"
+              name="email"
+              type="email"
+              required
+              placeholder="Email..."
+            />
           </div>
         </div>
         <div className="col-lg-6 col-md-6 col-sm-6 col-12">
           <div className="form-group">
             <label htmlFor="tel">Număr de telefon</label>
-            <input id="tel" type="tel" placeholder="+1-202-555-0174" />
+            <input
+              id="tel"
+              name="tel"
+              required
+              type="tel"
+              placeholder="Număr de telefon..."
+            />
           </div>
         </div>
         <div className="col-12">
@@ -27,17 +61,22 @@ const ContactForm = () => {
             <label htmlFor="message">Mesaj</label>
             <textarea
               id="message"
+              name="message"
+              required
               cols="20"
               rows="5"
-              placeholder="Sunt Front-End Developer pentru #Rainbow IT în Bangladesh, OR. Am o pasiune serioasă pentru efecte UI, animații și crearea unor experiențe dinamice și intuitive pentru utilizatori."
             ></textarea>
           </div>
         </div>
         <div className="col-12 mt--20">
           <div className="form-group mb--0">
-            <a className="btn-default" href="#">
-              Contactează-ne
-            </a>
+            <button
+              type="submit"
+              className="btn-default"
+              disabled={disabled || isPending}
+            >
+              {isPending ? "Se trimite..." : "Contactează-ne"}
+            </button>
           </div>
         </div>
       </form>
