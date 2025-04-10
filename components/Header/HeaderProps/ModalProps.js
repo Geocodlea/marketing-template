@@ -9,10 +9,17 @@ import { useRouter } from "next/navigation";
 const ModalProps = () => {
   const router = useRouter(); // Initialize the useRouter hook
 
-  const handleClick = (event, link) => {
-    event.preventDefault();
-    router.push(link).then(() => router.reload()); // Push the new link and reload the page
+  const handleClick = (e, link) => {
+    e.preventDefault();
+
+    // Trigger the close button click
+    const closeBtn = document.querySelector("#newchatModal .close-button");
+    if (closeBtn) closeBtn.click();
+
+    router.push(link);
+    window.location.reload();
   };
+
   return (
     <>
       {ToolsData &&

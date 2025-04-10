@@ -175,35 +175,45 @@
       "icon": ""
     },
     {
+      "link": "/roadmap",
+      "type": "default",
+      "text": "Utilizare",
+      "icon": "book-open"
+    },
+    {
+      "link": "/utilize",
+      "type": "default",
+      "text": "Setup",
+      "icon": "settings"
+    },
+    {
+      "link": "/contact",
+      "type": "default",
+      "text": "Contact",
+      "icon": "mail"
+    },
+    {
       "link": "/profile-details",
-      "isDisable": false,
-      "type": "setting",
+      "type": "profile",
       "text": "Profile Details",
-      "badge": "",
       "icon": "user"
     },
     {
       "link": "/notification",
-      "isDisable": false,
-      "type": "setting",
+      "type": "profile",
       "text": "Notification",
-      "badge": "",
       "icon": "shopping-bag"
     },
     {
       "link": "/chat-export",
-      "isDisable": false,
-      "type": "setting",
+      "type": "profile",
       "text": "Chat Export",
-      "badge": "",
       "icon": "users"
     },
     {
       "link": "/plans-billing",
-      "isDisable": false,
-      "type": "setting",
+      "type": "profile",
       "text": "Plans and Billing",
-      "badge": "",
       "icon": "briefcase"
     }
   ],
@@ -934,7 +944,7 @@
       "isDisable": true,
       "title": "Email Marketing",
       "img": "/images/generator-icon/text-voice.png",
-      "badge": ""
+      "badge": "Coming"
     },
     {
       "link": "#",

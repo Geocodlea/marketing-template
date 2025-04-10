@@ -35,7 +35,7 @@ const HeaderDashboard = ({ display }) => {
                   <button
                     className={`bg-solid-primary popup-dashboardleft-btn ${
                       mobile ? "" : "collapsed"
-                    }`}
+                    } ${display}`}
                     onClick={() => setMobile(!mobile)}
                   >
                     <i className="fa-sharp fa-regular fa-sidebar"></i>
@@ -79,10 +79,10 @@ const HeaderDashboard = ({ display }) => {
                     <div className="rbt-admin-card grid-style">
                       <a className="d-flex align-items-center" href="#">
                         <div className="inner d-flex align-items-center">
-                          <div className="img-box">
+                          <div className="img-box flex-shrink-0">
                             <Image
                               src={session.user.image || avatar}
-                              alt="Admin"
+                              alt="User Image"
                               width={31}
                               height={31}
                             />
@@ -105,7 +105,7 @@ const HeaderDashboard = ({ display }) => {
                   <Link href="/signin">SignIn</Link>
                 )}
 
-                <div className={`expand-btn-grp ${display}`}>
+                {/* <div className={`expand-btn-grp ${display}`}>
                   <button
                     className={`bg-solid-primary popup-dashboardright-btn ${
                       rightBar ? "" : "collapsed"
@@ -114,7 +114,7 @@ const HeaderDashboard = ({ display }) => {
                   >
                     <i className="fa-sharp fa-regular fa-sidebar-flip"></i>
                   </button>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

@@ -101,6 +101,22 @@ const LeftSidebar = () => {
                       </li>
                     </ul>
                   </div>
+
+                  <div className="rbt-sm-separator"></div>
+
+                  <div className="right-side-top text-center">
+                    <a
+                      style={{ cursor: "pointer" }}
+                      className="btn-default bg-solid-primary d-flex align-items-center justify-content-center gap-2 cursor-pointer"
+                      data-bs-toggle="modal"
+                      data-bs-target="#newchatModal"
+                    >
+                      <span className="icon">
+                        <i className="feather-plus-circle"></i>
+                      </span>
+                      <span>New Chat</span>
+                    </a>
+                  </div>
                 </nav>
               </div>
             </div>

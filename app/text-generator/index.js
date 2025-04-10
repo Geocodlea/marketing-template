@@ -6,7 +6,7 @@ import PopupMobileMenu from "@/components/Header/PopUpMobileMenu";
 import BackToTop from "../backToTop";
 import LeftDashboardSidebar from "@/components/Header/LeftDashboardSidebar";
 import HeaderDashboard from "@/components/Header/HeaderDashboard";
-import RightDashboardSidebar from "@/components/Header/RightDashboardSidebar";
+// import RightDashboardSidebar from "@/components/Header/RightDashboardSidebar";
 import Modal from "@/components/Common/Modal";
 import TextGenerator from "@/components/TextGenerator/TextGenerator";
 import StaticbarDashboard from "@/components/Common/StaticBarDashboard";
@@ -107,7 +107,7 @@ const TextGeneratorPage = () => {
         <Context>
           <LeftDashboardSidebar />
           <HeaderDashboard display="" />
-          <RightDashboardSidebar />
+          {/* <RightDashboardSidebar /> */}
           <Modal />
           <PopupMobileMenu />
           <div className="rbt-main-content">

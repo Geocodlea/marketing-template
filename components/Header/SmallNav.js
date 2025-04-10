@@ -43,6 +43,21 @@ const SmallNav = () => {
               </li>
             ))}
         </ul>
+
+        <div className="rbt-sm-separator"></div>
+
+        <ul className="submenu rbt-default-sidebar-list">
+          {SmallNavItem &&
+            SmallNavItem.smallNavItem.slice(5, 8).map((data, index) => (
+              <li key={index}>
+                <Link href={data.link}>
+                  <i className={`feather-${data.icon}`}></i>
+                  <span>{data.text}</span>
+                </Link>
+              </li>
+            ))}
+        </ul>
+
         <div className="rbt-sm-separator"></div>
         <div className="mainmenu-nav">
           <ul className="dashboard-mainmenu rbt-default-sidebar-list">
@@ -56,13 +71,13 @@ const SmallNav = () => {
                 aria-controls="collapseExampleMenu"
               >
                 <i className="feather-plus-circle"></i>
-                <span>Settings</span>
+                <span>Profile</span>
               </a>
               <div className="collapse" id="collapseExampleMenu">
                 <ul className="submenu rbt-default-sidebar-list">
                   {SmallNavItem &&
                     SmallNavItem.smallNavItem
-                      .slice(5, 14)
+                      .slice(8, 14)
                       .map((data, index) => (
                         <li key={index}>
                           <Link href={data.link}>
