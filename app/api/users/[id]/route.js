@@ -22,7 +22,10 @@ export async function PATCH(request, { params }) {
   await dbConnect();
   await User.updateOne({ _id: params.id }, filteredDetails);
 
-  return NextResponse.json({ success: true });
+  return NextResponse.json({
+    status: "success",
+    message: "Contul a fost actualizat cu succes!",
+  });
 }
 
 export async function DELETE(request, { params }) {
@@ -37,10 +40,16 @@ export async function DELETE(request, { params }) {
   const deletedUser = await User.findOneAndDelete({ _id: params.id });
 
   if (!deletedUser) {
-    return NextResponse.json({ success: false, message: "User-ul nu există" });
+    return NextResponse.json({
+      status: "danger",
+      message: "A apărut o eroare. User-ul nu există.",
+    });
   }
 
   await Account.deleteMany({ userId: params.id });
 
-  return NextResponse.json({ success: true });
+  return NextResponse.json({
+    status: "success",
+    message: "Contul a fost șters cu succes!",
+  });
 }

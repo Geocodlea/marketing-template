@@ -2,7 +2,6 @@
 
 import nodemailer from "nodemailer";
 import { convert } from "html-to-text";
-import { redirect } from "next/navigation";
 
 // Create a transporter with Gmail
 const adminTransporter = nodemailer.createTransport({
@@ -37,9 +36,16 @@ export async function contact(formData) {
       text: emailText,
       html: emailHtml,
     });
+
+    return {
+      status: "success",
+      message: "Mesajul a fost trimis cu succes!",
+    };
   } catch (error) {
     console.error("Error sending contact email:", error);
+    return {
+      status: "danger",
+      message: "A apărut o eroare. Vă rugăm să încercați mai târziu.",
+    };
   }
-
-  redirect("/contact");
 }

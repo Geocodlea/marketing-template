@@ -2,15 +2,25 @@
 
 import { useState, useTransition } from "react";
 import { contact } from "@/app/actions/contact";
+import Alert from "@/components/Common/Alert";
 
 const ContactForm = () => {
   const [isPending, startTransition] = useTransition();
   const [disabled, setDisabled] = useState(false);
+  const [alert, setAlert] = useState(null);
 
   const handleSubmit = (formData) => {
     setDisabled(true);
-    startTransition(() => {
-      contact(formData);
+
+    startTransition(async () => {
+      const result = await contact(formData);
+
+      setAlert({
+        status: result.status,
+        message: result.message,
+      });
+
+      setDisabled(false);
     });
   };
 
@@ -79,6 +89,8 @@ const ContactForm = () => {
             </button>
           </div>
         </div>
+
+        {alert && <Alert alert={alert} setAlert={setAlert} />}
       </form>
     </>
   );

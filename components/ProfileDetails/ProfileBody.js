@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { useSession } from "next-auth/react";
 import { signOut } from "next-auth/react";
+import Alert from "@/components/Common/Alert";
 
 const ProfileBody = () => {
   const { data: session } = useSession();
+  const [alert, setAlert] = useState(null);
 
   // Use useState for each form field
   const [firstname, setFirstname] = useState("");
@@ -33,13 +35,18 @@ const ProfileBody = () => {
         body: JSON.stringify({ accountDetails }),
       });
 
+      const data = await response.json();
+
       if (response.ok) {
-        console.log("Account updated successfully");
+        setAlert(data);
       } else {
-        console.error("Error updating account");
+        setAlert(data);
       }
     } catch (error) {
-      console.error("Error updating account:", error);
+      setAlert({
+        status: "danger",
+        message: `A apărut o eroare: ${error.message}`,
+      });
     }
   };
 
@@ -51,14 +58,19 @@ const ProfileBody = () => {
         method: "DELETE",
       });
 
+      const data = await response.json();
+
       if (response.ok) {
+        setAlert(data);
         signOut();
-        console.log("Account deleted successfully");
       } else {
-        console.error("Error deleting account");
+        setAlert(data);
       }
     } catch (error) {
-      console.error("Error deleting account:", error);
+      setAlert({
+        status: "danger",
+        message: `A apărut o eroare: ${error.message}`,
+      });
     }
   };
 
@@ -180,6 +192,8 @@ const ProfileBody = () => {
                     </button>
                   </div>
                 </div>
+
+                {alert && <Alert alert={alert} setAlert={setAlert} />}
               </form>
             </div>
 
@@ -208,6 +222,8 @@ const ProfileBody = () => {
                     </button>
                   </div>
                 </div>
+
+                {alert && <Alert alert={alert} setAlert={setAlert} />}
               </form>
             </div>
           </div>
