@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import Context from "@/context/Context";
 import PopupMobileMenu from "@/components/Header/PopUpMobileMenu";
 import BackToTop from "../backToTop";
@@ -36,8 +36,6 @@ const TextGeneratorPage = () => {
   const [step, setStep] = useState("validation");
   const [adDetails, setAdDetails] = useState(initialAdDetails);
   const [disabledChat, setDisabledChat] = useState(false);
-  const [showAdPreview, setShowAdPreview] = useState(false);
-  const [adPreview, setAdPreview] = useState(null);
   const router = useRouter();
 
   const {
@@ -50,6 +48,7 @@ const TextGeneratorPage = () => {
     reload,
     addToolResult,
     data,
+    setData,
   } = useChat({
     api: "/api/facebook/chat",
     body: { step, adDetails },
@@ -64,10 +63,11 @@ const TextGeneratorPage = () => {
         return result.message;
       }
     },
-    // async onError(error) {
-    //   console.log("error: ", error);
-    // },
   });
+
+  useEffect(() => {
+    if (sessionStatus === "unauthenticated") router.push("/signin");
+  }, [sessionStatus]);
 
   useEffect(() => {
     if (data) {
@@ -78,42 +78,15 @@ const TextGeneratorPage = () => {
         setStep(latest.step);
       }
       if (!isEqual(latest.adDetails, adDetails)) {
-        setAdDetails(latest.adDetails || initialAdDetails);
+        setAdDetails(latest.adDetails);
+      }
+
+      if (latest.step === "end") {
+        setAdDetails(initialAdDetails);
+        setData(undefined);
       }
     }
   }, [data]);
-
-  useEffect(() => {
-    if (sessionStatus === "unauthenticated") router.push("/signin");
-  }, [sessionStatus]);
-
-  useEffect(() => {
-    // Loop through messages to find the result state
-    const resultMessage = messages.find((msg) =>
-      msg.parts.some(
-        (part) =>
-          part.type === "tool-invocation" &&
-          part.toolInvocation.toolName === "generateAdPreview" &&
-          part.toolInvocation.state === "result"
-      )
-    );
-
-    // If a result message is found, set showAdPreview to true
-    if (resultMessage) {
-      const iframe = resultMessage.parts.filter(
-        (part) =>
-          part.type === "tool-invocation" &&
-          part.toolInvocation.toolName === "generateAdPreview" &&
-          part.toolInvocation.state === "result"
-      );
-
-      const newAdPreview = iframe[0].toolInvocation.result.data[0].body;
-      if (newAdPreview === adPreview) return;
-
-      setShowAdPreview(true);
-      setAdPreview(iframe[0].toolInvocation.result.data[0].body);
-    }
-  }, [messages]); // This will trigger when messages change
 
   useEffect(() => {
     const isAskForConfirmation = messages.some((msg) =>
@@ -125,11 +98,7 @@ const TextGeneratorPage = () => {
       )
     );
 
-    if (isAskForConfirmation) {
-      setDisabledChat(true);
-    } else {
-      setDisabledChat(false);
-    }
+    setDisabledChat(isAskForConfirmation);
   }, [messages]);
 
   return (

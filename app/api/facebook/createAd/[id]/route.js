@@ -84,9 +84,10 @@ export async function POST(req, { params }) {
           countries: adSet.targeting.geoLocations.countries,
         },
       },
-      // status: "PAUSED",
+      status: campaign.status,
       promoted_object: {
         page_id: pageId,
+        custom_event_type: "LEAD",
       },
       access_token: accessToken,
     };
@@ -114,43 +115,22 @@ export async function POST(req, { params }) {
     const adSetId = adSetResult.id;
 
     // Step 3: Create Ad Creative
-
-    // const adCreativePayload = {
-    //   name: adCreative.name,
-    //   object_story_spec: {
-    //     link_data: {
-    //       message: adCreative.objectStorySpec.linkData.message,
-    //       link: adCreative.objectStorySpec.linkData.link,
-    //       call_to_action: {
-    //         type: adCreative.objectStorySpec.linkData.CTA.type,
-    //         value: {
-    //           lead_gen_form_id: formId,
-    //         },
-    //       },
-    //     },
-    //     page_id: pageId,
-    //   },
-    //   access_token: accessToken,
-    // };
-
     const adCreativePayload = {
-      name: "Healthy Dog Food Lead Ad",
+      name: adCreative.name,
       object_story_spec: {
-        page_id: pageId, // Replace with your Facebook Page ID
+        page_id: pageId,
         link_data: {
-          // Note: The link must be exactly "https://fb.me/" for lead forms.
-          message:
-            "Give your dog the best nutrition with our premium dog food!",
+          message: adCreative.objectStorySpec.linkData.message,
           link: "https://fb.me/",
           call_to_action: {
-            type: "LEARN_MORE",
+            type: adCreative.objectStorySpec.linkData.CTA.type,
             value: {
-              lead_gen_form_id: formId, // Replace with your lead form ID
+              lead_gen_form_id: formId,
             },
           },
         },
       },
-      access_token: accessToken, // Replace with your valid access token
+      access_token: accessToken,
     };
 
     let creativeResult;

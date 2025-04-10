@@ -1,15 +1,67 @@
-"use client";
-
-import React, { useState } from "react";
+import { useState } from "react";
+import { useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 
 const ProfileBody = () => {
-  const [text, setText] = useState(
-    "Numele meu este Fazlay Elahi Rafi și sunt un Dezvoltator Front-End la #Rainbow IT în Bangladesh, OR. Am o pasiune serioasă pentru efectele UI, animații și crearea de experiențe de utilizator intuitive și dinamice."
-  );
+  const { data: session } = useSession();
 
-  const handleChange = (event) => {
-    setText(event.target.value);
+  // Use useState for each form field
+  const [firstname, setFirstname] = useState("");
+  const [lastname, setLastname] = useState("");
+  const [username, setUsername] = useState("");
+  const [phonenumber, setPhonenumber] = useState("");
+  const [bio, setBio] = useState("");
+
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+
+    // Collect form data into an object
+    const accountDetails = {
+      firstname,
+      lastname,
+      username,
+      phonenumber,
+      bio,
+    };
+
+    try {
+      const response = await fetch(`/api/users/${session.user.id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ accountDetails }),
+      });
+
+      if (response.ok) {
+        console.log("Account updated successfully");
+      } else {
+        console.error("Error updating account");
+      }
+    } catch (error) {
+      console.error("Error updating account:", error);
+    }
   };
+
+  const handleDelete = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch(`/api/users/${session.user.id}`, {
+        method: "DELETE",
+      });
+
+      if (response.ok) {
+        signOut();
+        console.log("Account deleted successfully");
+      } else {
+        console.error("Error deleting account");
+      }
+    } catch (error) {
+      console.error("Error deleting account:", error);
+    }
+  };
+
   return (
     <>
       <div className="single-settings-box profile-details-box overflow-hidden">
@@ -59,26 +111,41 @@ const ProfileBody = () => {
               role="tabpanel"
               aria-labelledby="profile-tab"
             >
-              <form
-                action="#"
-                className="rbt-profile-row rbt-default-form row row--15"
-              >
+              <form className="rbt-profile-row rbt-default-form row row--15">
                 <div className="col-lg-6 col-md-6 col-sm-6 col-12">
                   <div className="form-group">
                     <label htmlFor="firstname">Prenume</label>
-                    <input id="firstname" type="text" defaultValue="Fazlay" />
+                    <input
+                      id="firstname"
+                      type="text"
+                      value={firstname}
+                      placeholder={session?.user.firstname}
+                      onChange={(e) => setFirstname(e.target.value)} // Handle change
+                    />
                   </div>
                 </div>
                 <div className="col-lg-6 col-md-6 col-sm-6 col-12">
                   <div className="form-group">
                     <label htmlFor="lastname">Nume de Familie</label>
-                    <input id="lastname" type="text" defaultValue="Elahi" />
+                    <input
+                      id="lastname"
+                      type="text"
+                      value={lastname}
+                      placeholder={session?.user.lastname}
+                      onChange={(e) => setLastname(e.target.value)} // Handle change
+                    />
                   </div>
                 </div>
                 <div className="col-lg-6 col-md-6 col-sm-6 col-12">
                   <div className="form-group">
                     <label htmlFor="username">Nume de Utilizator</label>
-                    <input id="username" type="text" defaultValue="Rafi" />
+                    <input
+                      id="username"
+                      type="text"
+                      value={username}
+                      placeholder={session?.user.username}
+                      onChange={(e) => setUsername(e.target.value)} // Handle change
+                    />
                   </div>
                 </div>
                 <div className="col-lg-6 col-md-6 col-sm-6 col-12">
@@ -87,7 +154,9 @@ const ProfileBody = () => {
                     <input
                       id="phonenumber"
                       type="tel"
-                      defaultValue="+1-202-555-0174"
+                      value={phonenumber}
+                      placeholder={session?.user.phonenumber}
+                      onChange={(e) => setPhonenumber(e.target.value)} // Handle change
                     />
                   </div>
                 </div>
@@ -98,16 +167,17 @@ const ProfileBody = () => {
                       id="bio"
                       cols="20"
                       rows="5"
-                      value={text}
-                      onChange={handleChange}
+                      value={bio}
+                      placeholder={session?.user.bio}
+                      onChange={(e) => setBio(e.target.value)} // Handle change
                     />
                   </div>
                 </div>
                 <div className="col-12 mt--20">
                   <div className="form-group mb--0">
-                    <a className="btn-default" href="#">
+                    <button onClick={handleUpdate} className="btn-default">
                       Actualizează Informațiile
-                    </a>
+                    </button>
                   </div>
                 </div>
               </form>
@@ -119,10 +189,7 @@ const ProfileBody = () => {
               role="tabpanel"
               aria-labelledby="del-account-tab"
             >
-              <form
-                action="#"
-                className="rbt-profile-row rbt-default-form row row--15"
-              >
+              <form className="rbt-profile-row rbt-default-form row row--15">
                 <div className="col-11 text-Center">
                   <p className="mb--20">
                     <strong>Avertisment: </strong>Ștergerea contului tău va
@@ -136,9 +203,9 @@ const ProfileBody = () => {
 
                 <div className="col-12 mt--20">
                   <div className="form-group mb--0">
-                    <a className="btn-default" href="#">
+                    <button className="btn-default" onClick={handleDelete}>
                       <i className="feather-trash-2"></i> Șterge Contul
-                    </a>
+                    </button>
                   </div>
                 </div>
               </form>

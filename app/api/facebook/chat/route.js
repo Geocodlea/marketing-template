@@ -17,7 +17,7 @@ export async function POST(req) {
   console.log("Step: ", step);
   console.log("Ad Details: ", JSON.stringify(adDetails, null, 2));
 
-  if (step === "validation") {
+  if (step === "validation" || step === "end") {
     console.log("validation");
     // **Step 1: Validate if the input is ad-related, vague, or unrelated**
     const validationResponse = await generateObject({
@@ -33,7 +33,7 @@ export async function POST(req) {
         - "unrelated" if the input is unrelated.
         - "clarification" if the input is missing key ad creation details (too vague).`,
         },
-        ...messages,
+        ...(step === "validation" ? messages : []),
       ],
       max_tokens: 10,
     });
@@ -41,23 +41,33 @@ export async function POST(req) {
     const validationText = validationResponse.object;
 
     if (validationText === "unrelated") {
+      step = "validation";
       console.log("Unrelated request.");
 
       // **Step 2: If the input is unrelated, guide the user to create Facebook ads**
-      const unrelatedResponse = streamText({
-        model: openai("gpt-4o-mini"),
-        messages: [
-          {
-            role: "system",
-            content:
-              "You guide users to create Facebook ads. The input was unrelated. Redirect them politely.",
-          },
-          ...messages,
-        ],
-        max_tokens: 50,
-      });
+      return createDataStreamResponse({
+        execute: (dataStream) => {
+          dataStream.writeData({
+            step,
+            adDetails,
+          });
 
-      return unrelatedResponse.toDataStreamResponse();
+          const unrelatedResponse = streamText({
+            model: openai("gpt-4o-mini"),
+            messages: [
+              {
+                role: "system",
+                content:
+                  "You guide users to create Facebook ads. The input was unrelated. Redirect them politely.",
+              },
+              ...messages,
+            ],
+            max_tokens: 50,
+          });
+
+          unrelatedResponse.mergeIntoDataStream(dataStream);
+        },
+      });
     }
 
     if (validationText === "clarification") {
@@ -69,6 +79,7 @@ export async function POST(req) {
         execute: (dataStream) => {
           dataStream.writeData({
             step,
+            adDetails,
           });
 
           const clarificationResponse = streamText({
@@ -394,13 +405,18 @@ export async function POST(req) {
 
   if (step === "adCreation") {
     console.log("Create Ad");
-    step = "details";
 
     const toolInvocations = messages[messages.length - 1].toolInvocations;
     const confirmationResult =
       toolInvocations[toolInvocations.length - 1].result;
 
     console.log("confirmationResult: ", confirmationResult);
+
+    if (confirmationResult === "approve") {
+      step = "end";
+    } else {
+      step = "details";
+    }
 
     return createDataStreamResponse({
       execute: (dataStream) => {
