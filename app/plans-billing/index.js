@@ -7,7 +7,7 @@ import LeftDashboardSidebar from "@/components/Header/LeftDashboardSidebar";
 import PlansBilling from "@/components/PlansBilling/PlansBilling";
 import BackToTop from "../backToTop";
 
-const PlansBillingPage = () => {
+const PlansBillingPage = ({ plan, planExpiresAt, paymentStatus }) => {
   return (
     <>
       <main className="page-wrapper rbt-dashboard-page">
@@ -18,7 +18,11 @@ const PlansBillingPage = () => {
             <PopupMobileMenu />
             <LeftDashboardSidebar />
 
-            <PlansBilling />
+            <PlansBilling
+              plan={plan}
+              planExpiresAt={planExpiresAt}
+              paymentStatus={paymentStatus}
+            />
           </div>
 
           <BackToTop />

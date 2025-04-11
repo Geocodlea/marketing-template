@@ -1,13 +1,13 @@
 "use client";
 
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
-const ErrorPage = () => {
+const NotFound = () => {
   const router = useRouter();
   useEffect(() => {
     router.push("/");
   }, [router]);
 };
 
-export default ErrorPage;
+export default NotFound;

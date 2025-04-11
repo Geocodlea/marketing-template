@@ -133,7 +133,7 @@ const TextGenerator = ({ messages, reload, addToolResult }) => {
                               case "call":
                                 return <div key={callId}>Creating ad...</div>;
                               case "result":
-                                return part.toolInvocation.result;
+                                return null;
                             }
                             break;
                           }

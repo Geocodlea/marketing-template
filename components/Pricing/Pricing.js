@@ -1,20 +1,51 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 
 import PricingData from "../../data/pricing.json";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import Alert from "@/components/Common/Alert";
 
-const Pricing = ({ start, end, parentClass, isBadge, gap }) => {
+const Pricing = ({ start, end, parentClass, isBadge, gap, plan }) => {
   const [sectionStates, setSectionStates] = useState({
     Premium: true,
     Enterprise: true,
   });
+  const router = useRouter();
+  const { data: session } = useSession();
+  const [alert, setAlert] = useState(null);
 
   const toggleSection = (subTitle) => {
     setSectionStates((prevState) => ({
       ...prevState,
       [subTitle]: !prevState[subTitle],
     }));
+  };
+
+  const planSelect = async (plan) => {
+    if (!session) router.push("/signin");
+    if (plan === "Basic") router.push("/text-generator");
+
+    try {
+      const response = await fetch(`/api/stripe/${session.user.email}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(plan),
+      });
+
+      if (!response.ok) {
+        throw new Error(`A apărut o eroare. Vă rugăm să încercați mai târziu.`);
+      }
+
+      const data = await response.json();
+      router.push(data);
+    } catch (error) {
+      setAlert({
+        status: "danger",
+        message: error.message,
+      });
+    }
   };
 
   return (
@@ -39,7 +70,13 @@ const Pricing = ({ start, end, parentClass, isBadge, gap }) => {
                     <div className={parentClass} key={innerIndex}>
                       <div
                         className={`rainbow-pricing style-aiwave ${
-                          innerData.isSelect ? "active" : ""
+                          plan
+                            ? innerData.subTitle.toLowerCase() === plan
+                              ? "active"
+                              : ""
+                            : innerData.isSelect
+                            ? "active"
+                            : ""
                         }`}
                       >
                         <div className="pricing-table-inner">
@@ -82,7 +119,7 @@ const Pricing = ({ start, end, parentClass, isBadge, gap }) => {
                                 </ul>
                                 {innerData.isShow ? (
                                   <div
-                                    className={`rbt-show-more-btn ${
+                                    className={`rbt-show-more-btn text-center mb-3 ${
                                       !sectionStates[innerData.subTitle]
                                         ? "active"
                                         : ""
@@ -91,7 +128,7 @@ const Pricing = ({ start, end, parentClass, isBadge, gap }) => {
                                       toggleSection(innerData.subTitle)
                                     }
                                   >
-                                    Arată toate
+                                    Arată toate{" "}
                                   </div>
                                 ) : (
                                   ""
@@ -100,16 +137,20 @@ const Pricing = ({ start, end, parentClass, isBadge, gap }) => {
                             </div>
                           </div>
                           <div className="pricing-footer">
-                            <a
+                            <button
                               className={`btn-default ${
-                                innerData.isSelect
+                                plan
+                                  ? innerData.subTitle.toLowerCase() === plan
+                                    ? "color-blacked"
+                                    : "btn-border"
+                                  : innerData.isSelect
                                   ? "color-blacked"
                                   : "btn-border"
-                              }`}
-                              href="#"
+                              } d-block mx-auto`}
+                              onClick={() => planSelect(innerData.subTitle)}
                             >
                               Începe
-                            </a>
+                            </button>
                             <p className="bottom-text">{innerData.limited}</p>
                           </div>
                         </div>
@@ -125,6 +166,8 @@ const Pricing = ({ start, end, parentClass, isBadge, gap }) => {
             </div>
           ))}
       </div>
+
+      {alert && <Alert alert={alert} setAlert={setAlert} />}
     </>
   );
 };

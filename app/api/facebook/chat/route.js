@@ -12,10 +12,31 @@ import {
   adCreativeCTAs,
 } from "@/utils/fbAdOptions";
 
+import dbConnect from "@/utils/dbConnect";
+import User from "@/models/User";
+
 export async function POST(req) {
-  let { messages, step, adDetails } = await req.json();
+  let { messages, step, adDetails, userId, adsRemaining } = await req.json();
   console.log("Step: ", step);
   console.log("Ad Details: ", JSON.stringify(adDetails, null, 2));
+  console.log("Ads Remaining: ", adsRemaining);
+
+  if (step === "end") {
+    console.log("Updated adsRemaining");
+
+    await dbConnect();
+    const user = await User.findOneAndUpdate(
+      { _id: userId },
+      {
+        $inc: {
+          "facebook.adsRemaining": -1,
+        },
+      },
+      { new: true }
+    );
+
+    adsRemaining = user.facebook.adsRemaining;
+  }
 
   if (step === "validation" || step === "end") {
     console.log("validation");
@@ -50,6 +71,7 @@ export async function POST(req) {
           dataStream.writeData({
             step,
             adDetails,
+            adsRemaining,
           });
 
           const unrelatedResponse = streamText({
@@ -80,6 +102,7 @@ export async function POST(req) {
           dataStream.writeData({
             step,
             adDetails,
+            adsRemaining,
           });
 
           const clarificationResponse = streamText({
@@ -259,6 +282,7 @@ export async function POST(req) {
           dataStream.writeData({
             step,
             adDetails,
+            adsRemaining,
           });
 
           const missingDetailsResponse = streamText({
@@ -295,6 +319,7 @@ export async function POST(req) {
         dataStream.writeData({
           step,
           adDetails,
+          adsRemaining,
         });
 
         const previewResponse = streamText({
@@ -364,6 +389,7 @@ export async function POST(req) {
         dataStream.writeData({
           step,
           adDetails,
+          adsRemaining,
         });
 
         const confirmationResponse = streamText({
@@ -423,6 +449,7 @@ export async function POST(req) {
         dataStream.writeData({
           step,
           adDetails,
+          adsRemaining,
         });
 
         const createAdResponse = streamText({
@@ -442,7 +469,7 @@ export async function POST(req) {
                   JSON.stringify(adDetails)
                 : "Ask the user what details they want to modify."
             }
-            - If the 'createAd' tool returns a successful response, respond with the success message "Ad created successfully", else respond with the error message "Ad creation failed."`,
+            - If the 'createAd' tool returns a successful response, respond with "Ad created successfully.", else respond with "Ad creation failed."`,
             },
             ...messages,
           ],

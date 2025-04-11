@@ -11,15 +11,13 @@ import Modal from "@/components/Common/Modal";
 import TextGenerator from "@/components/TextGenerator/TextGenerator";
 import StaticbarDashboard from "@/components/Common/StaticBarDashboard";
 
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import { useChat } from "@ai-sdk/react";
 import { initialAdDetails } from "@/utils/fbAdOptions";
 import isEqual from "lodash/isEqual";
 
-const adFetch = async (adDetails, session, api) => {
+const adFetch = async (adDetails, userId, api) => {
   try {
-    const response = await fetch(`/api/facebook/${api}/${session.user.id}`, {
+    const response = await fetch(`/api/facebook/${api}/${userId}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ adDetails }),
@@ -31,15 +29,15 @@ const adFetch = async (adDetails, session, api) => {
   }
 };
 
-const TextGeneratorPage = () => {
-  const { data: session, status: sessionStatus } = useSession();
+const TextGeneratorPage = ({ userId, userAdsRemaining }) => {
   const [step, setStep] = useState("validation");
   const [adDetails, setAdDetails] = useState(initialAdDetails);
   const [disabledChat, setDisabledChat] = useState(false);
-  const router = useRouter();
+  const [adsRemaining, setAdsRemaining] = useState(userAdsRemaining);
 
   const {
     messages,
+    setMessages,
     input,
     handleInputChange,
     handleSubmit,
@@ -51,23 +49,29 @@ const TextGeneratorPage = () => {
     setData,
   } = useChat({
     api: "/api/facebook/chat",
-    body: { step, adDetails },
+    body: { step, adDetails, userId, adsRemaining },
     maxSteps: 5,
     async onToolCall({ toolCall }) {
       if (toolCall.toolName === "generateAdPreview") {
-        const result = await adFetch(toolCall.args, session, "generatePreview");
+        const result = await adFetch(toolCall.args, userId, "generatePreview");
         return result;
       }
       if (toolCall.toolName === "createAd") {
-        const result = await adFetch(toolCall.args, session, "createAd");
+        const result = await adFetch(toolCall.args, userId, "createAd");
         return result.message;
       }
     },
   });
 
-  useEffect(() => {
-    if (sessionStatus === "unauthenticated") router.push("/signin");
-  }, [sessionStatus]);
+  if (!adsRemaining) {
+    setMessages([
+      {
+        role: "system",
+        content:
+          "Ai depășit numărul de reclame conform planului tău. Pentru a crea mai multe reclame va trebui să te abonezi la alt plan.",
+      },
+    ]);
+  }
 
   useEffect(() => {
     if (data) {
@@ -76,6 +80,9 @@ const TextGeneratorPage = () => {
 
       if (latest.step !== step) {
         setStep(latest.step);
+      }
+      if (latest.adsRemaining !== adsRemaining) {
+        setAdsRemaining(latest.adsRemaining);
       }
       if (!isEqual(latest.adDetails, adDetails)) {
         setAdDetails(latest.adDetails);
@@ -99,7 +106,8 @@ const TextGeneratorPage = () => {
     );
 
     setDisabledChat(isAskForConfirmation);
-  }, [messages]);
+    if (!adsRemaining) setDisabledChat(true);
+  }, [messages, adsRemaining]);
 
   return (
     <main className="page-wrapper rbt-dashboard-page">

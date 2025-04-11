@@ -1,16 +1,35 @@
-import React from "react";
 import UserNav from "../Common/UserNav";
 import Pricing from "../Pricing/Pricing";
 import PricingData from "../../data/pricing.json";
 import Compare from "../Pricing/Compare";
 
-const PlansBilling = () => {
+import { formattedDate } from "@/utils/helpers";
+
+const PlansBilling = ({ plan, planExpiresAt, paymentStatus }) => {
   return (
     <>
       <div className="rbt-main-content mb-0">
         <div className="rbt-daynamic-page-content center-width">
           <div className="rbt-dashboard-content">
             <UserNav title="Plans & Billing" />
+
+            {paymentStatus && (
+              <p>
+                Vă mulțumim pentru achiziție! Un e-mail de confirmare a fost
+                trimis către adresa dvs. Dacă aveți întrebări, nu ezitați să ne
+                contactați.
+              </p>
+            )}
+
+            {plan && (
+              <p>
+                Utilizați în prezent planul <strong>{plan}</strong>. Abonamentul
+                dvs. este valabil până în{" "}
+                <strong>{formattedDate(planExpiresAt)}</strong>. Pentru a
+                modifica sau reînnoi planul, accesați opțiunile de mai jos.
+              </p>
+            )}
+
             <div className="content-page pb--50">
               <div className="aiwave-pricing-area wrapper">
                 <div className="container">
@@ -34,7 +53,7 @@ const PlansBilling = () => {
                                 type="button"
                                 role="tab"
                                 aria-controls={data.priceId}
-                                aria-selected="false"
+                                aria-selected={data.isSelect}
                                 key={index}
                               >
                                 {data.priceType}{" "}
@@ -58,6 +77,7 @@ const PlansBilling = () => {
                     end={3}
                     isHeading={false}
                     isBadge={false}
+                    plan={plan}
                   />
                 </div>
               </div>
