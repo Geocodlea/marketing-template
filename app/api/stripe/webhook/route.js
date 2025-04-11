@@ -2,8 +2,7 @@ import { NextResponse } from "next/server";
 import { fulfillSubscription } from "@/utils/fulfillSubscription";
 import { stripe } from "@/utils/stripe";
 
-const endpointSecret =
-  "whsec_6b755ea9f1e73e7d5708427c117903d5029ce5c021df33c9a71fba2f672a67df"; // Your webhook secret here
+const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
 export async function POST(req) {
   const rawBody = await req.text(); // Get the raw body for signature verification
