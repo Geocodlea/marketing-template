@@ -23,28 +23,35 @@ const Pricing = ({ start, end, parentClass, isBadge, gap, plan }) => {
     }));
   };
 
-  const planSelect = async (plan) => {
+  const planSelect = async (selectedPlan) => {
     if (!session) router.push("/signin");
-    if (plan === "Basic") router.push("/text-generator");
+    if (plan === selectedPlan.toLowerCase() || selectedPlan === "Basic") {
+      router.push("/text-generator");
+    } else {
+      try {
+        const response = await fetch(`/api/stripe/`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            plan: selectedPlan,
+            email: session.user.email,
+          }),
+        });
 
-    try {
-      const response = await fetch(`/api/stripe/`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ plan, email: session.user.email }),
-      });
+        if (!response.ok) {
+          throw new Error(
+            `A apărut o eroare. Vă rugăm să încercați mai târziu.`
+          );
+        }
 
-      if (!response.ok) {
-        throw new Error(`A apărut o eroare. Vă rugăm să încercați mai târziu.`);
+        const data = await response.json();
+        router.push(data);
+      } catch (error) {
+        setAlert({
+          status: "danger",
+          message: error.message,
+        });
       }
-
-      const data = await response.json();
-      router.push(data);
-    } catch (error) {
-      setAlert({
-        status: "danger",
-        message: error.message,
-      });
     }
   };
 

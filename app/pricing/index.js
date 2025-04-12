@@ -18,7 +18,7 @@ import Pricing from "@/components/Pricing/Pricing";
 import Compare from "@/components/Pricing/Compare";
 import CtaTwo from "@/components/CallToActions/Cta-Two";
 
-const PricingPage = () => {
+const PricingPage = ({ plan }) => {
   useEffect(() => {
     Sal();
   }, []);
@@ -58,6 +58,7 @@ const PricingPage = () => {
                   parentClass="col-xl-4 col-lg-6 col-md-6 col-12 mt--30"
                   start={0}
                   end={3}
+                  plan={plan}
                 />
               </div>
             </div>
