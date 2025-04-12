@@ -25,7 +25,7 @@ export async function fulfillSubscription(sessionId) {
       expand: ["items.data.price.product"],
     });
 
-    // Get the product name from the subscription
+    const customerId = subscription.customer;
     const product = subscription.items.data[0].price.product;
     let productName;
 
@@ -46,13 +46,14 @@ export async function fulfillSubscription(sessionId) {
     const subscription30Days = subscriptionDate + 30 * 24 * 60 * 60;
     const planExpiresAt = new Date(subscription30Days * 1000);
 
-    // Update user's plan in MongoDB
     const updatedUser = await User.findOneAndUpdate(
       { email },
       {
         $set: {
           plan,
           planExpiresAt,
+          subscriptionId,
+          customerId,
           "facebook.adsRemaining": plan === "enterprise" ? Infinity : 3,
         },
       }
@@ -67,4 +68,27 @@ export async function fulfillSubscription(sessionId) {
   } else {
     console.log(`💰 One-time payment completed for ${email}`);
   }
+}
+
+export async function fulfillCancelSubscription(customerId) {
+  await dbConnect();
+  const updatedUser = await User.findOneAndUpdate(
+    { customerId },
+    {
+      $unset: {
+        plan: "",
+        planExpiresAt: "",
+        subscriptionId: "",
+        customerId: "",
+        "facebook.adsRemaining": "",
+      },
+    }
+  );
+
+  if (!updatedUser) {
+    console.warn("⚠️ No user found with customerId: ", customerId);
+    return;
+  }
+
+  console.log(`✅ Updated user with customerId: ${customerId} to no plan`);
 }

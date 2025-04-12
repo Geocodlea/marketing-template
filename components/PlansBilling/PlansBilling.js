@@ -1,11 +1,50 @@
+"use client";
+
+import { useState } from "react";
 import UserNav from "../Common/UserNav";
 import Pricing from "../Pricing/Pricing";
 import PricingData from "../../data/pricing.json";
 import Compare from "../Pricing/Compare";
 
 import { formattedDate } from "@/utils/helpers";
+import Alert from "@/components/Common/Alert";
 
-const PlansBilling = ({ plan, planExpiresAt, paymentStatus }) => {
+const PlansBilling = ({
+  plan,
+  planExpiresAt,
+  paymentStatus,
+  subscriptionId,
+}) => {
+  const [alert, setAlert] = useState("");
+
+  const cancelSubscription = async () => {
+    try {
+      const res = await fetch("/api/stripe/cancelSubscription", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          subscriptionId,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        setAlert({
+          status: data.status,
+          message: data.message,
+        });
+      } else {
+        setAlert({ status: result.status, message: result.message });
+      }
+    } catch (error) {
+      setAlert({
+        status: "danger",
+        message: "A apărut o eroare. Vă rugăm să încercați mai târziu.",
+      });
+    }
+  };
+
   return (
     <>
       <div className="rbt-main-content mb-0">
@@ -82,9 +121,26 @@ const PlansBilling = ({ plan, planExpiresAt, paymentStatus }) => {
                 </div>
               </div>
             </div>
-            <div className="rbt-sm-separator"></div>
 
+            <div className="rbt-sm-separator"></div>
             <Compare subTitle="" title="Detailed Compare" postion="left" />
+
+            {/* Cancel subscription section */}
+            {subscriptionId && (
+              <div className="my-5 text-center">
+                <p>
+                  Dacă doriți să renunțați la abonament, apăsați butonul de mai
+                  jos.
+                </p>
+                <button
+                  className="btn-default btn-small"
+                  onClick={cancelSubscription}
+                >
+                  Anulează abonamentul
+                </button>
+                {alert && <Alert alert={alert} setAlert={setAlert} />}
+              </div>
+            )}
           </div>
         </div>
       </div>

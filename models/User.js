@@ -9,6 +9,8 @@ global.models.User =
     firstname: { type: String },
     plan: { type: String, default: "free" },
     planExpiresAt: { type: Date },
+    subscriptionId: { type: String },
+    customerId: { type: String },
     facebook: { type: Object },
   });
 

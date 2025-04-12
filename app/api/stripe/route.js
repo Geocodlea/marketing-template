@@ -3,8 +3,8 @@ import { headers } from "next/headers";
 
 import { stripe } from "@/utils/stripe";
 
-export async function POST(req, { params }) {
-  const plan = await req.json();
+export async function POST(req) {
+  const { plan, email } = await req.json();
   let price;
 
   if (plan === "Premium") price = "price_1RCbWDR50rqLKtmOimuvqfq4";
@@ -13,9 +13,8 @@ export async function POST(req, { params }) {
   const headersList = await headers();
   const origin = headersList.get("origin");
 
-  // Create Checkout Sessions from body params.
   const session = await stripe.checkout.sessions.create({
-    customer_email: params.email,
+    customer_email: email,
     line_items: [
       {
         price,
@@ -25,6 +24,7 @@ export async function POST(req, { params }) {
     mode: "subscription",
     success_url: `${origin}/plans-billing?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${origin}/pricing?canceled=true`,
+    payment_method_types: ["card"],
   });
 
   return NextResponse.json(session.url);

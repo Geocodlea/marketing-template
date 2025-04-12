@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
-import { fulfillSubscription } from "@/utils/fulfillSubscription";
+import {
+  fulfillSubscription,
+  fulfillCancelSubscription,
+} from "@/utils/fulfillSubscription";
 import { stripe } from "@/utils/stripe";
 
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
@@ -44,6 +47,14 @@ export async function POST(req) {
           { status: 500 }
         );
       }
+      break;
+
+    case "customer.subscription.deleted":
+    case "invoice.payment_failed":
+      const subscription = event.data.object;
+
+      fulfillCancelSubscription(subscription.customer);
+
       break;
 
     default:

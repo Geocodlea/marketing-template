@@ -28,10 +28,10 @@ const Pricing = ({ start, end, parentClass, isBadge, gap, plan }) => {
     if (plan === "Basic") router.push("/text-generator");
 
     try {
-      const response = await fetch(`/api/stripe/${session.user.email}`, {
+      const response = await fetch(`/api/stripe/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(plan),
+        body: JSON.stringify({ plan, email: session.user.email }),
       });
 
       if (!response.ok) {
