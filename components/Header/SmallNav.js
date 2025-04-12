@@ -1,11 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
 import SmallNavItem from "../../data/header.json";
+
+import avatar from "../../public/images/team/team-01sm.jpg";
+import { useSession } from "next-auth/react";
 
 const SmallNav = () => {
   const pathname = usePathname();
+  const { data: session } = useSession();
 
   const isActive = (href) => pathname.startsWith(href);
   return (
@@ -59,38 +62,40 @@ const SmallNav = () => {
         </ul>
 
         <div className="rbt-sm-separator"></div>
-        <div className="mainmenu-nav">
-          <ul className="dashboard-mainmenu rbt-default-sidebar-list">
-            <li className="has-submenu">
-              <a
-                className="collapse-btn collapsed"
-                data-bs-toggle="collapse"
-                href="#collapseExampleMenu"
-                role="button"
-                aria-expanded="false"
-                aria-controls="collapseExampleMenu"
-              >
-                <i className="feather-plus-circle"></i>
-                <span>Profile</span>
-              </a>
-              <div className="collapse" id="collapseExampleMenu">
-                <ul className="submenu rbt-default-sidebar-list">
-                  {SmallNavItem &&
-                    SmallNavItem.smallNavItem
-                      .slice(8, 14)
-                      .map((data, index) => (
-                        <li key={index}>
-                          <Link href={data.link}>
-                            <i className={`feather-${data.icon}`}></i>
-                            <span>{data.text}</span>
-                          </Link>
-                        </li>
-                      ))}
-                </ul>
-              </div>
+
+        {session ? (
+          <div
+            className="subscription-box"
+            style={{ position: "relative", bottom: 0 }}
+          >
+            <div className="inner">
+              <Link href="/profile-details" className="autor-info">
+                <div className="author-img active">
+                  <Image
+                    className="w-100"
+                    width={49}
+                    height={48}
+                    src={session?.user.image || avatar}
+                    alt="User Images"
+                  />
+                </div>
+                <div className="author-desc">
+                  <h6>{session?.user.name}</h6>
+                  <span>{session?.user.email}</span>
+                </div>
+              </Link>
+            </div>
+          </div>
+        ) : (
+          <ul className="submenu rbt-default-sidebar-list">
+            <li>
+              <Link href="/signin">
+                <i className="feather-user"></i>
+                <span>Sign In</span>
+              </Link>
             </li>
           </ul>
-        </div>
+        )}
       </nav>
     </>
   );

@@ -11,7 +11,7 @@ import { useAppContext } from "@/context/Context";
 
 import { useSession } from "next-auth/react";
 
-const LeftSidebar = () => {
+const LeftSidebar = ({ plan }) => {
   const pathname = usePathname();
   const { shouldCollapseLeftbar } = useAppContext();
   const { data: session } = useSession();
@@ -138,25 +138,17 @@ const LeftSidebar = () => {
                   <h6>{session?.user.name}</h6>
                   <span>{session?.user.email}</span>
                 </div>
-                <div className="author-badge">Free</div>
+                {!plan && <div className="author-badge">Free</div>}
               </Link>
-              <div className="btn-part">
-                <Link href="/pricing" className="btn-default btn-border">
-                  Upgrade To Pro
-                </Link>
-              </div>
+              {!plan && (
+                <div className="btn-part">
+                  <Link href="/pricing" className="btn-default btn-border">
+                    Upgrade To Pro
+                  </Link>
+                </div>
+              )}
             </div>
           </div>
-          <p className="subscription-copyright copyright-text text-center b3  small-text">
-            © 2024
-            <Link
-              className="ps-2"
-              href="https://themeforest.net/user/rainbow-themes/portfolio"
-            >
-              Rainbow Themes
-            </Link>
-            .
-          </p>
         </div>
       </div>
     </>

@@ -29,7 +29,7 @@ const adFetch = async (adDetails, userId, api) => {
   }
 };
 
-const TextGeneratorPage = ({ userId, userAdsRemaining }) => {
+const TextGeneratorPage = ({ userId, userAdsRemaining, plan }) => {
   const [step, setStep] = useState("validation");
   const [adDetails, setAdDetails] = useState(initialAdDetails);
   const [disabledChat, setDisabledChat] = useState(false);
@@ -113,7 +113,7 @@ const TextGeneratorPage = ({ userId, userAdsRemaining }) => {
     <main className="page-wrapper rbt-dashboard-page">
       <div className="rbt-panel-wrapper">
         <Context>
-          <LeftDashboardSidebar />
+          <LeftDashboardSidebar plan={plan} />
           <HeaderDashboard display="" />
           {/* <RightDashboardSidebar /> */}
           <Modal />

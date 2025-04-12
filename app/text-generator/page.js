@@ -26,6 +26,7 @@ const TextGeneratorLayout = async () => {
       <TextGeneratorPage
         userId={userId}
         userAdsRemaining={user.facebook.adsRemaining}
+        plan={user.plan}
       />
       <BackToTop />
     </>
