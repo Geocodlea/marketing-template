@@ -2,6 +2,8 @@ import NextAuth from "next-auth";
 import { MongoDBAdapter } from "@auth/mongodb-adapter";
 import clientPromise from "/utils/dbMongoClient";
 import FacebookProvider from "next-auth/providers/facebook";
+import dbConnect from "@/utils/dbConnect";
+import User from "@/models/User";
 
 export const authOptions = {
   adapter: MongoDBAdapter(clientPromise),
@@ -30,6 +32,23 @@ export const authOptions = {
 
       return session;
     },
+  },
+
+  events: {
+    async createUser({ user }) {
+      await User.updateOne(
+        { _id: user.id },
+        {
+          $set: {
+            "facebook.adsRemaining": 1,
+          },
+        }
+      );
+    },
+  },
+
+  pages: {
+    newUser: "/auth/new-user", // New users will be directed here on first sign in (leave the property out if not of interest)
   },
 };
 

@@ -3,9 +3,10 @@ import Link from "next/link";
 const TermsPolicy = () => {
   return (
     <>
-      <div className="rbt-main-content mb--0">
+      <div className="rbt-main-content my-0">
         <div className="rbt-daynamic-page-content center-width">
           <div className="rbt-dashboard-content rainbow-section-gap">
+            <br />
             <div className="banner-area">
               <div className="settings-area">
                 <h3 className="title">Termeni și Condiții</h3>

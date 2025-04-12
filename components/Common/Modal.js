@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import sal from "sal.js";
 
 import ModalProps from "../Header/HeaderProps/ModalProps";
 
-const Modal = () => {
+const Modal = ({ deleteAccount }) => {
   const [selectedValues, setSelectedValues] = useState([]);
 
   const handleChange = (event) => {
@@ -77,7 +77,7 @@ const Modal = () => {
         </div>
       </div>
 
-      {/* ==== DisLike Section Modal ==== */}
+      {/* ==== Dislike Section Modal ==== */}
       <div
         id="dislikeModal"
         className="modal rbt-modal-box dislike-modal fade"
@@ -177,6 +177,38 @@ const Modal = () => {
             </div>
             <button className="close-button" data-bs-dismiss="modal">
               <i className="fa-sharp fa-regular fa-x"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* ==== Delete Account Confirmation Modal ==== */}
+      <div
+        id="deleteAccountModal"
+        className="modal rbt-modal-box delete-modal fade"
+        tabIndex="-1"
+      >
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content wrapper">
+            <h5 className="title">Ești sigur că vrei să ștergi contul?</h5>
+            <p className="modal-subtitle">
+              Această acțiune este permanentă și ireversibilă.
+            </p>
+            <div className="bottom-btn">
+              <button
+                className="btn-default btn-small me-5"
+                data-bs-dismiss="modal"
+                style={{ background: "#FF0003" }}
+                onClick={deleteAccount}
+              >
+                Confirmă Ștergerea
+              </button>
+              <button className="btn-default btn-small" data-bs-dismiss="modal">
+                Anulează
+              </button>
+            </div>
+            <button className="close-button" data-bs-dismiss="modal">
+              <i className="feather-x"></i>
             </button>
           </div>
         </div>

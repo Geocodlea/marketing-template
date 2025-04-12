@@ -9,10 +9,6 @@
       "text": "Notification"
     },
     {
-      "link": "/chat-export",
-      "text": "Chat Export"
-    },
-    {
       "link": "/plans-billing",
       "text": "Plans and Billing"
     }
@@ -96,7 +92,7 @@
           "badge": ""
         },
         {
-          "link": "/team",
+          "link": "/about",
           "isDisable": false,
           "title": "Despre Noi",
           "badge": ""
@@ -116,13 +112,13 @@
       ]
     },
     {
-      "link": "/roadmap",
+      "link": "/utilize",
       "isIcon": false,
       "isMenu": false,
       "text": "Utilizare"
     },
     {
-      "link": "/utilize",
+      "link": "/setup",
       "isIcon": false,
       "isMenu": false,
       "text": "Setup"
@@ -175,13 +171,13 @@
       "icon": ""
     },
     {
-      "link": "/roadmap",
+      "link": "/utilize",
       "type": "default",
       "text": "Utilizare",
       "icon": "book-open"
     },
     {
-      "link": "/utilize",
+      "link": "/setup",
       "type": "default",
       "text": "Setup",
       "icon": "settings"
@@ -203,12 +199,6 @@
       "type": "profile",
       "text": "Notification",
       "icon": "shopping-bag"
-    },
-    {
-      "link": "/chat-export",
-      "type": "profile",
-      "text": "Chat Export",
-      "icon": "users"
     },
     {
       "link": "/plans-billing",

@@ -7,7 +7,7 @@
           "innerItem": [
             {
               "link": "/pricing",
-              "text": "Pricing"
+              "text": "Prețuri"
             },
             {
               "link": "/contact",
@@ -15,11 +15,11 @@
             },
             {
               "link": "/utilize",
-              "text": "How to use"
+              "text": "Utilizare"
             },
             {
-              "link": "/roadmap",
-              "text": "Roadmap"
+              "link": "/setup",
+              "text": "Setup"
             },
             {
               "link": "/blog",
@@ -33,24 +33,24 @@
           "title": "Services",
           "innerItem": [
             {
-              "link": "/image-generator",
-              "text": "Image Generator"
-            },
-            {
-              "link": "/vedio-generator",
-              "text": "Video Generator"
-            },
-            {
               "link": "/text-generator",
-              "text": "Text Generator"
-            },
-            {
-              "link": "/code-generator",
-              "text": "Code Generator"
+              "text": "Creează Reclamă Facebook"
             },
             {
               "link": "#",
-              "text": "Education Feedback"
+              "text": "Email Marketing"
+            },
+            {
+              "link": "#",
+              "text": "Social Media Manager"
+            },
+            {
+              "link": "#",
+              "text": "Customer Support"
+            },
+            {
+              "link": "#",
+              "text": "Strategist Vânzări"
             }
           ]
         }

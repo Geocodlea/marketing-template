@@ -14,10 +14,22 @@ export async function PATCH(request, { params }) {
     });
   }
 
-  const { accountDetails } = await request.json();
-  const filteredDetails = Object.fromEntries(
-    Object.entries(accountDetails).filter(([_, value]) => value !== "")
-  );
+  const { accountDetails, fbDetails } = await request.json();
+
+  let filteredDetails;
+  if (accountDetails) {
+    filteredDetails = Object.fromEntries(
+      Object.entries(accountDetails).filter(([_, value]) => value !== "")
+    );
+  } else {
+    filteredDetails = Object.fromEntries(
+      Object.entries(fbDetails)
+        .filter(([_, value]) => value !== "")
+        .map(([key, value]) => [`facebook.${key}`, value])
+    );
+  }
+
+  console.log(filteredDetails);
 
   await dbConnect();
   await User.updateOne({ _id: params.id }, filteredDetails);

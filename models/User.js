@@ -7,11 +7,16 @@ global.models.User =
   mongoose.model("User", {
     email: { type: String, required: true, unique: true },
     firstname: { type: String },
-    plan: { type: String, default: "free" },
+    plan: { type: String },
     planExpiresAt: { type: Date },
     subscriptionId: { type: String },
     customerId: { type: String },
-    facebook: { type: Object },
+    facebook: {
+      adsRemaining: { type: Number, default: 0 },
+      adAccountId: { type: String },
+      pageId: { type: String },
+      formId: { type: String },
+    },
   });
 
 export default global.models.User;

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { contact } from "@/app/actions/contact";
+import { contact } from "@/actions/contact";
 import Alert from "@/components/Common/Alert";
 
 const ContactForm = () => {
