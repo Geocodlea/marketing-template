@@ -20,6 +20,7 @@ export async function POST(req, { params }) {
         name: adDetails.name,
         message: adDetails.message,
         link: adDetails.link,
+        picture: adDetails.picture || null,
         description: adDetails.description,
         call_to_action: adDetails.CTA,
       },
@@ -30,7 +31,7 @@ export async function POST(req, { params }) {
   // Make the GET request to Facebook to generate the ad preview
   const queryParams = new URLSearchParams({
     creative: JSON.stringify(creative),
-    ad_format: "DESKTOP_FEED_STANDARD",
+    ad_format: "MOBILE_FEED_STANDARD",
     access_token: account.access_token,
   });
 

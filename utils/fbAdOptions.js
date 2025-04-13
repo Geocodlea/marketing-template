@@ -22,6 +22,7 @@ const initialAdDetails = {
       linkData: {
         message: null,
         link: null,
+        picture: null,
         CTA: {
           type: null,
           value: {
@@ -33,7 +34,7 @@ const initialAdDetails = {
   },
 };
 
-function findEmptyFields(obj, path = []) {
+function findEmptyFields(obj, path = [], excludePaths = []) {
   const emptyFields = [];
 
   const isEmpty = (val) =>
@@ -42,17 +43,26 @@ function findEmptyFields(obj, path = []) {
     val === "" ||
     (Array.isArray(val) && val.length === 0);
 
+  const currentPath = path.join(".");
+
+  // Check if the current path should be excluded
+  if (excludePaths.includes(currentPath)) {
+    return [];
+  }
+
   if (isEmpty(obj)) {
-    return [path.join(".")];
+    return [currentPath];
   }
 
   if (Array.isArray(obj)) {
     obj.forEach((item, index) => {
-      emptyFields.push(...findEmptyFields(item, [...path, `[${index}]`]));
+      emptyFields.push(
+        ...findEmptyFields(item, [...path, `[${index}]`], excludePaths)
+      );
     });
   } else if (typeof obj === "object" && obj !== null) {
     Object.entries(obj).forEach(([key, value]) => {
-      emptyFields.push(...findEmptyFields(value, [...path, key]));
+      emptyFields.push(...findEmptyFields(value, [...path, key], excludePaths));
     });
   }
 

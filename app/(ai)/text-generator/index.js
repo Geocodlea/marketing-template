@@ -66,9 +66,24 @@ const TextGeneratorPage = ({ userId, userFacebook, plan }) => {
             status: "success",
             message: "Reclama a fost creată cu succes!",
           });
+        } else {
+          setAlert({
+            status: "danger",
+            message: "A apărut o eroare la crearea reclamei.",
+          });
         }
         return result.message;
       }
+    },
+    // async onResponse(response) {
+    //   console.log(response);
+    // },
+    async onError(error) {
+      console.error("Error:", error);
+      setAlert({
+        status: "danger",
+        message: "A apărut o eroare. Te rugăm să încerci mai târziu.",
+      });
     },
   });
 

@@ -1,4 +1,16 @@
+import { useEffect } from "react";
+
 const Alert = ({ alert, setAlert }) => {
+  useEffect(() => {
+    if (alert) {
+      const timer = setTimeout(() => {
+        setAlert(null);
+      }, 5000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [alert, setAlert]);
+
   return (
     <div
       className={`alert alert-${alert.status} alert-dismissible fade show mt-3`}
