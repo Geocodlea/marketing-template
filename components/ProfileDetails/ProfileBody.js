@@ -1,40 +1,71 @@
 "use client";
 
-import { use, useState } from "react";
+import { useState } from "react";
 import { useSession } from "next-auth/react";
 import { signOut } from "next-auth/react";
 import Alert from "@/components/Common/Alert";
 import Modal from "@/components/Common/Modal";
+
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as Yup from "yup";
+
+const profileSchema = Yup.object().shape({
+  phonenumber: Yup.string()
+    .matches(/^\d*$/, "Numărul trebuie să conțină doar cifre.")
+    .test(
+      "exact-length-or-empty",
+      "Numărul trebuie să aibă exact 10 cifre.",
+      (value) => value === "" || value.length === 10
+    ),
+});
+
+const fbSchema = Yup.object().shape({
+  adAccountId: Yup.string()
+    .matches(/^\d*$/, "Numărul trebuie să conțină doar cifre.")
+    .test(
+      "exact-length-or-empty",
+      "Numărul trebuie să aibă exact 16 cifre.",
+      (value) => value === "" || value.length === 16
+    ),
+  pageId: Yup.string()
+    .matches(/^\d*$/, "Numărul trebuie să conțină doar cifre.")
+    .test(
+      "exact-length-or-empty",
+      "Numărul trebuie să aibă exact 15 cifre.",
+      (value) => value === "" || value.length === 15
+    ),
+  formId: Yup.string()
+    .matches(/^\d*$/, "Numărul trebuie să conțină doar cifre.")
+    .test(
+      "exact-length-or-empty",
+      "Numărul trebuie să aibă exact 16 cifre.",
+      (value) => value === "" || value.length === 16
+    ),
+});
 
 const ProfileBody = ({ userData }) => {
   const { data: session } = useSession();
   const [alert, setAlert] = useState(null);
   const user = JSON.parse(userData);
 
-  // Profile form fields
-  const [firstname, setFirstname] = useState("");
-  const [lastname, setLastname] = useState("");
-  const [username, setUsername] = useState("");
-  const [phonenumber, setPhonenumber] = useState("");
-  const [bio, setBio] = useState("");
+  const {
+    register: registerProfile,
+    handleSubmit: handleSubmitProfile,
+    formState: { errors: profileErrors },
+  } = useForm({
+    resolver: yupResolver(profileSchema),
+  });
 
-  // Facebook form fields
-  const [adAccountId, setAdAccountId] = useState("");
-  const [pageId, setPageId] = useState("");
-  const [formId, setFormId] = useState("");
+  const {
+    register: registerFb,
+    handleSubmit: handleSubmitFb,
+    formState: { errors: fbErrors },
+  } = useForm({
+    resolver: yupResolver(fbSchema),
+  });
 
-  const updateAccount = async (e) => {
-    e.preventDefault();
-
-    // Collect form data into an object
-    const accountDetails = {
-      firstname,
-      lastname,
-      username,
-      phonenumber,
-      bio,
-    };
-
+  const updateAccount = async (accountDetails) => {
     try {
       const response = await fetch(`/api/users/${session.user.id}`, {
         method: "PATCH",
@@ -42,40 +73,6 @@ const ProfileBody = ({ userData }) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ accountDetails }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        setAlert(data);
-      } else {
-        setAlert(data);
-      }
-    } catch (error) {
-      setAlert({
-        status: "danger",
-        message: `A apărut o eroare: ${error.message}`,
-      });
-    }
-  };
-
-  const updateFbFields = async (e) => {
-    e.preventDefault();
-
-    // Collect form data into an object
-    const fbDetails = {
-      adAccountId,
-      pageId,
-      formId,
-    };
-
-    try {
-      const response = await fetch(`/api/users/${session.user.id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ fbDetails }),
       });
 
       const data = await response.json();
@@ -181,17 +178,27 @@ const ProfileBody = ({ userData }) => {
               role="tabpanel"
               aria-labelledby="profile-tab"
             >
-              <form className="rbt-profile-row rbt-default-form row row--15">
+              <form
+                onSubmit={handleSubmitProfile(updateAccount)}
+                className="rbt-profile-row rbt-default-form row row--15"
+              >
                 <div className="col-lg-6 col-md-6 col-sm-6 col-12">
                   <div className="form-group">
                     <label htmlFor="firstname">Prenume</label>
                     <input
                       id="firstname"
                       type="text"
-                      value={firstname}
                       placeholder={user.firstname}
-                      onChange={(e) => setFirstname(e.target.value)}
+                      {...registerProfile("firstname")}
+                      className={`form-control ${
+                        profileErrors.firstname ? "is-invalid" : ""
+                      }`}
                     />
+                    {profileErrors.firstname && (
+                      <div className="invalid-feedback">
+                        {profileErrors.firstname.message}
+                      </div>
+                    )}
                   </div>
                 </div>
                 <div className="col-lg-6 col-md-6 col-sm-6 col-12">
@@ -200,10 +207,17 @@ const ProfileBody = ({ userData }) => {
                     <input
                       id="lastname"
                       type="text"
-                      value={lastname}
                       placeholder={user.lastname}
-                      onChange={(e) => setLastname(e.target.value)}
+                      {...registerProfile("lastname")}
+                      className={`form-control ${
+                        profileErrors.lastname ? "is-invalid" : ""
+                      }`}
                     />
+                    {profileErrors.lastname && (
+                      <div className="invalid-feedback">
+                        {profileErrors.lastname.message}
+                      </div>
+                    )}
                   </div>
                 </div>
                 <div className="col-lg-6 col-md-6 col-sm-6 col-12">
@@ -212,10 +226,17 @@ const ProfileBody = ({ userData }) => {
                     <input
                       id="username"
                       type="text"
-                      value={username}
                       placeholder={user.username}
-                      onChange={(e) => setUsername(e.target.value)}
+                      {...registerProfile("username")}
+                      className={`form-control ${
+                        profileErrors.username ? "is-invalid" : ""
+                      }`}
                     />
+                    {profileErrors.username && (
+                      <div className="invalid-feedback">
+                        {profileErrors.username.message}
+                      </div>
+                    )}
                   </div>
                 </div>
                 <div className="col-lg-6 col-md-6 col-sm-6 col-12">
@@ -224,10 +245,17 @@ const ProfileBody = ({ userData }) => {
                     <input
                       id="phonenumber"
                       type="tel"
-                      value={phonenumber}
                       placeholder={user.phonenumber}
-                      onChange={(e) => setPhonenumber(e.target.value)}
+                      {...registerProfile("phonenumber")}
+                      className={`form-control ${
+                        profileErrors.phonenumber ? "is-invalid" : ""
+                      }`}
                     />
+                    {profileErrors.phonenumber && (
+                      <div className="invalid-feedback">
+                        {profileErrors.phonenumber.message}
+                      </div>
+                    )}
                   </div>
                 </div>
                 <div className="col-12">
@@ -237,21 +265,26 @@ const ProfileBody = ({ userData }) => {
                       id="bio"
                       cols="20"
                       rows="5"
-                      value={bio}
                       placeholder={user.bio}
-                      onChange={(e) => setBio(e.target.value)}
+                      {...registerProfile("bio")}
+                      className={`form-control ${
+                        profileErrors.bio ? "is-invalid" : ""
+                      }`}
                     />
+                    {profileErrors.bio && (
+                      <div className="invalid-feedback">
+                        {profileErrors.bio.message}
+                      </div>
+                    )}
                   </div>
                 </div>
                 <div className="col-12 mt--20">
                   <div className="form-group mb--0">
-                    <button onClick={updateAccount} className="btn-default">
+                    <button className="btn-default">
                       Actualizează Informațiile
                     </button>
                   </div>
                 </div>
-
-                {alert && <Alert alert={alert} setAlert={setAlert} />}
               </form>
             </div>
 
@@ -261,19 +294,29 @@ const ProfileBody = ({ userData }) => {
               role="tabpanel"
               aria-labelledby="fb-tab"
             >
-              <form className="rbt-profile-row rbt-default-form row row--15">
+              <form
+                onSubmit={handleSubmitFb(updateAccount)}
+                className="rbt-profile-row rbt-default-form row row--15"
+              >
                 <div className="col-lg-6 col-md-6 col-sm-6 col-12">
                   <div className="form-group">
                     <label htmlFor="adAccountId">Cont de Publicitate</label>
                     <input
                       id="adAccountId"
                       type="text"
-                      value={adAccountId}
                       placeholder={
                         user.facebook.adAccountId || "Ex.: 1653034732758696"
                       }
-                      onChange={(e) => setAdAccountId(e.target.value)}
+                      {...registerFb("adAccountId")}
+                      className={`form-control ${
+                        fbErrors.adAccountId ? "is-invalid" : ""
+                      }`}
                     />
+                    {fbErrors.adAccountId && (
+                      <div className="invalid-feedback">
+                        {fbErrors.adAccountId.message}
+                      </div>
+                    )}
                   </div>
                 </div>
                 <div className="col-lg-6 col-md-6 col-sm-6 col-12">
@@ -282,12 +325,19 @@ const ProfileBody = ({ userData }) => {
                     <input
                       id="pageId"
                       type="text"
-                      value={pageId}
                       placeholder={
                         user.facebook.pageId || "Ex.: 614020611786833"
                       }
-                      onChange={(e) => setPageId(e.target.value)}
+                      {...registerFb("pageId")}
+                      className={`form-control ${
+                        fbErrors.pageId ? "is-invalid" : ""
+                      }`}
                     />
+                    {fbErrors.pageId && (
+                      <div className="invalid-feedback">
+                        {fbErrors.pageId.message}
+                      </div>
+                    )}
                   </div>
                 </div>
                 <div className="col-lg-6 col-md-6 col-sm-6 col-12">
@@ -296,24 +346,27 @@ const ProfileBody = ({ userData }) => {
                     <input
                       id="formId"
                       type="text"
-                      value={formId}
                       placeholder={
                         user.facebook.formId || "Ex.: 1377801553236600"
                       }
-                      onChange={(e) => setFormId(e.target.value)}
+                      {...registerFb("formId")}
+                      className={`form-control ${
+                        fbErrors.formId ? "is-invalid" : ""
+                      }`}
                     />
+                    {fbErrors.formId && (
+                      <div className="invalid-feedback">
+                        {fbErrors.formId.message}
+                      </div>
+                    )}
                   </div>
                 </div>
 
                 <div className="col-12 mt--20">
                   <div className="form-group mb--0">
-                    <button onClick={updateFbFields} className="btn-default">
-                      Actualizează Datele
-                    </button>
+                    <button className="btn-default">Actualizează Datele</button>
                   </div>
                 </div>
-
-                {alert && <Alert alert={alert} setAlert={setAlert} />}
               </form>
             </div>
 
@@ -338,10 +391,12 @@ const ProfileBody = ({ userData }) => {
               >
                 <i className="feather-trash-2"></i>Șterge Contul
               </button>
-              {alert && <Alert alert={alert} setAlert={setAlert} />}
+
               <Modal deleteAccount={deleteAccount} />
             </div>
           </div>
+
+          {alert && <Alert alert={alert} setAlert={setAlert} />}
         </div>
       </div>
     </>

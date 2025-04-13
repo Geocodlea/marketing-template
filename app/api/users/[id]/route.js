@@ -14,22 +14,25 @@ export async function PATCH(request, { params }) {
     });
   }
 
-  const { accountDetails, fbDetails } = await request.json();
+  const { accountDetails } = await request.json();
+
+  const isFacebookDetails = ["adAccountId", "pageId", "formId"].every((key) =>
+    Object.keys(accountDetails).includes(key)
+  );
 
   let filteredDetails;
-  if (accountDetails) {
+
+  if (isFacebookDetails) {
     filteredDetails = Object.fromEntries(
-      Object.entries(accountDetails).filter(([_, value]) => value !== "")
+      Object.entries(accountDetails)
+        .filter(([_, value]) => value !== "")
+        .map(([key, value]) => [`facebook.${key}`, value]) // nest under "facebook"
     );
   } else {
     filteredDetails = Object.fromEntries(
-      Object.entries(fbDetails)
-        .filter(([_, value]) => value !== "")
-        .map(([key, value]) => [`facebook.${key}`, value])
+      Object.entries(accountDetails).filter(([_, value]) => value !== "")
     );
   }
-
-  console.log(filteredDetails);
 
   await dbConnect();
   await User.updateOne({ _id: params.id }, filteredDetails);

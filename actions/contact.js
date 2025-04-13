@@ -12,14 +12,7 @@ const adminTransporter = nodemailer.createTransport({
   },
 });
 
-export async function contact(formData) {
-  const data = {
-    name: formData.get("name"),
-    email: formData.get("email"),
-    tel: formData.get("tel"),
-    message: formData.get("message"),
-  };
-
+export async function contact(data) {
   try {
     const emailHtml = `<p>${data.message}<br /><br />
                             Trimis de: ${data.name}<br />
