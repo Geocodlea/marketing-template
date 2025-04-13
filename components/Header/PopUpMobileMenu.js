@@ -16,6 +16,10 @@ const PopupMobileMenu = () => {
     }
   };
 
+  const closeMenu = () => {
+    setActiveMobileMenu(!activeMobileMenu);
+  };
+
   useEffect(() => {
     window.addEventListener("resize", handleResize);
     handleResize();
@@ -53,7 +57,7 @@ const PopupMobileMenu = () => {
           </div>
           <div className="content">
             <div className="rbt-default-sidebar-wrapper">
-              <SmallNav />
+              <SmallNav closeMenu={closeMenu} />
             </div>
           </div>
         </div>

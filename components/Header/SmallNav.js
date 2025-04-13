@@ -6,7 +6,7 @@ import SmallNavItem from "../../data/header.json";
 import avatar from "../../public/images/team/team-01sm.jpg";
 import { useSession } from "next-auth/react";
 
-const SmallNav = () => {
+const SmallNav = ({ closeMenu }) => {
   const pathname = usePathname();
   const { data: session } = useSession();
 
@@ -19,6 +19,7 @@ const SmallNav = () => {
             SmallNavItem.smallNavItem.slice(0, 5).map((data, index) => (
               <li key={index}>
                 <Link
+                  onClick={closeMenu}
                   className={
                     isActive(data.link)
                       ? "active"
@@ -53,7 +54,7 @@ const SmallNav = () => {
           {SmallNavItem &&
             SmallNavItem.smallNavItem.slice(5, 8).map((data, index) => (
               <li key={index}>
-                <Link href={data.link}>
+                <Link onClick={closeMenu} href={data.link}>
                   <i className={`feather-${data.icon}`}></i>
                   <span>{data.text}</span>
                 </Link>
@@ -69,7 +70,11 @@ const SmallNav = () => {
             style={{ position: "relative", bottom: 0 }}
           >
             <div className="inner">
-              <Link href="/profile-details" className="autor-info">
+              <Link
+                onClick={closeMenu}
+                href="/profile-details"
+                className="autor-info"
+              >
                 <div className="author-img active">
                   <Image
                     className="w-100"
@@ -89,7 +94,7 @@ const SmallNav = () => {
         ) : (
           <ul className="submenu rbt-default-sidebar-list">
             <li>
-              <Link href="/signin">
+              <Link onClick={closeMenu} href="/signin">
                 <i className="feather-user"></i>
                 <span>Sign In</span>
               </Link>
