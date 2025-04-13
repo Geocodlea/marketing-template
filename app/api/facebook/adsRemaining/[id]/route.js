@@ -3,21 +3,21 @@ import User from "@/models/User";
 import dbConnect from "@/utils/dbConnect";
 
 export async function POST(req, { params }) {
-  const { userId } = params;
+  const { id } = params;
 
   try {
     await dbConnect();
-    const user = await User.updateOne(
-      { _id: userId },
+    const {
+      facebook: { adsRemaining },
+    } = await User.findOneAndUpdate(
+      { _id: id },
       {
         $inc: {
           "facebook.adsRemaining": -1,
         },
       },
       { new: true }
-    );
-
-    const adsRemaining = user.facebook.adsRemaining;
+    ).select("facebook.adsRemaining");
 
     return NextResponse.json({
       status: "success",

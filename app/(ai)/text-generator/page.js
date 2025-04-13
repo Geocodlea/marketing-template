@@ -24,7 +24,7 @@ const TextGeneratorLayout = async () => {
     <>
       <TextGeneratorPage
         userId={userId}
-        userAdsRemaining={user.facebook.adsRemaining}
+        userFacebook={JSON.stringify(user.facebook)}
         plan={user.plan}
       />
     </>

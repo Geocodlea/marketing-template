@@ -98,7 +98,7 @@ const Home = () => {
                   Lansează reclame în 5 minute, optimizate automat pentru
                   conversii.
                 </p>
-                <Link className="btn-default " href="/signin">
+                <Link className="btn-default " href="/text-generator">
                   Încearcă gratuit
                 </Link>
                 {/* <div className="form-group">
@@ -276,7 +276,7 @@ const Home = () => {
                 </h2>
                 <Link
                   className="btn-default btn-large color-blacked"
-                  href="/contact"
+                  href="/text-generator"
                 >
                   Încearcă gratuit{" "}
                   <i className="fa-sharp fa-light fa-arrow-right ml--5"></i>

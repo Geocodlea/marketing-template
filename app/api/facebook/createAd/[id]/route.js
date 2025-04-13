@@ -186,9 +186,6 @@ export async function POST(req, { params }) {
     return NextResponse.json({
       status: "success",
       message: "Ad campaign, ad set, and ad created successfully!",
-      campaignId,
-      adSetId,
-      adId: adResult.id,
     });
   } catch (error) {
     console.error("Error creating Facebook ad campaign:", error);

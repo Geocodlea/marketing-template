@@ -1,7 +1,19 @@
 import ProfileBody from "./ProfileBody";
 import UserNav from "../Common/UserNav";
 
-const ProfileDetails = () => {
+import { authOptions } from "/app/api/auth/[...nextauth]/route";
+import { getServerSession } from "next-auth/next";
+import { redirect } from "next/navigation";
+import dbConnect from "@/utils/dbConnect";
+import User from "@/models/User";
+
+const ProfileDetails = async () => {
+  const session = await getServerSession(authOptions);
+  if (!session) redirect(`/signin`);
+
+  await dbConnect();
+  const user = await User.findOne({ _id: session.user.id });
+
   return (
     <>
       <div className="rbt-main-content mb-0">
@@ -11,7 +23,7 @@ const ProfileDetails = () => {
 
             <div className="content-page pb--50">
               <div className="chat-box-list">
-                <ProfileBody />
+                <ProfileBody userData={JSON.stringify(user)} />
               </div>
             </div>
           </div>

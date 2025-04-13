@@ -1,14 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { use, useState } from "react";
 import { useSession } from "next-auth/react";
 import { signOut } from "next-auth/react";
 import Alert from "@/components/Common/Alert";
 import Modal from "@/components/Common/Modal";
 
-const ProfileBody = () => {
+const ProfileBody = ({ userData }) => {
   const { data: session } = useSession();
   const [alert, setAlert] = useState(null);
+  const user = JSON.parse(userData);
 
   // Profile form fields
   const [firstname, setFirstname] = useState("");
@@ -188,7 +189,7 @@ const ProfileBody = () => {
                       id="firstname"
                       type="text"
                       value={firstname}
-                      placeholder={session?.user.firstname}
+                      placeholder={user.firstname}
                       onChange={(e) => setFirstname(e.target.value)}
                     />
                   </div>
@@ -200,7 +201,7 @@ const ProfileBody = () => {
                       id="lastname"
                       type="text"
                       value={lastname}
-                      placeholder={session?.user.lastname}
+                      placeholder={user.lastname}
                       onChange={(e) => setLastname(e.target.value)}
                     />
                   </div>
@@ -212,7 +213,7 @@ const ProfileBody = () => {
                       id="username"
                       type="text"
                       value={username}
-                      placeholder={session?.user.username}
+                      placeholder={user.username}
                       onChange={(e) => setUsername(e.target.value)}
                     />
                   </div>
@@ -224,7 +225,7 @@ const ProfileBody = () => {
                       id="phonenumber"
                       type="tel"
                       value={phonenumber}
-                      placeholder={session?.user.phonenumber}
+                      placeholder={user.phonenumber}
                       onChange={(e) => setPhonenumber(e.target.value)}
                     />
                   </div>
@@ -237,7 +238,7 @@ const ProfileBody = () => {
                       cols="20"
                       rows="5"
                       value={bio}
-                      placeholder={session?.user.bio}
+                      placeholder={user.bio}
                       onChange={(e) => setBio(e.target.value)}
                     />
                   </div>
@@ -268,7 +269,9 @@ const ProfileBody = () => {
                       id="adAccountId"
                       type="text"
                       value={adAccountId}
-                      placeholder={"Ex.: 1653034732758696"}
+                      placeholder={
+                        user.facebook.adAccountId || "Ex.: 1653034732758696"
+                      }
                       onChange={(e) => setAdAccountId(e.target.value)}
                     />
                   </div>
@@ -280,7 +283,9 @@ const ProfileBody = () => {
                       id="pageId"
                       type="text"
                       value={pageId}
-                      placeholder={"Ex.: 614020611786833"}
+                      placeholder={
+                        user.facebook.pageId || "Ex.: 614020611786833"
+                      }
                       onChange={(e) => setPageId(e.target.value)}
                     />
                   </div>
@@ -292,7 +297,9 @@ const ProfileBody = () => {
                       id="formId"
                       type="text"
                       value={formId}
-                      placeholder={"Ex.: 1377801553236600"}
+                      placeholder={
+                        user.facebook.formId || "Ex.: 1377801553236600"
+                      }
                       onChange={(e) => setFormId(e.target.value)}
                     />
                   </div>

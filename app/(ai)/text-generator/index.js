@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 
 import LeftDashboardSidebar from "@/components/Header/LeftDashboardSidebar";
 // import RightDashboardSidebar from "@/components/Header/RightDashboardSidebar";
@@ -27,11 +27,12 @@ const adFetch = async (adDetails, userId, api) => {
   }
 };
 
-const TextGeneratorPage = ({ userId, userAdsRemaining, plan }) => {
+const TextGeneratorPage = ({ userId, userFacebook, plan }) => {
+  const userFb = JSON.parse(userFacebook);
   const [step, setStep] = useState("validation");
   const [adDetails, setAdDetails] = useState(initialAdDetails);
   const [disabledChat, setDisabledChat] = useState(false);
-  const [adsRemaining, setAdsRemaining] = useState(userAdsRemaining);
+  const [adsRemaining, setAdsRemaining] = useState(userFb.adsRemaining);
   const [alert, setAlert] = useState(null);
 
   const {
@@ -60,15 +61,13 @@ const TextGeneratorPage = ({ userId, userAdsRemaining, plan }) => {
 
         if (result.status === "success") {
           const data = await adFetch("", userId, "adsRemaining");
-          console.log("adsRemaining: ", data.adsRemaining);
-
           setAdsRemaining(data.adsRemaining);
           setAlert({
             status: "success",
             message: "Reclama a fost creată cu succes!",
           });
         }
-        return null;
+        return result.message;
       }
     },
   });
@@ -79,6 +78,16 @@ const TextGeneratorPage = ({ userId, userAdsRemaining, plan }) => {
         role: "system",
         content:
           "Ai depășit numărul de reclame conform planului tău. Pentru a crea mai multe reclame va trebui să te abonezi la alt plan.",
+      },
+    ]);
+  }
+
+  if (!userFb.adAccountId || !userFb.pageId || !userFb.formId) {
+    setMessages([
+      {
+        role: "system",
+        content:
+          "Nu ai setat datele de conexiune pentru Facebook. Te rugăm să le setezi în profilul tău.",
       },
     ]);
   }
