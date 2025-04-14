@@ -20,7 +20,7 @@ const details = (
   adSetOptimizationGoals,
   adSetBidStrategies,
   adCreativeCTAs
-) => `You are a helpful assistant. Your task is to return a complete JSON object matching the schema provided using the prrevious messages and ${JSON.stringify(
+) => `You are a helpful assistant. Your task is to return a complete JSON object matching the schema provided using the previous messages and ${JSON.stringify(
   adDetails
 )}. Do not include any explanation, description, or extra text.
 
@@ -31,66 +31,55 @@ Strict output rule:
 
 Guidelines:
 - **Do NOT infer the following critical details:**
-    - Campaign objective
-    - Ad set billing event
-    - Ad set optimization goal
-    - Ad set daily budget
-    - Ad set targeting audience
-    - Ad creative picture
+  - Campaign objective
+  - Ad set billing event
+  - Ad set optimization goal
+  - Ad set daily budget
+  - Ad set targeting audience
+  - Ad creative picture
 
 - **⚠️ Critical Field Compatibility Rules**:
-    When generating values, ensure that the following **field pairs are logically valid together**. If any pair does not match a valid combination, return both fields as null
-    1. **billingEvent and optimizationGoal must be a valid combination.** Valid pairs include:
-    - billingEvent: "IMPRESSIONS", optimizationGoal: "REACH"
-    - billingEvent: "LINK_CLICKS", optimizationGoal: "LINK_CLICKS"
-    - billingEvent: "THRUPLAY", optimizationGoal: "VIDEO_VIEWS"
-    - billingEvent: "IMPRESSIONS", optimizationGoal: "VIDEO_VIEWS"
-    - billingEvent: "IMPRESSIONS", optimizationGoal: "POST_ENGAGEMENT"
-    - billingEvent: "IMPRESSIONS", optimizationGoal: "LEAD_GENERATION"
-    2. If billingEvent is not valid for the selected optimizationGoal, return BOTH fields as null and wait for the user to clarify.
-    3. If bidStrategy is "LOWEST_COST_WITHOUT_CAP", do NOT provide bidAmount.
+  When generating values, ensure that the following **field pairs are logically valid together**. If any pair does not match a valid combination, return both fields as null
+  1. **billingEvent and optimizationGoal must be a valid combination.** Valid pairs include:
+  - billingEvent: "IMPRESSIONS", optimizationGoal: "REACH"
+  - billingEvent: "LINK_CLICKS", optimizationGoal: "LINK_CLICKS"
+  - billingEvent: "THRUPLAY", optimizationGoal: "VIDEO_VIEWS"
+  - billingEvent: "IMPRESSIONS", optimizationGoal: "VIDEO_VIEWS"
+  - billingEvent: "IMPRESSIONS", optimizationGoal: "POST_ENGAGEMENT"
+  - billingEvent: "IMPRESSIONS", optimizationGoal: "LEAD_GENERATION"
+  2. If billingEvent is not valid for the selected optimizationGoal, return BOTH fields as null and wait for the user to clarify.
+  3. If bidStrategy is "LOWEST_COST_WITHOUT_CAP", do NOT provide bidAmount.
 - You MUST enforce these compatibility rules before returning any values.
-
-- If any of the following fields are missing or null, request them explicitly:
-- **Check for missing fields in the provided object and ask the user directly for them.**  
-    - If any of the following fields are missing or null, request them explicitly:
-    - Campaign objective: ${
-      adDetails.campaign.objective ? "Provided" : "Missing"
-    }
-    - Campaign status: ${adDetails.campaign.status ? "Provided" : "Missing"}
-    - Ad set daily budget: ${
-      adDetails.adSet.dailyBudget ? "Provided" : "Missing"
-    }
     
 - **Enum rules:**
-    - The following fields MUST match EXACTLY one of the valid enum values listed below or be null if unknown or not provided. DO NOT invent or infer new values outside of these lists:
-    - Campaign objective: Must match EXACTLY one of the valid enum values: ${campaignObjectives.join(
-      ", "
-    )}
-    - Campaign status: Must match EXACTLY one of the valid enum values: ${campaignStatuses.join(
-      ", "
-    )}
-    - Ad set billing event: Must match EXACTLY one of the valid enum values: ${adSetBillingEvents.join(
-      ", "
-    )}
-    - Ad set optimization goal: Must match EXACTLY one of the valid enum values: ${adSetOptimizationGoals.join(
-      ", "
-    )}
-    - Ad set bid strategy: Must match EXACTLY one of the valid enum values: ${adSetBidStrategies.join(
-      ", "
-    )}
-    - Ad creative CTA type: Must match EXACTLY one of the valid enum values: ${adCreativeCTAs.join(
-      ", "
-    )}
-    - If the correct value is not available or cannot be inferred, return null.
+  - The following fields MUST match EXACTLY one of the valid enum values listed below or be null if unknown or not provided. DO NOT invent or infer new values outside of these lists:
+  - Campaign objective: Must match EXACTLY one of the valid enum values: ${campaignObjectives.join(
+    ", "
+  )}
+  - Campaign status: Must match EXACTLY one of the valid enum values: ${campaignStatuses.join(
+    ", "
+  )}
+  - Ad set billing event: Must match EXACTLY one of the valid enum values: ${adSetBillingEvents.join(
+    ", "
+  )}
+  - Ad set optimization goal: Must match EXACTLY one of the valid enum values: ${adSetOptimizationGoals.join(
+    ", "
+  )}
+  - Ad set bid strategy: Must match EXACTLY one of the valid enum values: ${adSetBidStrategies.join(
+    ", "
+  )}
+  - Ad creative CTA type: Must match EXACTLY one of the valid enum values: ${adCreativeCTAs.join(
+    ", "
+  )}
+  - If the correct value is not available or cannot be inferred, return null.
 
 - **Infer all the following fields:**
-    - Campaign: name
-    - Ad set: 
+  - Campaign: name
+  - Ad set: 
     - name
     - optimizationGoal
     - bidStrategy
-    - Ad creative:
+  - Ad creative:
     - name
     - objectStorySpec.linkData.message: A compelling ad message
     - objectStorySpec.linkData.link: Use a placeholder like https://example.com
@@ -98,7 +87,7 @@ Guidelines:
     - objectStorySpec.linkData.CTA.value.link: Same as above link or another relevant one
 - If adCreative already exists, preserve existing fields.
 
-- **Return null for any missing details you cannot infer.**
+- **Return null for any missing details you cannot infer or are not allowed to infer.**
 - **Final Rule**: Validate field compatibility before returning the object. If a field is invalid in context, return it as null and await clarification from the user.`;
 
 const missingDetails = (
@@ -170,3 +159,14 @@ export {
   confirmation,
   adCreation,
 };
+
+const notUsed = (
+  adDetails
+) => `- If any of the following fields are missing or null, request them explicitly:
+- **Check for missing fields in the provided object and ask the user directly for them.**  
+  - If any of the following fields are missing or null, request them explicitly:
+  - Campaign objective: ${adDetails.campaign.objective ? "Provided" : "Missing"}
+  - Campaign status: ${adDetails.campaign.status ? "Provided" : "Missing"}
+  - Ad set daily budget: ${
+    adDetails.adSet.dailyBudget ? "Provided" : "Missing"
+  }`;

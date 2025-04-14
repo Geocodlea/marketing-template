@@ -5,6 +5,10 @@
       "text": "Profile"
     },
     {
+      "link": "/ads",
+      "text": "Facebook Ads"
+    },
+    {
       "link": "/notification",
       "text": "Notification"
     },

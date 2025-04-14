@@ -9,7 +9,12 @@ export async function POST(req, { params }) {
   } = await req.json();
   const { id } = params;
 
-  console.log("API input:", campaign, adSet, adCreative);
+  console.log(
+    "API input:",
+    campaign,
+    JSON.stringify(adSet, null, 2),
+    JSON.stringify(adCreative, null, 2)
+  );
 
   await dbConnect();
 

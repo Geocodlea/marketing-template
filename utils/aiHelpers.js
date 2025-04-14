@@ -22,7 +22,7 @@ import {
   adCreation,
 } from "@/utils/aiContent";
 
-const AdDetailsSchema = z.object({
+const adDetailsSchema = z.object({
   campaign: z.object({
     name: z.string().nullable(),
     objective: z.enum(campaignObjectives).nullable(),
@@ -212,7 +212,7 @@ const handleDetailsStep = async (messages, step, adDetails) => {
       },
       ...messages,
     ],
-    schema: AdDetailsSchema,
+    schema: adDetailsSchema,
   });
 
   adDetails = detailsResponse.object;
@@ -371,7 +371,6 @@ const handleDefaultStep = () => {
 };
 
 export {
-  AdDetailsSchema,
   parseRequest,
   handleValidationStep,
   handleDetailsStep,

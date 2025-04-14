@@ -16,17 +16,11 @@ const ProfileDetails = async () => {
 
   return (
     <>
-      <div className="rbt-main-content mb-0">
-        <div className="rbt-daynamic-page-content center-width">
-          <div className="rbt-dashboard-content">
-            <UserNav title="Profile Details" />
+      <UserNav title="Profile Details" />
 
-            <div className="content-page pb--50">
-              <div className="chat-box-list">
-                <ProfileBody userData={JSON.stringify(user)} />
-              </div>
-            </div>
-          </div>
+      <div className="content-page pb--50">
+        <div className="chat-box-list">
+          <ProfileBody userData={JSON.stringify(user)} />
         </div>
       </div>
     </>

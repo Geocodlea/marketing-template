@@ -21,6 +21,15 @@ const UserMenuItems = ({ parentClass }) => {
         </li>
         <li>
           <Link
+            className={isActive("/ads") ? "active" : ""}
+            href="/profile-details"
+          >
+            <i className="fab fa-facebook-f"></i>
+            <span>Facebook Ads</span>
+          </Link>
+        </li>
+        <li>
+          <Link
             className={isActive("/notification") ? "active" : ""}
             href="/notification"
           >

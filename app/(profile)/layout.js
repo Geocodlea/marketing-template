@@ -2,7 +2,6 @@
 
 import Context from "@/context/Context";
 import BackToTop from "@/components/Common/BackToTop";
-
 import HeaderDashboard from "@/components/Header/HeaderDashboard";
 import PopupMobileMenu from "@/components/Header/PopUpMobileMenu";
 import Footer from "@/components/Footers/Footer";
@@ -14,7 +13,11 @@ const ProfileLayout = ({ children }) => {
       <HeaderDashboard display="d-none" />
       <PopupMobileMenu />
 
-      {children}
+      <div className="rbt-main-content mb-0">
+        <div className="rbt-daynamic-page-content center-width">
+          <div className="rbt-dashboard-content">{children}</div>
+        </div>
+      </div>
 
       <BackToTop />
       <Footer />
