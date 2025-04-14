@@ -4,7 +4,7 @@ import UserNav from "../Common/UserNav";
 const Notification = () => {
   return (
     <>
-      <UserNav title="Notification" />
+      <UserNav title="Notificări" />
 
       <div className="content-page pb--50">
         <div className="chat-box-list">

@@ -22,7 +22,7 @@ const TopBar = ({ barImg, title, wdt, htd, padding, msg }) => {
           </button>
           <ul className="dropdown-menu style-one">
             <li>
-              <a className="dropdown-item" href="/text-generator">
+              <a className="dropdown-item" href="/ads-generator">
                 <i className="fa-sharp fa-solid fa-arrows-rotate"></i> Reset
                 Chat
               </a>

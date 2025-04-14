@@ -3,7 +3,7 @@
     {
       "links": [
         {
-          "title": "Qucik Links",
+          "title": "Link-uri utile",
           "innerItem": [
             {
               "link": "/pricing",
@@ -30,10 +30,10 @@
       ],
       "services": [
         {
-          "title": "Services",
+          "title": "Servicii",
           "innerItem": [
             {
-              "link": "/text-generator",
+              "link": "/ads-generator",
               "text": "Creează Reclamă Facebook"
             },
             {

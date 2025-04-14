@@ -16,7 +16,7 @@ const ProfileDetails = async () => {
 
   return (
     <>
-      <UserNav title="Profile Details" />
+      <UserNav title="Detalii Profil" />
 
       <div className="content-page pb--50">
         <div className="chat-box-list">

@@ -16,16 +16,13 @@ const UserMenuItems = ({ parentClass }) => {
             href="/profile-details"
           >
             <i className="fa-sharp fa-regular fa-user"></i>
-            <span>Profile Details</span>
+            <span>Detalii Profil</span>
           </Link>
         </li>
         <li>
-          <Link
-            className={isActive("/ads") ? "active" : ""}
-            href="/profile-details"
-          >
+          <Link className={isActive("/ads") ? "active" : ""} href="/ads">
             <i className="fab fa-facebook-f"></i>
-            <span>Facebook Ads</span>
+            <span>Reclame Facebook</span>
           </Link>
         </li>
         <li>
@@ -34,7 +31,7 @@ const UserMenuItems = ({ parentClass }) => {
             href="/notification"
           >
             <i className="fa-sharp fa-regular fa-shopping-bag"></i>
-            <span>Notification</span>
+            <span>Notificări</span>
           </Link>
         </li>
         <li>
@@ -43,7 +40,7 @@ const UserMenuItems = ({ parentClass }) => {
             href="/plans-billing"
           >
             <i className="fa-sharp fa-regular fa-briefcase"></i>
-            <span>Plans and Billing</span>
+            <span>Planuri și Abonamente</span>
           </Link>
         </li>
       </ul>

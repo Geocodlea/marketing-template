@@ -20,7 +20,7 @@ const AdsPage = ({ ads }) => {
 
   return (
     <>
-      <UserNav title="Facebook Ads" />
+      <UserNav title="Reclame Facebook" />
 
       <div className="rainbow-pricing-detailed-area mb--80">
         <div className="row row--15">

@@ -2,19 +2,19 @@
   "navDashboardItem": [
     {
       "link": "/profile-details",
-      "text": "Profile"
+      "text": "Detalii Profil"
     },
     {
       "link": "/ads",
-      "text": "Facebook Ads"
+      "text": "Reclame Facebook"
     },
     {
       "link": "/notification",
-      "text": "Notification"
+      "text": "Notificări"
     },
     {
       "link": "/plans-billing",
-      "text": "Plans and Billing"
+      "text": "Planuri și Abonamente"
     }
   ],
   "nav": [
@@ -32,7 +32,7 @@
       "dropdown": true,
       "subItem": [
         {
-          "link": "/text-generator",
+          "link": "/ads-generator",
           "isDisable": false,
           "title": "Creează Reclamă Facebook",
           "badge": ""
@@ -130,7 +130,7 @@
   ],
   "smallNavItem": [
     {
-      "link": "/text-generator",
+      "link": "/ads-generator",
       "isDisable": false,
       "type": "default",
       "img": "/images/generator-icon/text.png",
@@ -903,7 +903,7 @@
   ],
   "leftPanel": [
     {
-      "link": "/text-generator",
+      "link": "/ads-generator",
       "isDisable": false,
       "title": "Creează Reclamă Facebook",
       "img": "/images/generator-icon/text.png",

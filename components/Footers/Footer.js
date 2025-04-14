@@ -31,10 +31,13 @@ const Footer = () => {
                     It has long been known that a reader's <br /> attention will
                     be diverted from{" "}
                   </p>
-                  <h6 className="subtitle">Join a Newsletter</h6>
+                  <h6 className="subtitle">Alăturați-vă unui Newsletter</h6>
                   <form className="newsletter-form" action="#">
                     <div className="form-group">
-                      <input type="email" placeholder="Enter Your Email Here" />
+                      <input
+                        type="email"
+                        placeholder="Introdu e-mail-ul tău aici"
+                      />
                       <button
                         className="btn-default bg-solid-primary"
                         type="submit"

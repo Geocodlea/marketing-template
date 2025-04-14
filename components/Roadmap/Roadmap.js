@@ -5,7 +5,6 @@ import Link from "next/link";
 import Sal from "sal.js";
 
 import RoadmapData from "../../data/roadmap.json";
-import CtaTwo from "../CallToActions/Cta-Two";
 
 const Roadmap = () => {
   useEffect(() => {
@@ -102,12 +101,6 @@ const Roadmap = () => {
               </div>
             </div>
           </div>
-        </div>
-      </div>
-
-      <div className="rainbow-cta-area rainbow-section-gap rainbow-section-gapBottom-big">
-        <div className="container">
-          <CtaTwo />
         </div>
       </div>
     </>

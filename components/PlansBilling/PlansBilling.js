@@ -47,7 +47,7 @@ const PlansBilling = ({
 
   return (
     <>
-      <UserNav title="Plans & Billing" />
+      <UserNav title="Planuri și Abonamente" />
 
       {paymentStatus && (
         <p>

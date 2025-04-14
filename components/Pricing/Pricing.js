@@ -26,7 +26,7 @@ const Pricing = ({ start, end, parentClass, isBadge, gap, plan }) => {
   const planSelect = async (selectedPlan) => {
     if (!session) router.push("/signin");
     if (plan === selectedPlan.toLowerCase() || selectedPlan === "Basic") {
-      router.push("/text-generator");
+      router.push("/ads-generator");
     } else {
       try {
         const response = await fetch(`/api/stripe/`, {

@@ -75,7 +75,7 @@ const TabStyleOne = () => {
                             <div className="read-more">
                               <Link
                                 className="btn-default color-blacked"
-                                href="/text-generator"
+                                href="/ads-generator"
                               >
                                 Încearcă gratuit
                                 <i className="fa-sharp fa-solid fa-arrow-right ps-2"></i>

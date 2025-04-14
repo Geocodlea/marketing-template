@@ -68,7 +68,7 @@ const Header = ({ headerTransparent, headerSticky, btnClass }) => {
             <div className="col-lg-2 col-md-6 col-6 position-static">
               <div className="header-right">
                 <div className="header-btn">
-                  <Link className={`${btnClass}`} href="/text-generator">
+                  <Link className={`${btnClass}`} href="/ads-generator">
                     <span>Start</span>
                   </Link>
                 </div>

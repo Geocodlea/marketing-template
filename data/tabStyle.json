@@ -72,7 +72,7 @@
     {
       "title": "Scrie texte creative și convingătoare automat.",
       "img": "/images/generator-img/chat-export.png",
-      "menuId": "text-generator",
+      "menuId": "ads-generator",
       "text": "Mesaje Automate",
       "target": "text-generate",
       "iconImg": "/images/icons/text-g.png",

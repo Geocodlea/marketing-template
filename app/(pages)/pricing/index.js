@@ -5,7 +5,6 @@ import Sal from "sal.js";
 import Breadcrumb from "@/components/Common/Breadcrumb";
 import Pricing from "@/components/Pricing/Pricing";
 import Compare from "@/components/Pricing/Compare";
-import CtaTwo from "@/components/CallToActions/Cta-Two";
 
 const PricingPage = ({ plan }) => {
   useEffect(() => {
@@ -52,12 +51,6 @@ const PricingPage = ({ plan }) => {
               title="Compară planurile & funcționalitățile"
               subTitle="Comparare Prețuri"
             />
-          </div>
-        </div>
-
-        <div className="rainbow-cta-area rainbow-section-gap">
-          <div className="container">
-            <CtaTwo />
           </div>
         </div>
       </div>

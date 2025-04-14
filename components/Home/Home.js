@@ -58,61 +58,50 @@ const Home = () => {
               <div className="inner text-center mt--140">
                 <h1 className="title display-one">
                   Creează reclame pe Facebook
-                  <br />{" "}
-                  <span className="header-caption">
-                    <span className="cd-headline rotate-1">
-                      <span className="cd-words-wrapper">
-                        <b
-                          className={
-                            visibleIndex === 0
-                              ? "is-visible theme-gradient"
-                              : "is-hidden theme-gradient"
-                          }
-                        >
-                          automat
-                        </b>
-                        <b
-                          className={
-                            visibleIndex === 1
-                              ? "is-visible theme-gradient"
-                              : "is-hidden theme-gradient"
-                          }
-                        >
-                          simplu
-                        </b>
-                        <b
-                          className={
-                            visibleIndex === 2
-                              ? "is-visible theme-gradient"
-                              : "is-hidden theme-gradient"
-                          }
-                        >
-                          elegant
-                        </b>
+                  <div>
+                    <span className="header-caption">
+                      <span className="cd-headline rotate-1">
+                        <span className="cd-words-wrapper">
+                          <b
+                            className={
+                              visibleIndex === 0
+                                ? "is-visible theme-gradient"
+                                : "is-hidden theme-gradient"
+                            }
+                          >
+                            automat
+                          </b>
+                          <b
+                            className={
+                              visibleIndex === 1
+                                ? "is-visible theme-gradient"
+                                : "is-hidden theme-gradient"
+                            }
+                          >
+                            simplu
+                          </b>
+                          <b
+                            className={
+                              visibleIndex === 2
+                                ? "is-visible theme-gradient"
+                                : "is-hidden theme-gradient"
+                            }
+                          >
+                            elegant
+                          </b>
+                        </span>
                       </span>
                     </span>
-                  </span>{" "}
-                  {/* fără agenții costisitoare. */}
+                  </div>
                 </h1>
                 <p className="description">
                   Lansează reclame în 5 minute, optimizate automat pentru
                   conversii.
                 </p>
-                <Link className="btn-default " href="/text-generator">
+                <Link className="btn-default " href="/ads-generator">
                   Încearcă gratuit
                 </Link>
-                {/* <div className="form-group">
-                  <textarea
-                    name="text"
-                    id="slider-text-area"
-                    cols="30"
-                    rows="2"
-                    placeholder="Enter a prompt, for example: a fundraising deck to a mobile finance app called Intuitive"
-                  ></textarea>
-                  <Link className="btn-default " href="/text-generator">
-                    Start with AI
-                  </Link>
-                </div> */}
+
                 <div className="inner-shape">
                   <Image
                     src={shapeOne}
@@ -276,7 +265,7 @@ const Home = () => {
                 </h2>
                 <Link
                   className="btn-default btn-large color-blacked"
-                  href="/text-generator"
+                  href="/ads-generator"
                 >
                   Încearcă gratuit{" "}
                   <i className="fa-sharp fa-light fa-arrow-right ml--5"></i>
