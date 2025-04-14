@@ -36,7 +36,10 @@ const PopupMobileMenu = () => {
         <div className="inner-popup">
           <div className="header-top">
             <div className="logo">
-              <Link href="/">
+              <Link
+                onClick={() => setActiveMobileMenu(!activeMobileMenu)}
+                href="/"
+              >
                 <Image
                   className="logo-light"
                   src={logoLight}

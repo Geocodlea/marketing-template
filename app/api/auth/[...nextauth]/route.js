@@ -17,7 +17,7 @@ export const authOptions = {
         url: "https://www.facebook.com/v22.0/dialog/oauth",
         params: {
           scope:
-            "email,ads_management,business_management,pages_read_engagement,pages_show_list,pages_manage_posts,pages_manage_ads,pages_read_user_content,leads_retrieval",
+            "email,ads_read,ads_management,business_management,pages_read_engagement,pages_show_list,pages_manage_posts,pages_manage_ads,pages_read_user_content,leads_retrieval",
         },
       },
     }),
@@ -36,6 +36,7 @@ export const authOptions = {
 
   events: {
     async createUser({ user }) {
+      await dbConnect();
       await User.updateOne(
         { _id: user.id },
         {

@@ -44,9 +44,15 @@ const UserMenu = () => {
             </Link>
           </li>
           <li>
-            <Link href="/profile-details">
+            <Link href="/utilize">
               <i className="fa-sharp fa-solid fa-gears"></i>
-              <span>Settings</span>
+              <span>Utilizare</span>
+            </Link>
+          </li>
+          <li>
+            <Link href="/setup">
+              <i className="fa-sharp fa-solid fa-gears"></i>
+              <span>Setup</span>
             </Link>
           </li>
         </ul>

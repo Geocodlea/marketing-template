@@ -181,30 +181,6 @@
       "type": "default",
       "text": "Setup",
       "icon": "settings"
-    },
-    {
-      "link": "/contact",
-      "type": "default",
-      "text": "Contact",
-      "icon": "mail"
-    },
-    {
-      "link": "/profile-details",
-      "type": "profile",
-      "text": "Profile Details",
-      "icon": "user"
-    },
-    {
-      "link": "/notification",
-      "type": "profile",
-      "text": "Notification",
-      "icon": "shopping-bag"
-    },
-    {
-      "link": "/plans-billing",
-      "type": "profile",
-      "text": "Plans and Billing",
-      "icon": "briefcase"
     }
   ],
   "rightPanel": [
