@@ -11,6 +11,16 @@ import {
   adSetBidStrategies,
   adCreativeCTAs,
 } from "@/utils/fbAdOptions";
+import {
+  validation,
+  unrelated,
+  clarification,
+  details,
+  missingDetails,
+  generatePreview,
+  confirmation,
+  adCreation,
+} from "@/utils/aiContent";
 
 const AdDetailsSchema = z.object({
   campaign: z.object({
@@ -120,10 +130,7 @@ const handleValidationStep = async (messages, step, adDetails) => {
     messages: [
       {
         role: "system",
-        content: `You determine if a user request is for Facebook ad creation. Respond with:
-                 - "details" if the input contains enough details to generate an ad.
-                 - "unrelated" if the input is unrelated.
-                 - "clarification" if the input is missing key ad creation details (too vague).`,
+        content: validation,
       },
       ...(step === "validation" ? messages : []),
     ],
@@ -144,8 +151,7 @@ const handleValidationStep = async (messages, step, adDetails) => {
           messages: [
             {
               role: "system",
-              content:
-                "You guide users to create Facebook ads. The input was unrelated. Redirect them politely.",
+              content: unrelated,
             },
             ...messages,
           ],
@@ -169,11 +175,7 @@ const handleValidationStep = async (messages, step, adDetails) => {
           messages: [
             {
               role: "system",
-              content: `The user input was too vague to create an ad. Ask the user to clarify their request in a natural and helpful way.
-              - Tailor the response based on what is missing.
-              - Keep it polite and concise.
-              - You DON'T create an ad.
-              - Example: "Could you provide more details? Are you selling a product or offering a service?"`,
+              content: clarification,
             },
             ...messages,
           ],
@@ -198,90 +200,15 @@ const handleDetailsStep = async (messages, step, adDetails) => {
     messages: [
       {
         role: "system",
-        content: `
-          You are a helpful assistant. Your task is to return a complete JSON object matching the schema provided using the prrevious messages and ${JSON.stringify(
-            adDetails
-          )}. Do not include any explanation, description, or extra text.
-            
-          Strict output rule:
-          - Return ONLY the JSON object.
-          - Do NOT wrap it in markdown.
-          - Do NOT add any headings or comments.
-
-           Guidelines:
-            - **Do NOT infer the following critical details:**
-              - Campaign objective
-              - Ad set billing event
-              - Ad set optimization goal
-              - Ad set daily budget
-              - Ad set targeting audience
-              - Ad creative picture
-
-            - **⚠️ Critical Field Compatibility Rules**:
-              When generating values, ensure that the following **field pairs are logically valid together**. If any pair does not match a valid combination, return both fields as null
-              1. **billingEvent and optimizationGoal must be a valid combination.** Valid pairs include:
-                - billingEvent: "IMPRESSIONS", optimizationGoal: "REACH"
-                - billingEvent: "LINK_CLICKS", optimizationGoal: "LINK_CLICKS"
-                - billingEvent: "THRUPLAY", optimizationGoal: "VIDEO_VIEWS"
-                - billingEvent: "IMPRESSIONS", optimizationGoal: "VIDEO_VIEWS"
-                - billingEvent: "IMPRESSIONS", optimizationGoal: "POST_ENGAGEMENT"
-                - billingEvent: "IMPRESSIONS", optimizationGoal: "LEAD_GENERATION"
-              2. If billingEvent is not valid for the selected optimizationGoal, return BOTH fields as null and wait for the user to clarify.
-              3. If bidStrategy is "LOWEST_COST_WITHOUT_CAP", do NOT provide bidAmount.
-            - You MUST enforce these compatibility rules before returning any values.
-
-            - If any of the following fields are missing or null, request them explicitly:
-            - **Check for missing fields in the provided object and ask the user directly for them.**  
-              - If any of the following fields are missing or null, request them explicitly:
-                - Campaign objective: ${
-                  adDetails.campaign.objective ? "Provided" : "Missing"
-                }
-                - Campaign status: ${
-                  adDetails.campaign.status ? "Provided" : "Missing"
-                }
-                - Ad set daily budget: ${
-                  adDetails.adSet.dailyBudget ? "Provided" : "Missing"
-                }
-                
-            - **Enum rules:**
-              - The following fields MUST match EXACTLY one of the valid enum values listed below or be null if unknown or not provided. DO NOT invent or infer new values outside of these lists:
-              - Campaign objective: Must match EXACTLY one of the valid enum values: ${campaignObjectives.join(
-                ", "
-              )}
-              - Campaign status: Must match EXACTLY one of the valid enum values: ${campaignStatuses.join(
-                ", "
-              )}
-              - Ad set billing event: Must match EXACTLY one of the valid enum values: ${adSetBillingEvents.join(
-                ", "
-              )}
-              - Ad set optimization goal: Must match EXACTLY one of the valid enum values: ${adSetOptimizationGoals.join(
-                ", "
-              )}
-              - Ad set bid strategy: Must match EXACTLY one of the valid enum values: ${adSetBidStrategies.join(
-                ", "
-              )}
-              - Ad creative CTA type: Must match EXACTLY one of the valid enum values: ${adCreativeCTAs.join(
-                ", "
-              )}
-              - If the correct value is not available or cannot be inferred, return null.
-
-            - **Infer all the following fields:**
-              - Campaign: name
-              - Ad set: 
-                - name
-                - optimizationGoal
-                - bidStrategy
-              - Ad creative:
-                - name
-                - objectStorySpec.linkData.message: A compelling ad message
-                - objectStorySpec.linkData.link: Use a placeholder like https://example.com
-                - objectStorySpec.linkData.CTA.type: Choose a valid CTA from the enum
-                - objectStorySpec.linkData.CTA.value.link: Same as above link or another relevant one
-            - If adCreative already exists, preserve existing fields.
-          
-            - **Return null for any missing details you cannot infer.**
-            - **Final Rule**: Validate field compatibility before returning the object. If a field is invalid in context, return it as null and await clarification from the user.
-          `,
+        content: details(
+          adDetails,
+          campaignObjectives,
+          campaignStatuses,
+          adSetBillingEvents,
+          adSetOptimizationGoals,
+          adSetBidStrategies,
+          adCreativeCTAs
+        ),
       },
       ...messages,
     ],
@@ -310,12 +237,7 @@ const handleDetailsStep = async (messages, step, adDetails) => {
           messages: [
             {
               role: "system",
-              content: `The user has not provided some required details (${missingFields.join(
-                ", "
-              )}).
-                    - Ask naturally for only the missing fields.
-                    - Keep it conversational and avoid overwhelming the user.
-                    - Example: "Could you provide a campaign name and its objective?"`,
+              content: missingDetails(missingFields),
             },
             ...messages,
           ],
@@ -344,28 +266,7 @@ const handlePreviewStep = async (messages, step, adDetails) => {
         messages: [
           {
             role: "system",
-            content: `You are a tool-using assistant that helps generate Facebook ad previews.
-  
-              You are given ad input data as a JavaScript object: ${JSON.stringify(
-                adDetails
-              )}
-              
-              Instructions:
-              - Extract the following fields from the data and use them to call the 'generateAdPreview' tool:
-                - "name": a short creative title
-                - "description": a short and catchy description
-                - "message": the persuasive ad text
-                - "CTA": must be one of [${adCreativeCTAs.join(", ")}]
-                - "link": use "https://example.com" if missing
-              
-              STRICT output rules:
-              - Do not generate text.
-              - Do not describe the ad.
-              - Do not wrap the tool call in markdown or text.
-              - Do not output iframe code.
-              - Do not explain anything.
-              - DO NOT respond with JSON or text.
-              - Your ONLY task is to immediately call the 'generateAdPreview' tool with the structured fields above.`,
+            content: generatePreview(adDetails, adCreativeCTAs),
           },
           ...messages,
         ],
@@ -397,15 +298,7 @@ const handleConfirmationStep = async (messages, step, adDetails) => {
         messages: [
           {
             role: "system",
-            content: `You are a tool-using assistant.
-              
-              STRICT output rules:
-              - Do not generate text.
-              - Do not describe the ad.
-              - Do not wrap the tool call in markdown or text.
-              - Do not explain anything.
-              - DO NOT respond with JSON or text.
-              - Your ONLY task is to immediately call the 'askForConfirmation' tool with the message "Do you approve this ad?".`,
+            content: confirmation,
           },
           ...messages,
         ],
@@ -451,19 +344,7 @@ const handleAdCreationStep = async (messages, step, adDetails) => {
         messages: [
           {
             role: "system",
-            content: `You are a tool-using assistant that helps generate Facebook ads.
-              
-              STRICT output rules:
-              - Do not describe the ad.
-              - Do not wrap the tool call in markdown or text.
-              - Do not explain anything.
-              - ${
-                confirmationResult === "approve"
-                  ? "Immediately call the 'createAd' tool with the following parameters:" +
-                    JSON.stringify(adDetails)
-                  : "Ask the user what details they want to modify."
-              }
-              - If the 'createAd' tool returns a successful response, respond with "Ad created successfully.", else respond with "Ad creation failed."`,
+            content: adCreation(confirmationResult, adDetails),
           },
           ...messages,
         ],

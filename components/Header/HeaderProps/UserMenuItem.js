@@ -30,15 +30,6 @@ const UserMenuItems = ({ parentClass }) => {
         </li>
         <li>
           <Link
-            className={isActive("/chat-export") ? "active" : ""}
-            href="/chat-export"
-          >
-            <i className="fa-sharp fa-regular fa-users"></i>
-            <span>Chat Export</span>
-          </Link>
-        </li>
-        <li>
-          <Link
             className={isActive("/plans-billing") ? "active" : ""}
             href="/plans-billing"
           >

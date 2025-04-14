@@ -40,7 +40,7 @@ const UserMenu = () => {
           <li>
             <Link href="/contact">
               <i className="fa-solid fa-comments-question"></i>
-              <span>Help Center</span>
+              <span>Contact</span>
             </Link>
           </li>
           <li>

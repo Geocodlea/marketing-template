@@ -76,7 +76,7 @@ export async function POST(req, { params }) {
       campaign_id: campaignId,
       billing_event: adSet.billingEvent,
       optimization_goal: adSet.optimizationGoal,
-      daily_budget: adSet.dailyBudget.toString(),
+      daily_budget: (adSet.dailyBudget * 100).toFixed(0).toString(),
       bid_strategy: adSet.bidStrategy,
       destination_type: "ON_AD",
       targeting: {
