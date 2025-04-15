@@ -20,38 +20,44 @@ const createEmailSchema = z.object({
 export async function POST(req) {
   let { messages } = await req.json();
 
+  // Extract the user's last tool invocations to see if they approved or not
+  const toolInvocations = messages[messages.length - 1]?.toolInvocations || [];
+  const confirmationResult = toolInvocations.length
+    ? toolInvocations[toolInvocations.length - 1].result
+    : "";
+
   const response = streamText({
     model: openai("gpt-4o-mini"),
     messages: [
       {
         role: "system",
-        content: `You are an AI assistant that helps generate high-quality marketing emails. 
+        content: `You are an AI assistant that helps users generate high-quality marketing or transactional emails.
 
-    Your job is to:
-    1. Understand the intent behind the user's input message.
-    2. Generate a compelling, engaging **email subject line**.
-    3. Write a clear, persuasive **email body**, written in a friendly and professional tone, with the goal of engagement or conversion.
-    4. Adapt the language style to match the type of email (informative, promotional, transactional, follow-up, etc.).
-
-    Output format should be:
-
-    📌 Subject: [Generated Subject Line]
-
-    📨 Body:
-    [Generated Email Body (HTML-friendly, paragraph format, clear CTA if needed)]
-
-    Guidelines:
-    - Keep the subject line short and attention-grabbing (max 10 words).
-    - Make the body easy to scan: use short paragraphs, bold key points if helpful.
-    - Use personalization placeholders if appropriate (e.g. {{first_name}}).
-    - Match the tone to the intent (warm for follow-ups, exciting for launches, helpful for onboarding, etc.).
-
-    The user will give you short natural-language prompts like:
-    - “remind people about the webinar tomorrow”
-    - “announce our new integration with Slack”
-    - “welcome email for new subscribers”
-
-    Always assume the user is a marketing manager looking to use the generated email in a professional campaign tool.`,
+        Instructions:
+        - When generating the final version of the email, **only return the email subject and body through the "generateEmail" tool**.
+        - Do **not repeat or summarize** the email content inside your messages — the frontend will display a live preview.
+        - After the email is generated, ask if the user would like to modify anything (e.g. tone, subject line, content), but again, don't repeat the full content.
+        - If the user confirms the email, call the "createEmail" tool.
+        
+        Your job:
+        1. Understand the user's intent from short prompts.
+        2. Generate a compelling subject line (max 10 words).
+        3. Write a clean, professional body (HTML-friendly).
+        4. Match the email tone (friendly, persuasive, urgent, etc.) based on the intent.
+        
+        Guidelines:
+        - Use short paragraphs and clear structure.
+        - Avoid repeating the same message multiple times.
+        - If needed, use placeholders like {{first_name}}.
+        
+        Behavior based on confirmation:
+        - ${
+          confirmationResult === "approve"
+            ? "Call the 'createEmail' tool immediately with the subject and body."
+            : "Ask if the user wants to make any modifications using the 'askForConfirmation' tool."
+        }
+        
+        Assume the user is preparing this for a professional email marketing platform.`,
       },
       ...messages,
     ],

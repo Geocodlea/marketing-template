@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 
 import LeftDashboardSidebar from "@/components/Header/LeftDashboardSidebar";
 import AIGenerator from "@/components/Common/AIGenerator";
@@ -30,7 +30,6 @@ const AdsGeneratorPage = ({ userId, userFacebook, plan }) => {
   const userFb = JSON.parse(userFacebook);
   const [step, setStep] = useState("validation");
   const [adDetails, setAdDetails] = useState(initialAdDetails);
-  const [disabledChat, setDisabledChat] = useState(false);
   const [adsRemaining, setAdsRemaining] = useState(userFb.adsRemaining);
   const [alert, setAlert] = useState(null);
 
@@ -86,25 +85,25 @@ const AdsGeneratorPage = ({ userId, userFacebook, plan }) => {
     },
   });
 
-  if (!adsRemaining) {
-    setMessages([
-      {
-        role: "system",
-        content:
-          "Ai depășit numărul de reclame conform planului tău. Pentru a crea mai multe reclame va trebui să te abonezi la alt plan.",
-      },
-    ]);
-  }
-
-  if (!userFb.adAccountId || !userFb.pageId || !userFb.formId) {
-    setMessages([
-      {
-        role: "system",
-        content:
-          "Nu ai setat datele de conexiune pentru Facebook. Te rugăm să le setezi în profilul tău.",
-      },
-    ]);
-  }
+  useEffect(() => {
+    if (!adsRemaining) {
+      setMessages([
+        {
+          role: "system",
+          content:
+            "Ai depășit numărul de reclame conform planului tău. Pentru a crea mai multe reclame va trebui să te abonezi la alt plan.",
+        },
+      ]);
+    } else if (!userFb.adAccountId || !userFb.pageId || !userFb.formId) {
+      setMessages([
+        {
+          role: "system",
+          content:
+            "Nu ai setat datele de conexiune pentru Facebook. Te rugăm să le setezi în profilul tău.",
+        },
+      ]);
+    }
+  }, [adsRemaining, userFb.adAccountId, userFb.pageId, userFb.formId]);
 
   useEffect(() => {
     if (data) {
@@ -125,7 +124,7 @@ const AdsGeneratorPage = ({ userId, userFacebook, plan }) => {
     }
   }, [data]);
 
-  useEffect(() => {
+  const disabledChat = useMemo(() => {
     const isAskForConfirmation = messages.some((msg) =>
       msg.parts?.some(
         (part) =>
@@ -135,8 +134,7 @@ const AdsGeneratorPage = ({ userId, userFacebook, plan }) => {
       )
     );
 
-    setDisabledChat(isAskForConfirmation);
-    if (!adsRemaining) setDisabledChat(true);
+    return isAskForConfirmation || !adsRemaining;
   }, [messages, adsRemaining]);
 
   return (

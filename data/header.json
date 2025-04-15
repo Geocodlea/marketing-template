@@ -38,10 +38,10 @@
           "badge": ""
         },
         {
-          "link": "#",
-          "isDisable": true,
+          "link": "/email-generator",
+          "isDisable": false,
           "title": "Email Marketing",
-          "badge": "Coming"
+          "badge": ""
         },
         {
           "link": "#",
@@ -139,12 +139,12 @@
       "icon": ""
     },
     {
-      "link": "#",
-      "isDisable": true,
+      "link": "/email-generator",
+      "isDisable": false,
       "type": "default",
       "img": "/images/generator-icon/email.png",
       "text": "Email Marketing",
-      "badge": "Coming",
+      "badge": "",
       "icon": ""
     },
     {
@@ -910,11 +910,11 @@
       "badge": ""
     },
     {
-      "link": "#",
-      "isDisable": true,
+      "link": "/email-generator",
+      "isDisable": false,
       "title": "Email Marketing",
       "img": "/images/generator-icon/text-voice.png",
-      "badge": "Coming"
+      "badge": ""
     },
     {
       "link": "#",

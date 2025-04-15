@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useMemo } from "react";
 
 import LeftDashboardSidebar from "@/components/Header/LeftDashboardSidebar";
 import AIGenerator from "@/components/Common/AIGenerator";
@@ -24,7 +24,6 @@ const sendEmail = async (to, subject, html) => {
 };
 
 const EmailGeneratorPage = ({ email, plan }) => {
-  const [disabledChat, setDisabledChat] = useState(false);
   const [alert, setAlert] = useState(null);
 
   const {
@@ -43,12 +42,9 @@ const EmailGeneratorPage = ({ email, plan }) => {
     maxSteps: 5,
     async onToolCall({ toolCall }) {
       if (toolCall.toolName === "generateEmail") {
-        console.log("🚀 ~ generateEmail ~ toolCall.args:", toolCall.args);
-
-        return null;
+        return "succes";
       }
       if (toolCall.toolName === "createEmail") {
-        console.log("🚀 ~ createEmail ~ toolCall.args:", toolCall.args);
         const result = await sendEmail(
           email,
           toolCall.args.subject,
@@ -56,8 +52,6 @@ const EmailGeneratorPage = ({ email, plan }) => {
         );
 
         if (result.status === "success") {
-          const data = await adFetch("", userId, "adsRemaining");
-
           setAlert({
             status: result.status,
             message: result.message,
@@ -83,8 +77,8 @@ const EmailGeneratorPage = ({ email, plan }) => {
     },
   });
 
-  useEffect(() => {
-    const isAskForConfirmation = messages.some((msg) =>
+  const disabledChat = useMemo(() => {
+    return messages.some((msg) =>
       msg.parts?.some(
         (part) =>
           part.type === "tool-invocation" &&
@@ -92,8 +86,6 @@ const EmailGeneratorPage = ({ email, plan }) => {
           part.toolInvocation.state === "call"
       )
     );
-
-    setDisabledChat(isAskForConfirmation);
   }, [messages]);
 
   return (

@@ -77,7 +77,17 @@ export const renderToolInvocation = (part, addToolResult) => {
         return (
           <div key={callId}>
             <p>Here is your email preview:</p>
-            {/* <AdPreview html={part.toolInvocation.result.data[0].body} /> */}
+            <div className="container my-5 p-4 border rounded shadow-sm bg-white">
+              <h5 className="text-primary mb-4">
+                {part.toolInvocation.args.subject}
+              </h5>
+              <div
+                className="text-body"
+                dangerouslySetInnerHTML={{
+                  __html: part.toolInvocation.args.body,
+                }}
+              />
+            </div>
           </div>
         );
       }

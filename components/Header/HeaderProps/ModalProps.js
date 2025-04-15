@@ -5,9 +5,11 @@ import Link from "next/link";
 
 import ToolsData from "../../../data/header.json";
 import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 const ModalProps = () => {
-  const router = useRouter(); // Initialize the useRouter hook
+  const router = useRouter();
+  const pathname = usePathname();
 
   const handleClick = (e, link) => {
     e.preventDefault();
@@ -16,8 +18,11 @@ const ModalProps = () => {
     const closeBtn = document.querySelector("#newchatModal .close-button");
     if (closeBtn) closeBtn.click();
 
-    router.push(link);
-    window.location.reload();
+    if (pathname === link) {
+      window.location.reload();
+    } else {
+      router.push(link);
+    }
   };
 
   return (
