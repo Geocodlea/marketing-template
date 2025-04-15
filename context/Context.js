@@ -1,7 +1,8 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+"use client";
+
+import { createContext, useContext, useState, useEffect } from "react";
 
 export const CreateContext = createContext();
-
 export const useAppContext = () => useContext(CreateContext);
 
 const Context = ({ children }) => {

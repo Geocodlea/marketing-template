@@ -1,5 +1,3 @@
-"use client";
-
 import Context from "@/context/Context";
 import BackToTop from "@/components/Common/BackToTop";
 

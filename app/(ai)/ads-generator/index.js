@@ -1,9 +1,8 @@
 "use client";
 
-import { useState, useEffect, use } from "react";
+import { useState, useEffect } from "react";
 
 import LeftDashboardSidebar from "@/components/Header/LeftDashboardSidebar";
-// import RightDashboardSidebar from "@/components/Header/RightDashboardSidebar";
 import Modal from "@/components/Common/Modal";
 import TextGenerator from "@/components/TextGenerator/TextGenerator";
 import StaticbarDashboard from "@/components/Common/StaticBarDashboard";
@@ -27,7 +26,7 @@ const adFetch = async (adDetails, userId, api) => {
   }
 };
 
-const TextGeneratorPage = ({ userId, userFacebook, plan }) => {
+const AIGeneratorPage = ({ userId, userFacebook, plan }) => {
   const userFb = JSON.parse(userFacebook);
   const [step, setStep] = useState("validation");
   const [adDetails, setAdDetails] = useState(initialAdDetails);
@@ -142,35 +141,27 @@ const TextGeneratorPage = ({ userId, userFacebook, plan }) => {
 
   return (
     <>
-      <LeftDashboardSidebar plan={plan} />
-      {/* <RightDashboardSidebar /> */}
       <Modal />
-      <div className="rbt-main-content">
-        <div className="rbt-daynamic-page-content">
-          <div className="rbt-dashboard-content">
-            <div className="content-page">
-              <div className="chat-box-section">
-                <TextGenerator
-                  messages={messages}
-                  reload={reload}
-                  addToolResult={addToolResult}
-                />
-                {alert && <Alert alert={alert} setAlert={setAlert} />}
-                <StaticbarDashboard
-                  input={input}
-                  handleInputChange={handleInputChange}
-                  handleSubmit={handleSubmit}
-                  status={status}
-                  stop={stop}
-                  disabledChat={disabledChat}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
+      <LeftDashboardSidebar plan={plan} />
+
+      <div className="chat-box-section">
+        <TextGenerator
+          messages={messages}
+          reload={reload}
+          addToolResult={addToolResult}
+        />
+        {alert && <Alert alert={alert} setAlert={setAlert} />}
+        <StaticbarDashboard
+          input={input}
+          handleInputChange={handleInputChange}
+          handleSubmit={handleSubmit}
+          status={status}
+          stop={stop}
+          disabledChat={disabledChat}
+        />
       </div>
     </>
   );
 };
 
-export default TextGeneratorPage;
+export default AIGeneratorPage;

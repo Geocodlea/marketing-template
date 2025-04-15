@@ -69,7 +69,7 @@ const Home = () => {
                                 : "is-hidden theme-gradient"
                             }
                           >
-                            automat
+                            Automat
                           </b>
                           <b
                             className={
@@ -78,7 +78,7 @@ const Home = () => {
                                 : "is-hidden theme-gradient"
                             }
                           >
-                            simplu
+                            Simplu
                           </b>
                           <b
                             className={
@@ -87,7 +87,7 @@ const Home = () => {
                                 : "is-hidden theme-gradient"
                             }
                           >
-                            elegant
+                            Elegant
                           </b>
                         </span>
                       </span>
