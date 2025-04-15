@@ -1,5 +1,3 @@
-import AIGeneratorPage from "./index";
-
 export const metadata = {
   title: "Text Generator - || AiWave - AI SaaS Website NEXTJS14 UI Kit",
   description: "AiWave - AI SaaS Website NEXTJS14 UI Kit",
@@ -10,8 +8,9 @@ import { getServerSession } from "next-auth/next";
 import { redirect } from "next/navigation";
 import dbConnect from "@/utils/dbConnect";
 import User from "@/models/User";
+import AdsGeneratorPage from "./index";
 
-const AIGeneratorLayout = async () => {
+const AdsGeneratorLayout = async () => {
   const session = await getServerSession(authOptions);
   if (!session) redirect(`/signin`);
 
@@ -22,7 +21,7 @@ const AIGeneratorLayout = async () => {
 
   return (
     <>
-      <AIGeneratorPage
+      <AdsGeneratorPage
         userId={userId}
         userFacebook={JSON.stringify(user.facebook)}
         plan={user.plan}
@@ -31,4 +30,4 @@ const AIGeneratorLayout = async () => {
   );
 };
 
-export default AIGeneratorLayout;
+export default AdsGeneratorLayout;

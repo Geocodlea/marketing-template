@@ -13,7 +13,18 @@ export async function POST(request) {
 
   const { to, subject, html } = await request.json();
 
-  await testEmail(to, subject, html);
+  try {
+    await testEmail(to, subject, html);
 
-  return NextResponse.json({ success: true });
+    return NextResponse.json({
+      status: "success",
+      message: "Email created successfully!",
+    });
+  } catch (error) {
+    console.error("Error creating email: ", error);
+    return NextResponse.json({
+      status: "error",
+      message: error.message || "An error occurred while creating the email.",
+    });
+  }
 }

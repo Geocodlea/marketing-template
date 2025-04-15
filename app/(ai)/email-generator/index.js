@@ -4,20 +4,17 @@ import { useState, useEffect } from "react";
 
 import LeftDashboardSidebar from "@/components/Header/LeftDashboardSidebar";
 import AIGenerator from "@/components/Common/AIGenerator";
-
 import StaticbarDashboard from "@/components/Common/StaticBarDashboard";
 
 import { useChat } from "@ai-sdk/react";
-import { initialAdDetails } from "@/utils/fbAdOptions";
-import isEqual from "lodash/isEqual";
 import Alert from "@/components/Common/Alert";
 
-const adFetch = async (adDetails, userId, api) => {
+const sendEmail = async (to, subject, html) => {
   try {
-    const response = await fetch(`/api/facebook/${api}/${userId}`, {
+    const response = await fetch(`/api/emails/`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ adDetails }),
+      body: JSON.stringify({ to, subject, html }),
     });
     const result = await response.json();
     return result;
@@ -26,17 +23,12 @@ const adFetch = async (adDetails, userId, api) => {
   }
 };
 
-const AdsGeneratorPage = ({ userId, userFacebook, plan }) => {
-  const userFb = JSON.parse(userFacebook);
-  const [step, setStep] = useState("validation");
-  const [adDetails, setAdDetails] = useState(initialAdDetails);
+const EmailGeneratorPage = ({ email, plan }) => {
   const [disabledChat, setDisabledChat] = useState(false);
-  const [adsRemaining, setAdsRemaining] = useState(userFb.adsRemaining);
   const [alert, setAlert] = useState(null);
 
   const {
     messages,
-    setMessages,
     input,
     handleInputChange,
     handleSubmit,
@@ -45,30 +37,35 @@ const AdsGeneratorPage = ({ userId, userFacebook, plan }) => {
     reload,
     addToolResult,
     data,
-    setData,
   } = useChat({
-    api: "/api/facebook/chat",
-    body: { step, adDetails },
+    api: "/api/emails/chat",
+    body: {},
     maxSteps: 5,
     async onToolCall({ toolCall }) {
-      if (toolCall.toolName === "generateAdPreview") {
-        const result = await adFetch(toolCall.args, userId, "generatePreview");
-        return result;
+      if (toolCall.toolName === "generateEmail") {
+        console.log("🚀 ~ generateEmail ~ toolCall.args:", toolCall.args);
+
+        return null;
       }
-      if (toolCall.toolName === "createAd") {
-        const result = await adFetch(toolCall.args, userId, "createAd");
+      if (toolCall.toolName === "createEmail") {
+        console.log("🚀 ~ createEmail ~ toolCall.args:", toolCall.args);
+        const result = await sendEmail(
+          email,
+          toolCall.args.subject,
+          toolCall.args.body
+        );
 
         if (result.status === "success") {
           const data = await adFetch("", userId, "adsRemaining");
-          setAdsRemaining(data.adsRemaining);
+
           setAlert({
-            status: "success",
-            message: "Reclama a fost creată cu succes!",
+            status: result.status,
+            message: result.message,
           });
         } else {
           setAlert({
-            status: "danger",
-            message: "A apărut o eroare la crearea reclamei.",
+            status: result.status,
+            message: result.message,
           });
         }
         return result.message;
@@ -86,45 +83,6 @@ const AdsGeneratorPage = ({ userId, userFacebook, plan }) => {
     },
   });
 
-  if (!adsRemaining) {
-    setMessages([
-      {
-        role: "system",
-        content:
-          "Ai depășit numărul de reclame conform planului tău. Pentru a crea mai multe reclame va trebui să te abonezi la alt plan.",
-      },
-    ]);
-  }
-
-  if (!userFb.adAccountId || !userFb.pageId || !userFb.formId) {
-    setMessages([
-      {
-        role: "system",
-        content:
-          "Nu ai setat datele de conexiune pentru Facebook. Te rugăm să le setezi în profilul tău.",
-      },
-    ]);
-  }
-
-  useEffect(() => {
-    if (data) {
-      const latest = data.at(-1);
-      if (!latest) return;
-
-      if (latest.step !== step) {
-        setStep(latest.step);
-      }
-      if (!isEqual(latest.adDetails, adDetails)) {
-        setAdDetails(latest.adDetails);
-      }
-
-      if (latest.step === "end") {
-        setAdDetails(initialAdDetails);
-        setData(undefined);
-      }
-    }
-  }, [data]);
-
   useEffect(() => {
     const isAskForConfirmation = messages.some((msg) =>
       msg.parts?.some(
@@ -136,8 +94,7 @@ const AdsGeneratorPage = ({ userId, userFacebook, plan }) => {
     );
 
     setDisabledChat(isAskForConfirmation);
-    if (!adsRemaining) setDisabledChat(true);
-  }, [messages, adsRemaining]);
+  }, [messages]);
 
   return (
     <>
@@ -145,7 +102,7 @@ const AdsGeneratorPage = ({ userId, userFacebook, plan }) => {
 
       <div className="chat-box-section">
         <AIGenerator
-          title="Generator de Reclame"
+          title="Email Generator"
           messages={messages}
           reload={reload}
           addToolResult={addToolResult}
@@ -164,4 +121,4 @@ const AdsGeneratorPage = ({ userId, userFacebook, plan }) => {
   );
 };
 
-export default AdsGeneratorPage;
+export default EmailGeneratorPage;

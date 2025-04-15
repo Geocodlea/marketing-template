@@ -1,32 +1,24 @@
-"use client";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { getServerSession } from "next-auth/next";
+import { redirect } from "next/navigation";
+import dbConnect from "@/utils/dbConnect";
+import User from "@/models/User";
+import EmailGeneratorPage from "./index";
 
-import LeftDashboardSidebar from "@/components/Header/LeftDashboardSidebar";
+const EmailGeneratorLayout = async () => {
+  const session = await getServerSession(authOptions);
+  if (!session) redirect(`/signin`);
 
-const MyComponent = () => {
-  const sendEmail = async () => {
-    try {
-      const response = await fetch(`/api/emails/`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          to: "geocodlea@gmail.com",
-          subject: "Test subject",
-          html: "Test html",
-        }),
-      });
-      const result = await response.json();
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
+  const email = session.user.email;
+
+  await dbConnect();
+  const user = await User.findOne({ email });
 
   return (
     <>
-      <LeftDashboardSidebar />
-
-      <button onClick={sendEmail}>Send Email</button>
+      <EmailGeneratorPage email={email} plan={user.plan} />
     </>
   );
 };
 
-export default MyComponent;
+export default EmailGeneratorLayout;
