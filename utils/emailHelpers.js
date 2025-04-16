@@ -116,7 +116,7 @@ const unsubscribe = (email) => {
   return { html, text };
 };
 
-const sendTransactionalEmail = async (to, subject, html) => {
+const sendTransactionalEmail = async (from, to, subject, body) => {
   await fetch("https://api.brevo.com/v3/smtp/email", {
     method: "POST",
     headers: {
@@ -125,21 +125,21 @@ const sendTransactionalEmail = async (to, subject, html) => {
     },
     body: JSON.stringify({
       sender: {
-        email: process.env.BREVO_EMAIL_USER,
+        email: from,
         name: "AI Marketing",
       },
       to: [{ email: to }],
       subject,
-      htmlContent: html,
+      htmlContent: body,
       trackOpens: true, // Enable open tracking
       trackClicks: true, // Enable click tracking
     }),
   });
 };
 
-const testEmail = async (to, subject, html) => {
+const testEmail = async (from, to, subject, body) => {
   try {
-    await sendTransactionalEmail(to, subject, html);
+    await sendTransactionalEmail(from, to, subject, body);
   } catch (error) {
     console.error(error);
   }

@@ -9,12 +9,12 @@ import StaticbarDashboard from "@/components/Common/StaticBarDashboard";
 import { useChat } from "@ai-sdk/react";
 import Alert from "@/components/Common/Alert";
 
-const sendEmail = async (to, subject, html) => {
+const sendEmail = async (from, to, subject, html) => {
   try {
     const response = await fetch(`/api/emails/`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ to, subject, html }),
+      body: JSON.stringify({ from, to, subject, html }),
     });
     const result = await response.json();
     return result;
@@ -41,12 +41,10 @@ const EmailGeneratorPage = ({ email, plan }) => {
     body: {},
     maxSteps: 5,
     async onToolCall({ toolCall }) {
-      if (toolCall.toolName === "generateEmail") {
-        return "succes";
-      }
       if (toolCall.toolName === "createEmail") {
         const result = await sendEmail(
           email,
+          toolCall.args.to,
           toolCall.args.subject,
           toolCall.args.body
         );

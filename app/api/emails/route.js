@@ -11,10 +11,10 @@ export async function POST(request) {
   //     });
   //   }
 
-  const { to, subject, html } = await request.json();
+  const { from, to, subject, html } = await request.json();
 
   try {
-    await testEmail(to, subject, html);
+    await testEmail(process.env.BREVO_EMAIL_USER, to, subject, html);
 
     return NextResponse.json({
       status: "success",
