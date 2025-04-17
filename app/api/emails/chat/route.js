@@ -4,7 +4,9 @@ import { NextResponse } from "next/server";
 import z from "zod";
 
 const generateEmailSchema = z.object({
-  to: z.string().describe("The email address to send the email to."),
+  to: z
+    .array(z.object({ email: z.string().email() }))
+    .describe("The list of email addresses to send the email to."),
   subject: z.string().describe("The subject of the email."),
   body: z.string().describe("The body of the email."),
 });
@@ -14,7 +16,9 @@ const askForConfirmationSchema = z.object({
 });
 
 const createEmailSchema = z.object({
-  to: z.string().describe("The email address to send the email to."),
+  to: z
+    .array(z.object({ email: z.string().email() }))
+    .describe("The list of email addresses to send the email to."),
   subject: z.string().describe("The subject of the email."),
   body: z.string().describe("The body of the email."),
 });
@@ -68,6 +72,8 @@ export async function POST(req) {
         description: "Generate an email.",
         parameters: generateEmailSchema,
         execute: async ({ to, subject, body }) => {
+          console.log(to, subject, body);
+
           return { to, subject, body };
         },
       },

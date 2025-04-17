@@ -128,7 +128,7 @@ const sendTransactionalEmail = async (from, to, subject, body) => {
         email: from,
         name: "AI Marketing",
       },
-      to: [{ email: to }],
+      to,
       subject,
       htmlContent: body,
       trackOpens: true, // Enable open tracking

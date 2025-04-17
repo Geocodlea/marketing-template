@@ -78,7 +78,10 @@ export const renderToolInvocation = (part, addToolResult) => {
           <div key={callId}>
             <p>
               Here is your email preview, that will be sent to{" "}
-              {part.toolInvocation.args.to}:
+              {part.toolInvocation.args.to
+                .map((recipient) => recipient.email)
+                .join(", ")}
+              :
             </p>
             <div className="container my-5 p-4 border rounded shadow-sm bg-white">
               <h5 className="text-primary mb-4">

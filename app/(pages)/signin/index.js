@@ -47,6 +47,26 @@ const SigninPage = () => {
                       </div>
                     </div>
                   </div>
+                  <div className="signup-box-bottom">
+                    <div className="signup-box-content">
+                      <div className="social-btn-grp">
+                        <button
+                          className="btn-default btn-border"
+                          onClick={() => signIn("tiktok", { callbackUrl: "/" })}
+                        >
+                          <span className="icon-left">
+                            <Image
+                              src={facebook}
+                              width={18}
+                              height={18}
+                              alt="Facebook Icon"
+                            />
+                          </span>
+                          Login with TikTok
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div className="col-lg-6 right-wrapper">

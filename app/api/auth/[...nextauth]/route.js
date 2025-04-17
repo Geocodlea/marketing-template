@@ -2,13 +2,13 @@ import NextAuth from "next-auth";
 import { MongoDBAdapter } from "@auth/mongodb-adapter";
 import clientPromise from "/utils/dbMongoClient";
 import FacebookProvider from "next-auth/providers/facebook";
+import TikTokProvider from "@/utils/TikTokProvider";
 import dbConnect from "@/utils/dbConnect";
 import User from "@/models/User";
 
 export const authOptions = {
   adapter: MongoDBAdapter(clientPromise),
   secret: process.env.NEXTAUTH_SECRET,
-
   providers: [
     FacebookProvider({
       clientId: process.env.FACEBOOK_APP_ID,
@@ -21,14 +21,46 @@ export const authOptions = {
         },
       },
     }),
+
+    TikTokProvider({
+      clientId: process.env.TIKTOK_CLIENT_ID,
+      clientSecret: process.env.TIKTOK_CLIENT_SECRET,
+    }),
   ],
+
+  debug: true,
+  // callbacks: {
+  //   async redirect({ url, baseUrl }) {
+  //     return baseUrl;
+  //   },
+
+  //   async session({ session, user }) {
+  //     session.user.id = user.id;
+  //     return session;
+  //   },
+  // },
+
   callbacks: {
     async redirect({ url, baseUrl }) {
       return baseUrl;
     },
 
-    async session({ session, user }) {
-      session.user.id = user.id;
+    // jwt callback stores access and refresh tokens in the JWT token
+    async jwt({ token, account }) {
+      if (account) {
+        // Store the tokens from the TikTok account in the JWT token
+        token.access_token = account.access_token;
+        token.refresh_token = account.refresh_token;
+      }
+
+      return token;
+    },
+
+    // session callback stores tokens in the session object for use in the app
+    async session({ session, token }) {
+      // Store the access token and refresh token in the session
+      session.access_token = token.access_token;
+      session.refresh_token = token.refresh_token;
 
       return session;
     },
