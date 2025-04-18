@@ -1,5 +1,5 @@
 export default function TikTokProvider(options) {
-  console.log("🚀 ~ tikTokProvider.js:2 ~ TikTokProvider ~ options:", options);
+  // console.log("🚀 ~ tikTokProvider.js:2 ~ TikTokProvider ~ options:", options);
   return {
     id: "tiktok",
     name: "TikTok",

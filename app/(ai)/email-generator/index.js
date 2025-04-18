@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useEffect, useMemo } from "react";
 
 import LeftDashboardSidebar from "@/components/Header/LeftDashboardSidebar";
 import AIGenerator from "@/components/Common/AIGenerator";
@@ -23,11 +23,12 @@ const sendEmail = async (from, to, subject, html) => {
   }
 };
 
-const EmailGeneratorPage = ({ email, plan }) => {
+const EmailGeneratorPage = ({ brevoKey, email, plan }) => {
   const [alert, setAlert] = useState(null);
 
   const {
     messages,
+    setMessages,
     input,
     handleInputChange,
     handleSubmit,
@@ -74,6 +75,18 @@ const EmailGeneratorPage = ({ email, plan }) => {
       });
     },
   });
+
+  useEffect(() => {
+    if (!brevoKey) {
+      setMessages([
+        {
+          role: "system",
+          content:
+            "Nu ai setat datele domeniului de email. Te rugăm să le setezi în profilul tău.",
+        },
+      ]);
+    }
+  }, [brevoKey]);
 
   const disabledChat = useMemo(() => {
     return messages.some((msg) =>

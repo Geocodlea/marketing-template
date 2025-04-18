@@ -17,6 +17,7 @@ global.models.User =
       pageId: { type: String },
       formId: { type: String },
     },
+    brevoKey: { type: String },
   });
 
 export default global.models.User;

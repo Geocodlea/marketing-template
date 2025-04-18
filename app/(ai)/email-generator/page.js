@@ -16,7 +16,11 @@ const EmailGeneratorLayout = async () => {
 
   return (
     <>
-      <EmailGeneratorPage email={email} plan={user.plan} />
+      <EmailGeneratorPage
+        email={email}
+        brevoKey={user.brevoKey}
+        plan={user.plan}
+      />
     </>
   );
 };

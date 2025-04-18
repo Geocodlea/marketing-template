@@ -28,40 +28,14 @@ export const authOptions = {
     }),
   ],
 
-  debug: true,
-  // callbacks: {
-  //   async redirect({ url, baseUrl }) {
-  //     return baseUrl;
-  //   },
-
-  //   async session({ session, user }) {
-  //     session.user.id = user.id;
-  //     return session;
-  //   },
-  // },
-
+  // debug: true,
   callbacks: {
     async redirect({ url, baseUrl }) {
       return baseUrl;
     },
 
-    // jwt callback stores access and refresh tokens in the JWT token
-    async jwt({ token, account }) {
-      if (account) {
-        // Store the tokens from the TikTok account in the JWT token
-        token.access_token = account.access_token;
-        token.refresh_token = account.refresh_token;
-      }
-
-      return token;
-    },
-
-    // session callback stores tokens in the session object for use in the app
-    async session({ session, token }) {
-      // Store the access token and refresh token in the session
-      session.access_token = token.access_token;
-      session.refresh_token = token.refresh_token;
-
+    async session({ session, user }) {
+      session.user.id = user.id;
       return session;
     },
   },

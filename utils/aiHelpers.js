@@ -22,6 +22,8 @@ import {
   adCreation,
 } from "@/utils/aiContent";
 
+const model = process.env.AI_MODEL;
+
 const adDetailsSchema = z.object({
   campaign: z.object({
     name: z.string().nullable(),
@@ -124,7 +126,7 @@ const handleValidationStep = async (messages, step, adDetails) => {
 
   // Primary logic:
   const validationResponse = await generateObject({
-    model: openai("gpt-4o-mini"),
+    model: openai(model),
     output: "enum",
     enum: ["details", "unrelated", "clarification"],
     messages: [
@@ -147,7 +149,7 @@ const handleValidationStep = async (messages, step, adDetails) => {
       execute: (dataStream) => {
         dataStream.writeData({ step, adDetails });
         const unrelatedResponse = streamText({
-          model: openai("gpt-4o-mini"),
+          model: openai(model),
           messages: [
             {
               role: "system",
@@ -171,7 +173,7 @@ const handleValidationStep = async (messages, step, adDetails) => {
       execute: (dataStream) => {
         dataStream.writeData({ step, adDetails });
         const clarificationResponse = streamText({
-          model: openai("gpt-4o-mini"),
+          model: openai(model),
           messages: [
             {
               role: "system",
@@ -196,7 +198,7 @@ const handleDetailsStep = async (messages, step, adDetails) => {
 
   step = "details";
   const detailsResponse = await generateObject({
-    model: openai("gpt-4o-mini"),
+    model: openai(model),
     messages: [
       {
         role: "system",
@@ -233,7 +235,7 @@ const handleDetailsStep = async (messages, step, adDetails) => {
       execute: (dataStream) => {
         dataStream.writeData({ step, adDetails });
         const missingDetailsResponse = streamText({
-          model: openai("gpt-4o-mini"),
+          model: openai(model),
           messages: [
             {
               role: "system",
@@ -262,7 +264,7 @@ const handlePreviewStep = async (messages, step, adDetails) => {
     execute: (dataStream) => {
       dataStream.writeData({ step, adDetails });
       const previewResponse = streamText({
-        model: openai("gpt-4o-mini"),
+        model: openai(model),
         messages: [
           {
             role: "system",
@@ -294,7 +296,7 @@ const handleConfirmationStep = async (messages, step, adDetails) => {
     execute: (dataStream) => {
       dataStream.writeData({ step, adDetails });
       const confirmationResponse = streamText({
-        model: openai("gpt-4o-mini"),
+        model: openai(model),
         messages: [
           {
             role: "system",
@@ -340,7 +342,7 @@ const handleAdCreationStep = async (messages, step, adDetails) => {
     execute: (dataStream) => {
       dataStream.writeData({ step, adDetails });
       const createAdResponse = streamText({
-        model: openai("gpt-4o-mini"),
+        model: openai(model),
         messages: [
           {
             role: "system",

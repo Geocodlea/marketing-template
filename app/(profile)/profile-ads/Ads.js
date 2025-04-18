@@ -25,10 +25,11 @@ const AdsPage = ({ ads }) => {
       <div className="rainbow-pricing-detailed-area mb--80">
         <div className="row row--15">
           <div className="col-lg-12">
-            <div className="rainbow-compare-table style-1">
+            <div className="rainbow-compare-table style-2">
               <table className="table-responsive">
                 <thead>
                   <tr>
+                    <th></th>
                     <th>Nume</th>
                     <th>Status</th>
                     <th>Vârstă Țintită</th>
@@ -39,6 +40,7 @@ const AdsPage = ({ ads }) => {
                 <tbody>
                   {ads?.map((ad, index) => (
                     <tr key={index}>
+                      <td>{index + 1}</td>
                       <td>{ad.name}</td>
                       <td>
                         <span
@@ -61,7 +63,7 @@ const AdsPage = ({ ads }) => {
                       <td>{formatDate(ad.created_time)}</td>
                       <td>
                         <Link
-                          href={`/ads/${ad.id}`}
+                          href={`/profile-ads/${ad.id}`}
                           className="read-more-btn theme-gradient"
                         >
                           Vezi

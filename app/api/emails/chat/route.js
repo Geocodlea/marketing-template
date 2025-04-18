@@ -1,7 +1,8 @@
 import { openai } from "@ai-sdk/openai";
-import { streamText, generateObject, createDataStreamResponse } from "ai";
-import { NextResponse } from "next/server";
+import { streamText } from "ai";
 import z from "zod";
+
+const model = process.env.AI_MODEL;
 
 const generateEmailSchema = z.object({
   to: z
@@ -33,7 +34,7 @@ export async function POST(req) {
     : "";
 
   const response = streamText({
-    model: openai("gpt-4o-mini"),
+    model: openai(model),
     messages: [
       {
         role: "system",

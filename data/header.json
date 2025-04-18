@@ -5,8 +5,12 @@
       "text": "Detalii Profil"
     },
     {
-      "link": "/ads",
+      "link": "/profile-ads",
       "text": "Reclame Facebook"
+    },
+    {
+      "link": "/profile-emails",
+      "text": "Emails"
     },
     {
       "link": "/notification",
