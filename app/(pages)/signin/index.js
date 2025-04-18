@@ -5,6 +5,7 @@ import logo from "@/public/images/logo/logo.png";
 import userImg from "@/public/images/team/team-02sm.jpg";
 import brandImg from "@/public/images/brand/brand-t.png";
 import facebook from "@/public/images/sign-up/facebook.png";
+import tiktok from "@/public/images/sign-up/tiktok.webp";
 
 import { signIn } from "next-auth/react";
 
@@ -47,6 +48,7 @@ const SigninPage = () => {
                       </div>
                     </div>
                   </div>
+                  <br />
                   <div className="signup-box-bottom">
                     <div className="signup-box-content">
                       <div className="social-btn-grp">
@@ -56,10 +58,10 @@ const SigninPage = () => {
                         >
                           <span className="icon-left">
                             <Image
-                              src={facebook}
+                              src={tiktok}
                               width={18}
                               height={18}
-                              alt="Facebook Icon"
+                              alt="TikTok Icon"
                             />
                           </span>
                           Login with TikTok

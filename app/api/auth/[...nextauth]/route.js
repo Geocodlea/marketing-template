@@ -28,7 +28,6 @@ export const authOptions = {
     }),
   ],
 
-  // debug: true,
   callbacks: {
     async redirect({ url, baseUrl }) {
       return baseUrl;

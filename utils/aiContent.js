@@ -28,6 +28,7 @@ Strict output rule:
 - Return ONLY the JSON object.
 - Do NOT wrap it in markdown.
 - Do NOT add any headings or comments.
+- Always make the ad message longer, with subpoints, better formatted and with relevant emojis.
 
 Guidelines:
 - **Do NOT infer the following critical details:**
@@ -38,18 +39,7 @@ Guidelines:
   - Ad set targeting audience
   - Ad creative picture
 
-- **⚠️ Critical Field Compatibility Rules**:
-  When generating values, ensure that the following **field pairs are logically valid together**. If any pair does not match a valid combination, return both fields as null
-  1. **billingEvent and optimizationGoal must be a valid combination.** Valid pairs include:
-  - billingEvent: "IMPRESSIONS", optimizationGoal: "REACH"
-  - billingEvent: "LINK_CLICKS", optimizationGoal: "LINK_CLICKS"
-  - billingEvent: "THRUPLAY", optimizationGoal: "VIDEO_VIEWS"
-  - billingEvent: "IMPRESSIONS", optimizationGoal: "VIDEO_VIEWS"
-  - billingEvent: "IMPRESSIONS", optimizationGoal: "POST_ENGAGEMENT"
-  - billingEvent: "IMPRESSIONS", optimizationGoal: "LEAD_GENERATION"
-  2. If billingEvent is not valid for the selected optimizationGoal, return BOTH fields as null and wait for the user to clarify.
-  3. If bidStrategy is "LOWEST_COST_WITHOUT_CAP", do NOT provide bidAmount.
-- You MUST enforce these compatibility rules before returning any values.
+
     
 - **Enum rules:**
   - The following fields MUST match EXACTLY one of the valid enum values listed below or be null if unknown or not provided. DO NOT invent or infer new values outside of these lists:

@@ -16,7 +16,7 @@ export async function PATCH(request, { params }) {
 
   const { accountDetails } = await request.json();
 
-  const isFacebookDetails = ["adAccountId", "pageId", "formId"].every((key) =>
+  const isFacebookDetails = ["adAccountId", "pageId"].every((key) =>
     Object.keys(accountDetails).includes(key)
   );
 
