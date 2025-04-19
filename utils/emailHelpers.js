@@ -116,7 +116,13 @@ const unsubscribe = (email) => {
   return { html, text };
 };
 
-const sendTransactionalEmail = async (from, to, subject, body) => {
+const sendTransactionalEmail = async (
+  fromEmail,
+  fromName,
+  to,
+  subject,
+  body
+) => {
   await fetch("https://api.brevo.com/v3/smtp/email", {
     method: "POST",
     headers: {
@@ -125,8 +131,8 @@ const sendTransactionalEmail = async (from, to, subject, body) => {
     },
     body: JSON.stringify({
       sender: {
-        email: from,
-        name: "AI Marketing",
+        email: fromEmail,
+        name: fromName,
       },
       to,
       subject,
@@ -137,9 +143,9 @@ const sendTransactionalEmail = async (from, to, subject, body) => {
   });
 };
 
-const testEmail = async (from, to, subject, body) => {
+const testEmail = async (fromEmail, fromName, to, subject, body) => {
   try {
-    await sendTransactionalEmail(from, to, subject, body);
+    await sendTransactionalEmail(fromEmail, fromName, to, subject, body);
   } catch (error) {
     console.error(error);
   }

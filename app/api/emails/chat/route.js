@@ -73,8 +73,6 @@ export async function POST(req) {
         description: "Generate an email.",
         parameters: generateEmailSchema,
         execute: async ({ to, subject, body }) => {
-          console.log(to, subject, body);
-
           return { to, subject, body };
         },
       },

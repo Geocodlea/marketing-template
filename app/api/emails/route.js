@@ -11,10 +11,10 @@ export async function POST(request) {
   //     });
   //   }
 
-  const { from, to, subject, html } = await request.json();
+  const { fromEmail, fromName, to, subject, html } = await request.json();
 
   try {
-    await testEmail(process.env.BREVO_EMAIL_USER, to, subject, html);
+    await testEmail("geocodlea@gmail.com", "Geocodlea", to, subject, html);
 
     return NextResponse.json({
       status: "success",
