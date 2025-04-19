@@ -104,7 +104,7 @@ const LeftSidebar = ({ plan }) => {
 
                   <div className="rbt-sm-separator"></div>
 
-                  <div className="right-side-top text-center">
+                  <div className="right-side-top text-center mb-5">
                     <a
                       style={{ cursor: "pointer" }}
                       className="btn-default bg-solid-primary d-flex align-items-center justify-content-center gap-2 cursor-pointer"

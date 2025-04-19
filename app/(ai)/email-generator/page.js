@@ -18,7 +18,7 @@ const EmailGeneratorLayout = async () => {
     <>
       <EmailGeneratorPage
         email={email}
-        brevoKey={user.brevoKey}
+        brevoApiKey={user.brevoApiKey}
         plan={user.plan}
       />
     </>

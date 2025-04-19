@@ -3,7 +3,6 @@ export default function TikTokProvider(options) {
     id: "tiktok",
     name: "TikTok",
     type: "oauth",
-    // checks: ["pkce"],
     client: {
       token_endpoint_auth_method: "client_secret_post",
     },

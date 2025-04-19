@@ -343,7 +343,7 @@ const ProfileBody = ({ userData }) => {
                       placeholder={
                         user.brevoApiKey
                           ? "Setat"
-                          : "Ex.: x45ysib-bce8fc03b0174b367054e179be94c4f7a88c046afc116d3ffd528a9ceb5b5a3f-SBic7p0Pev7K4bvX"
+                          : "Ex.: y80esib-bce8fc03b0174b367054e179be94c4f7a88c046afc116d3ffd528a9cjfi35a3f-SBic7p0Pev7K4bvX"
                       }
                       {...registerEmail("brevoApiKey")}
                       className={`form-control ${

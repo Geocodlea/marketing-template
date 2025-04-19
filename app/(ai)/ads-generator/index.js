@@ -94,7 +94,7 @@ const AdsGeneratorPage = ({ userId, userFacebook, plan }) => {
             "Ai depășit numărul de reclame conform planului tău. Pentru a crea mai multe reclame va trebui să te abonezi la alt plan.",
         },
       ]);
-    } else if (!userFb.adAccountId || !userFb.pageId || !userFb.formId) {
+    } else if (!userFb.adAccountId || !userFb.pageId) {
       setMessages([
         {
           role: "system",
