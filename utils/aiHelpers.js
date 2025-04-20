@@ -1,14 +1,9 @@
 import { openai } from "@ai-sdk/openai";
 import { streamText, generateObject, createDataStreamResponse } from "ai";
-import { NextResponse } from "next/server";
 import z from "zod";
 import {
   findEmptyFields,
-  campaignObjectives,
   campaignStatuses,
-  adSetBillingEvents,
-  adSetOptimizationGoals,
-  adSetBidStrategies,
   leadFormCTAs,
   adCreativeCTAs,
 } from "@/utils/fbAdOptions";
@@ -28,33 +23,26 @@ const model = process.env.AI_MODEL;
 const adDetailsSchema = z.object({
   campaign: z.object({
     name: z.string().nullable(),
-    objective: z.enum(campaignObjectives).nullable(),
     status: z.enum(campaignStatuses).nullable(),
   }),
   adSet: z.object({
     name: z.string().nullable(),
-    billingEvent: z.enum(adSetBillingEvents).nullable(),
-    optimizationGoal: z.enum(adSetOptimizationGoals).nullable(),
-    bidStrategy: z.enum(adSetBidStrategies).nullable(),
-    dailyBudget: z.number().nullable(),
+    daily_budget: z.number().nullable(),
     targeting: z.object({
-      geoLocations: z.object({
+      geo_locations: z.object({
         countries: z.array(z.string().nullable()),
       }),
     }),
   }),
   leadForm: z.object({
     name: z.string().nullable(),
-    locale: z.string().nullable(),
-    privacy_policy: z.object({
-      url: z.string().url().nullable(),
-      link_text: z.string().nullable(),
-    }),
     intro: z.object({
       title: z.string().nullable(),
       body: z.string().nullable(),
     }),
-    questions: z.array(z.object({ type: z.string() })).nullable(),
+    questions: z.array(
+      z.object({ type: z.string().nullable(), label: z.string().nullable() })
+    ),
     thank_you_page: z.object({
       title: z.string().nullable(),
       body: z.string().nullable(),
@@ -65,8 +53,8 @@ const adDetailsSchema = z.object({
   }),
   adCreative: z.object({
     name: z.string().nullable(),
-    objectStorySpec: z.object({
-      linkData: z.object({
+    object_story_spec: z.object({
+      link_data: z.object({
         message: z.string().nullable(),
         link: z.string().url().nullable(),
         picture: z.string().url().nullable(),
@@ -101,33 +89,24 @@ const askForConfirmationSchema = z.object({
 const creatAdSchema = z.object({
   campaign: z.object({
     name: z.string(),
-    objective: z.enum(campaignObjectives),
     status: z.enum(campaignStatuses),
   }),
   adSet: z.object({
     name: z.string(),
-    billingEvent: z.enum(adSetBillingEvents),
-    optimizationGoal: z.enum(adSetOptimizationGoals),
-    bidStrategy: z.enum(adSetBidStrategies),
-    dailyBudget: z.number(),
+    daily_budget: z.number(),
     targeting: z.object({
-      geoLocations: z.object({
+      geo_locations: z.object({
         countries: z.array(z.string()),
       }),
     }),
   }),
   leadForm: z.object({
     name: z.string(),
-    locale: z.string(),
-    privacy_policy: z.object({
-      url: z.string().url(),
-      link_text: z.string(),
-    }),
     intro: z.object({
       title: z.string(),
       body: z.string(),
     }),
-    questions: z.array(z.object({ type: z.string() })),
+    questions: z.array(z.object({ type: z.string(), label: z.string() })),
     thank_you_page: z.object({
       title: z.string(),
       body: z.string(),
@@ -138,8 +117,8 @@ const creatAdSchema = z.object({
   }),
   adCreative: z.object({
     name: z.string(),
-    objectStorySpec: z.object({
-      linkData: z.object({
+    object_story_spec: z.object({
+      link_data: z.object({
         message: z.string(),
         link: z.string().url(),
         CTA: z.object({
@@ -236,11 +215,8 @@ const handleDetailsStep = async (messages, step, adDetails) => {
         role: "system",
         content: details(
           adDetails,
-          campaignObjectives,
           campaignStatuses,
-          adSetBillingEvents,
-          adSetOptimizationGoals,
-          adSetBidStrategies,
+          leadFormCTAs,
           adCreativeCTAs
         ),
       },
@@ -253,7 +229,7 @@ const handleDetailsStep = async (messages, step, adDetails) => {
   const missingFields = findEmptyFields(
     adDetails,
     [],
-    ["adCreative.objectStorySpec.linkData.picture"]
+    ["adCreative.object_story_spec.link_data.picture"]
   );
 
   if (missingFields.length > 0) {

@@ -14,11 +14,7 @@ const clarification = `The user input was too vague to create an ad. Ask the use
 
 const details = (
   adDetails,
-  campaignObjectives,
   campaignStatuses,
-  adSetBillingEvents,
-  adSetOptimizationGoals,
-  adSetBidStrategies,
   leadFormCTAs,
   adCreativeCTAs
 ) => `You are a helpful assistant. Your task is to return a complete JSON object matching the schema provided using the previous messages and ${JSON.stringify(
@@ -33,62 +29,37 @@ Strict output rule:
 
 Guidelines:
 - **Do NOT infer the following critical details:**
-  - Campaign objective
-  - Ad set billing event
-  - Ad set optimization goal
+ - Campaign status: Must match EXACTLY one of the valid enum values: ${campaignStatuses.join(
+   ","
+ )}
   - Ad set daily budget
   - Ad set targeting audience
-  - Ad creative picture
-
-- **Enum rules:**
-  - The following fields MUST match EXACTLY one of the valid enum values listed below or be null if unknown or not provided. DO NOT invent or infer new values outside of these lists:
-  - Campaign objective: Must match EXACTLY one of the valid enum values: ${campaignObjectives.join(
-    ", "
-  )}
-  - Campaign status: Must match EXACTLY one of the valid enum values: ${campaignStatuses.join(
-    ", "
-  )}
-  - Ad set billing event: Must match EXACTLY one of the valid enum values: ${adSetBillingEvents.join(
-    ", "
-  )}
-  - Ad set optimization goal: Must match EXACTLY one of the valid enum values: ${adSetOptimizationGoals.join(
-    ", "
-  )}
-  - Ad set bid strategy: Must match EXACTLY one of the valid enum values: ${adSetBidStrategies.join(
-    ", "
-  )}
-  - Lead form thank_you_page button_type: Must match EXACTLY one of the valid enum values: ${leadFormCTAs.join(
-    ", "
-  )}
-  - Ad creative CTA type: Must match EXACTLY one of the valid enum values: ${adCreativeCTAs.join(
-    ", "
-  )}
-  - If the correct value is not available or cannot be inferred, return null.
+  - Ad creative picture: if user provides a picture, use it, otherwise leave it null
 
 - **Infer all the following fields:**
   - Campaign: name
-  - Ad set: 
-    - name
-    - optimizationGoal
-    - bidStrategy
+  - Ad set: name
   - Lead form:
     - name
-    - questions.type = "CUSTOM" label
     - intro.title
     - intro.body
+    - questions[0].label
     - thank_you_page.title
-thank_you_page.body
-      body: null,
-      button_text: null,
-      button_type: null,
-      website_url: null,
+    - thank_you_page.body
+    - thank_you_page.button_text
+    - thank_you_page.button_type: Must match EXACTLY one of the valid enum values: ${leadFormCTAs.join(
+      ", "
+    )}
+    - thank_you_page.website_url
   - Ad creative:
     - name
-    - objectStorySpec.linkData.message: A compelling ad message
-    - objectStorySpec.linkData.link: Use a placeholder like https://example.com
-    - objectStorySpec.linkData.CTA.type: Choose a valid CTA from the enum
-    - objectStorySpec.linkData.CTA.value.link: Same as above link or another relevant one
-- If adCreative already exists, preserve existing fields.
+    - object_story_spec.link_data.message: A compelling ad message
+    - object_story_spec.link_data.link: Use a placeholder like https://example.com
+    - object_story_spec.link_data.CTA.type: Must match EXACTLY one of the valid enum values: ${adCreativeCTAs.join(
+      ", "
+    )}
+    - object_story_spec.link_data.CTA.value.link: Same as above link or another relevant one
+- If any field already exists, preserve its value.
 
 - **Return null for any missing details you cannot infer or are not allowed to infer.**
 - **Final Rule**: Validate field compatibility before returning the object. If a field is invalid in context, return it as null and await clarification from the user.`;
@@ -110,11 +81,13 @@ You are given ad input data as a JavaScript object: ${JSON.stringify(adDetails)}
 
 Instructions:
 - Extract the following fields from the data and use them to call the 'generateAdPreview' tool:
-  - "name": a short creative title
-  - "description": a short and catchy description
-  - "message": the persuasive ad text
-  - "CTA": must be one of [${adCreativeCTAs.join(", ")}]
-  - "link": use "https://example.com" if missing
+  - name
+  - message
+  - link
+  - picture
+  - CTA.type: Must match EXACTLY one of the valid enum values: ${adCreativeCTAs.join(
+    ", "
+  )}
 
 STRICT output rules:
 - Do not generate text.

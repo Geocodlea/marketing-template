@@ -1,35 +1,24 @@
 const initialAdDetails = {
   campaign: {
     name: null,
-    objective: "OUTCOME_LEADS",
     status: null,
   },
   adSet: {
     name: null,
-    billingEvent: "IMPRESSIONS",
-    optimizationGoal: "LEAD_GENERATION",
-    bidStrategy: "LOWEST_COST_WITHOUT_CAP",
-    dailyBudget: null,
+    daily_budget: null,
     targeting: {
-      geoLocations: {
+      geo_locations: {
         countries: ["RO"],
       },
     },
   },
   leadForm: {
     name: null,
-    locale: "ro_RO",
-    privacy_policy: {
-      url: "https://marketing-template-xi.vercel.app/privacy-policy",
-      link_text: "Politica de confidențialitate",
-    },
     intro: {
       title: null,
       body: null,
     },
     questions: [
-      { type: "FULL_NAME" },
-      { type: "PHONE" },
       {
         type: "CUSTOM",
         label: null,
@@ -45,8 +34,8 @@ const initialAdDetails = {
   },
   adCreative: {
     name: null,
-    objectStorySpec: {
-      linkData: {
+    object_story_spec: {
+      link_data: {
         message: null,
         link: null,
         picture: null,

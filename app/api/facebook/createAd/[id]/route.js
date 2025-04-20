@@ -45,7 +45,7 @@ export async function POST(req, { params }) {
     // Step 1: Create Campaign
     const campaignPayload = {
       name: campaign.name,
-      objective: campaign.objective,
+      objective: "OUTCOME_LEADS",
       status: campaign.status,
       special_ad_categories: ["NONE"],
       access_token: accessToken,
@@ -79,14 +79,14 @@ export async function POST(req, { params }) {
     const adSetPayload = {
       name: adSet.name,
       campaign_id: campaignId,
-      billing_event: adSet.billingEvent,
-      optimization_goal: adSet.optimizationGoal,
-      daily_budget: (adSet.dailyBudget * 100).toFixed(0).toString(),
-      bid_strategy: adSet.bidStrategy,
+      billing_event: "IMPRESSIONS",
+      optimization_goal: "LEAD_GENERATION",
+      bid_strategy: "LOWEST_COST_WITHOUT_CAP",
+      daily_budget: (adSet.daily_budget * 100).toFixed(0).toString(),
       destination_type: "ON_AD",
       targeting: {
         geo_locations: {
-          countries: adSet.targeting.geoLocations.countries,
+          countries: adSet.targeting.geo_locations.countries,
         },
       },
       status: campaign.status,
@@ -121,37 +121,31 @@ export async function POST(req, { params }) {
 
     // Step 3: Create Lead Form
     const formPayload = {
-      name: "Lead Form " + new Date().toISOString(),
-
-      locale: "ro_RO", // Romanian
-
-      // Privacy policy
+      name: leadForm.name + " " + new Date().toISOString(),
+      locale: "ro_RO",
       privacy_policy: {
-        url: "https://yourdomain.com/privacy",
+        url: "https://marketing-template-xi.vercel.app/privacy-policy",
         link_text: "Politica de confidențialitate",
       },
-
-      // Intro screen
       intro: {
-        title: "Hai să colaborăm!",
-        body: "Completează formularul și te vom contacta în cel mai scurt timp.",
+        title: leadForm.intro.title,
+        body: leadForm.intro.body,
       },
-
-      // Questions
       questions: [
         { type: "FULL_NAME" },
         { type: "PHONE" },
-        {
-          type: "CUSTOM",
-          label: "Ce servicii te interesează?",
-        },
+
+        ...leadForm.questions.map((question) => ({
+          type: question.type,
+          label: question.label,
+        })),
       ],
       thank_you_page: {
-        title: "Mulțumim!",
-        body: "Am primit detaliile tale. Te vom contacta în curând.",
-        button_text: "Vizitează site-ul",
-        button_type: "VIEW_WEBSITE", // ✅ YES: "WEBSITE", not "VIEW_WEBSITE"
-        website_url: "https://yourdomain.com", // ✅ YES: it's called "link", not "button_url"
+        title: leadForm.thank_you_page.title,
+        body: leadForm.thank_you_page.body,
+        button_text: leadForm.thank_you_page.button_text,
+        button_type: leadForm.thank_you_page.button_type,
+        website_url: leadForm.thank_you_page.website_url,
       },
 
       access_token: accessToken,
@@ -168,7 +162,6 @@ export async function POST(req, { params }) {
         }
       );
       formResult = await formResponse.json();
-      console.log("🚀 ~ route.js:143 ~ POST ~ formResult:", formResult);
 
       if (!formResponse.ok) {
         console.error("Lead Form creation error:", formResult);
@@ -186,10 +179,10 @@ export async function POST(req, { params }) {
       object_story_spec: {
         page_id: pageId,
         link_data: {
-          message: adCreative.objectStorySpec.linkData.message,
+          message: adCreative.object_story_spec.link_data.message,
           link: "https://fb.me/",
           call_to_action: {
-            type: adCreative.objectStorySpec.linkData.CTA.type,
+            type: adCreative.object_story_spec.link_data.CTA.type,
             value: {
               lead_gen_form_id: formId,
             },
