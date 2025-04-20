@@ -9,6 +9,7 @@ import {
   adSetBillingEvents,
   adSetOptimizationGoals,
   adSetBidStrategies,
+  leadFormCTAs,
   adCreativeCTAs,
 } from "@/utils/fbAdOptions";
 import {
@@ -40,6 +41,26 @@ const adDetailsSchema = z.object({
       geoLocations: z.object({
         countries: z.array(z.string().nullable()),
       }),
+    }),
+  }),
+  leadForm: z.object({
+    name: z.string().nullable(),
+    locale: z.string().nullable(),
+    privacy_policy: z.object({
+      url: z.string().url().nullable(),
+      link_text: z.string().nullable(),
+    }),
+    intro: z.object({
+      title: z.string().nullable(),
+      body: z.string().nullable(),
+    }),
+    questions: z.array(z.object({ type: z.string() })).nullable(),
+    thank_you_page: z.object({
+      title: z.string().nullable(),
+      body: z.string().nullable(),
+      button_text: z.string().nullable(),
+      button_type: z.enum(leadFormCTAs).nullable(),
+      website_url: z.string().url().nullable(),
     }),
   }),
   adCreative: z.object({
@@ -95,6 +116,26 @@ const creatAdSchema = z.object({
       }),
     }),
   }),
+  leadForm: z.object({
+    name: z.string(),
+    locale: z.string(),
+    privacy_policy: z.object({
+      url: z.string().url(),
+      link_text: z.string(),
+    }),
+    intro: z.object({
+      title: z.string(),
+      body: z.string(),
+    }),
+    questions: z.array(z.object({ type: z.string() })),
+    thank_you_page: z.object({
+      title: z.string(),
+      body: z.string(),
+      button_text: z.string(),
+      button_type: z.enum(leadFormCTAs),
+      website_url: z.string().url(),
+    }),
+  }),
   adCreative: z.object({
     name: z.string(),
     objectStorySpec: z.object({
@@ -111,15 +152,6 @@ const creatAdSchema = z.object({
     }),
   }),
 });
-
-const parseRequest = async (req) => {
-  try {
-    return await req.json();
-  } catch (err) {
-    // Return an empty object if parsing fails, or throw an error.
-    return {};
-  }
-};
 
 const handleValidationStep = async (messages, step, adDetails) => {
   console.log("validation");
@@ -365,19 +397,10 @@ const handleAdCreationStep = async (messages, step, adDetails) => {
   });
 };
 
-const handleDefaultStep = () => {
-  return NextResponse.json({
-    success: false,
-    error: "Unrecognized step or no step provided.",
-  });
-};
-
 export {
-  parseRequest,
   handleValidationStep,
   handleDetailsStep,
   handlePreviewStep,
   handleConfirmationStep,
   handleAdCreationStep,
-  handleDefaultStep,
 };

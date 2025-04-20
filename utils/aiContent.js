@@ -19,6 +19,7 @@ const details = (
   adSetBillingEvents,
   adSetOptimizationGoals,
   adSetBidStrategies,
+  leadFormCTAs,
   adCreativeCTAs
 ) => `You are a helpful assistant. Your task is to return a complete JSON object matching the schema provided using the previous messages and ${JSON.stringify(
   adDetails
@@ -39,8 +40,6 @@ Guidelines:
   - Ad set targeting audience
   - Ad creative picture
 
-
-    
 - **Enum rules:**
   - The following fields MUST match EXACTLY one of the valid enum values listed below or be null if unknown or not provided. DO NOT invent or infer new values outside of these lists:
   - Campaign objective: Must match EXACTLY one of the valid enum values: ${campaignObjectives.join(
@@ -58,6 +57,9 @@ Guidelines:
   - Ad set bid strategy: Must match EXACTLY one of the valid enum values: ${adSetBidStrategies.join(
     ", "
   )}
+  - Lead form thank_you_page button_type: Must match EXACTLY one of the valid enum values: ${leadFormCTAs.join(
+    ", "
+  )}
   - Ad creative CTA type: Must match EXACTLY one of the valid enum values: ${adCreativeCTAs.join(
     ", "
   )}
@@ -69,6 +71,17 @@ Guidelines:
     - name
     - optimizationGoal
     - bidStrategy
+  - Lead form:
+    - name
+    - questions.type = "CUSTOM" label
+    - intro.title
+    - intro.body
+    - thank_you_page.title
+thank_you_page.body
+      body: null,
+      button_text: null,
+      button_type: null,
+      website_url: null,
   - Ad creative:
     - name
     - objectStorySpec.linkData.message: A compelling ad message
@@ -149,14 +162,3 @@ export {
   confirmation,
   adCreation,
 };
-
-const notUsed = (
-  adDetails
-) => `- If any of the following fields are missing or null, request them explicitly:
-- **Check for missing fields in the provided object and ask the user directly for them.**  
-  - If any of the following fields are missing or null, request them explicitly:
-  - Campaign objective: ${adDetails.campaign.objective ? "Provided" : "Missing"}
-  - Campaign status: ${adDetails.campaign.status ? "Provided" : "Missing"}
-  - Ad set daily budget: ${
-    adDetails.adSet.dailyBudget ? "Provided" : "Missing"
-  }`;

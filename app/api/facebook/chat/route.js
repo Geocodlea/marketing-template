@@ -1,20 +1,13 @@
 import {
-  parseRequest,
   handleValidationStep,
   handleDetailsStep,
   handlePreviewStep,
   handleConfirmationStep,
   handleAdCreationStep,
-  handleDefaultStep,
 } from "@/utils/aiHelpers";
 
 export async function POST(req) {
-  let { messages, step, adDetails } = await parseRequest(req);
-  // Coerce data if null or undefined
-  messages = messages || [];
-  step = step || "validation"; // default to "validation"
-  adDetails = adDetails || {};
-
+  let { messages, step, adDetails } = await req.json();
   console.log("Step: ", step);
   console.log("Ad Details: ", JSON.stringify(adDetails, null, 2));
 
@@ -60,6 +53,6 @@ export async function POST(req) {
 
     default:
       // Unrecognized step
-      return handleDefaultStep();
+      return null;
   }
 }

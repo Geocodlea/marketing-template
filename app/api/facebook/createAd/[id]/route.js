@@ -5,7 +5,7 @@ import dbConnect from "@/utils/dbConnect";
 
 export async function POST(req, { params }) {
   const {
-    adDetails: { campaign, adSet, adCreative },
+    adDetails: { campaign, adSet, leadForm, adCreative },
   } = await req.json();
   const { id } = params;
 
@@ -13,6 +13,7 @@ export async function POST(req, { params }) {
     "API input:",
     campaign,
     JSON.stringify(adSet, null, 2),
+    leadForm,
     JSON.stringify(adCreative, null, 2)
   );
 
@@ -39,7 +40,6 @@ export async function POST(req, { params }) {
     const accessToken = account.access_token;
     const adAccountId = user.facebook.adAccountId;
     const pageId = user.facebook.pageId;
-    const formId = user.facebook.formId;
     const apiBaseUrl = process.env.FACEBOOK_API_URL;
 
     // Step 1: Create Campaign
@@ -119,7 +119,68 @@ export async function POST(req, { params }) {
 
     const adSetId = adSetResult.id;
 
-    // Step 3: Create Ad Creative
+    // Step 3: Create Lead Form
+    const formPayload = {
+      name: "Lead Form " + new Date().toISOString(),
+
+      locale: "ro_RO", // Romanian
+
+      // Privacy policy
+      privacy_policy: {
+        url: "https://yourdomain.com/privacy",
+        link_text: "Politica de confidențialitate",
+      },
+
+      // Intro screen
+      intro: {
+        title: "Hai să colaborăm!",
+        body: "Completează formularul și te vom contacta în cel mai scurt timp.",
+      },
+
+      // Questions
+      questions: [
+        { type: "FULL_NAME" },
+        { type: "PHONE" },
+        {
+          type: "CUSTOM",
+          label: "Ce servicii te interesează?",
+        },
+      ],
+      thank_you_page: {
+        title: "Mulțumim!",
+        body: "Am primit detaliile tale. Te vom contacta în curând.",
+        button_text: "Vizitează site-ul",
+        button_type: "VIEW_WEBSITE", // ✅ YES: "WEBSITE", not "VIEW_WEBSITE"
+        website_url: "https://yourdomain.com", // ✅ YES: it's called "link", not "button_url"
+      },
+
+      access_token: accessToken,
+    };
+
+    let formResult;
+    try {
+      const formResponse = await fetch(
+        `${apiBaseUrl}/${pageId}/leadgen_forms`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formPayload),
+        }
+      );
+      formResult = await formResponse.json();
+      console.log("🚀 ~ route.js:143 ~ POST ~ formResult:", formResult);
+
+      if (!formResponse.ok) {
+        console.error("Lead Form creation error:", formResult);
+        throw new Error(formResult.error?.message || "Form creation failed");
+      }
+    } catch (err) {
+      throw new Error(`Lead Form API error: ${err.message}`);
+    }
+
+    const formId = formResult.id;
+
+    // Step 4: Create Ad Creative
     const adCreativePayload = {
       name: adCreative.name,
       object_story_spec: {
@@ -162,7 +223,7 @@ export async function POST(req, { params }) {
 
     const creativeId = creativeResult.id;
 
-    // Step 4: Create Ad
+    // Step 5: Create Ad
     const adPayload = {
       name: adCreative.name,
       status: campaign.status,

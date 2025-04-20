@@ -16,6 +16,33 @@ const initialAdDetails = {
       },
     },
   },
+  leadForm: {
+    name: null,
+    locale: "ro_RO",
+    privacy_policy: {
+      url: "https://marketing-template-xi.vercel.app/privacy-policy",
+      link_text: "Politica de confidențialitate",
+    },
+    intro: {
+      title: null,
+      body: null,
+    },
+    questions: [
+      { type: "FULL_NAME" },
+      { type: "PHONE" },
+      {
+        type: "CUSTOM",
+        label: null,
+      },
+    ],
+    thank_you_page: {
+      title: null,
+      body: null,
+      button_text: null,
+      button_type: null,
+      website_url: null,
+    },
+  },
   adCreative: {
     name: null,
     objectStorySpec: {
@@ -84,6 +111,19 @@ const adSetOptimizationGoals = ["LEAD_GENERATION"];
 
 const adSetBidStrategies = ["LOWEST_COST_WITHOUT_CAP"];
 
+const leadFormCTAs = [
+  "VIEW_WEBSITE",
+  "CALL_BUSINESS",
+  "MESSAGE_BUSINESS",
+  "DOWNLOAD",
+  "SCHEDULE_APPOINTMENT",
+  "VIEW_ON_FACEBOOK",
+  "PROMO_CODE",
+  "NONE",
+  "WHATSAPP",
+  "P2B_MESSENGER",
+];
+
 const adCreativeCTAs = [
   "CONTACT_US",
   "INTERESTED",
@@ -108,5 +148,6 @@ export {
   adSetBillingEvents,
   adSetOptimizationGoals,
   adSetBidStrategies,
+  leadFormCTAs,
   adCreativeCTAs,
 };

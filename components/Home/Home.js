@@ -87,7 +87,7 @@ const Home = () => {
                                 : "is-hidden theme-gradient"
                             }
                           >
-                            Elegant
+                            Rapid
                           </b>
                         </span>
                       </span>
