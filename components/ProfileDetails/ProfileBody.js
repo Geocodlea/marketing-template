@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { signOut } from "next-auth/react";
 import Alert from "@/components/Common/Alert";
 import Modal from "@/components/Common/Modal";
@@ -36,8 +36,15 @@ const fbSchema = Yup.object().shape({
     ),
 });
 
+const emailSchema = Yup.object().shape({
+  emailBrevo: Yup.string()
+    .email("Emailul nu este valid.")
+    .required("Emailul este obligatoriu."),
+});
+
 const ProfileBody = ({ userData }) => {
   const [alert, setAlert] = useState(null);
+  const [dnsRecords, setDnsRecords] = useState([]);
   const user = JSON.parse(userData);
 
   const {
@@ -60,15 +67,42 @@ const ProfileBody = ({ userData }) => {
     register: registerEmail,
     handleSubmit: handleSubmitEmail,
     formState: { errors: emailErrors },
-  } = useForm();
+  } = useForm({
+    resolver: yupResolver(emailSchema),
+  });
 
   const updateAccount = async (accountDetails) => {
+    if (accountDetails.emailBrevo) {
+      try {
+        const response = await fetch(
+          `/api/emails/brevo/${accountDetails.emailBrevo}`,
+          {
+            method: "POST",
+          }
+        );
+
+        if (!response.ok) {
+          setAlert({
+            status: "danger",
+            message: `A apărut o eroare. Încercați mai târziu.`,
+          });
+          return;
+        }
+
+        const data = await response.json();
+        setDnsRecords(data.dnsRecords);
+      } catch (error) {
+        setAlert({
+          status: "danger",
+          message: `A apărut o eroare: ${error.message}`,
+        });
+        return;
+      }
+    }
+
     try {
       const response = await fetch(`/api/users/${user._id}`, {
         method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
         body: JSON.stringify({ accountDetails }),
       });
 
@@ -111,6 +145,18 @@ const ProfileBody = ({ userData }) => {
     }
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch(`/api/emails/brevo/${user.emailBrevo}`);
+      const data = await response.json();
+      setDnsRecords(data.dnsRecords);
+    };
+
+    fetchData();
+  }, [user.emailBrevo]);
+
+  console.log("dnsRecords", dnsRecords);
+
   return (
     <>
       <div className="single-settings-box profile-details-box overflow-hidden">
@@ -147,7 +193,7 @@ const ProfileBody = ({ userData }) => {
                   aria-controls="fb"
                   aria-selected="false"
                 >
-                  <span className="title">Facebook</span>
+                  <span className="title">Setup Facebook</span>
                 </a>
               </li>
 
@@ -162,7 +208,7 @@ const ProfileBody = ({ userData }) => {
                   aria-controls="email"
                   aria-selected="false"
                 >
-                  <span className="title">Email</span>
+                  <span className="title">Setup Email</span>
                 </a>
               </li>
 
@@ -336,27 +382,78 @@ const ProfileBody = ({ userData }) => {
               >
                 <div className="col-lg-6 col-md-6 col-sm-6 col-12">
                   <div className="form-group">
-                    <label htmlFor="brevoApiKey">Brevo API Key</label>
+                    <label htmlFor="emailBrevo">Email Utilizat</label>
                     <input
-                      id="brevoApiKey"
+                      id="emailBrevo"
                       type="text"
                       placeholder={
-                        user.brevoApiKey
-                          ? "Setat"
-                          : "Ex.: y80esib-bce8fc03b0174b367054e179be94c4f7a88c046afc116d3ffd528a9cjfi35a3f-SBic7p0Pev7K4bvX"
+                        user.emailBrevo ? "Setat" : "Ex.: contact@adpilot.ro"
                       }
-                      {...registerEmail("brevoApiKey")}
+                      {...registerEmail("emailBrevo")}
                       className={`form-control ${
-                        emailErrors.brevoApiKey ? "is-invalid" : ""
+                        emailErrors.emailBrevo ? "is-invalid" : ""
                       }`}
                     />
-                    {emailErrors.brevoApiKey && (
+                    {emailErrors.emailBrevo && (
                       <div className="invalid-feedback">
-                        {emailErrors.brevoApiKey.message}
+                        {emailErrors.emailBrevo.message}
                       </div>
                     )}
                   </div>
                 </div>
+
+                {dnsRecords &&
+                  Object.values(dnsRecords).some((record) => record) && (
+                    <div className="col-12 mt-4">
+                      <h4 className="mb-2 fw-semibold">
+                        Setează următoarele recorduri DNS:
+                      </h4>
+                      <table className="table table-bordered table-striped">
+                        <thead className="table-light">
+                          <tr>
+                            <th>Tip</th>
+                            <th>Host</th>
+                            <th>Valoare</th>
+                            <th>Status</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {Object.entries(dnsRecords).map(
+                            ([key, record], index) => {
+                              if (!record) return null;
+                              return (
+                                <tr
+                                  key={index}
+                                  className={
+                                    record.status
+                                      ? "table-success"
+                                      : "table-danger"
+                                  }
+                                >
+                                  <td>{record.type}</td>
+                                  <td>{record.host_name}</td>
+                                  <td style={{ wordBreak: "break-all" }}>
+                                    {record.value}
+                                  </td>
+                                  <td>
+                                    {record.status ? (
+                                      <span className="text-success">
+                                        Valid
+                                      </span>
+                                    ) : (
+                                      <span className="text-danger">
+                                        Invalid
+                                      </span>
+                                    )}
+                                  </td>
+                                </tr>
+                              );
+                            }
+                          )}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
 
                 <div className="col-12 mt--20">
                   <div className="form-group mb--0">

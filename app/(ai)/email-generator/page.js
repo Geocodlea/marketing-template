@@ -14,11 +14,20 @@ const EmailGeneratorLayout = async () => {
   await dbConnect();
   const user = await User.findOne({ email });
 
+  const respone = await fetch(
+    `${process.env.NEXTAUTH_URL}/api/emails/brevo/${user.emailBrevo}`,
+    {
+      method: "PUT",
+    }
+  );
+  const data = await respone.json();
+  const domainVerified = data.status === 200;
+
   return (
     <>
       <EmailGeneratorPage
         email={email}
-        brevoApiKey={user.brevoApiKey}
+        domainVerified={domainVerified}
         plan={user.plan}
       />
     </>

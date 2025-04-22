@@ -18,7 +18,7 @@ global.models.User =
       adAccountId: { type: String },
       pageId: { type: String },
     },
-    brevoApiKey: { type: String },
+    emailBrevo: { type: String },
   });
 
 export default global.models.User;

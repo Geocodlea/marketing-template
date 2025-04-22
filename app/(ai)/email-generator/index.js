@@ -23,7 +23,7 @@ const sendEmail = async (from, to, subject, body) => {
   }
 };
 
-const EmailGeneratorPage = ({ brevoApiKey, email, plan }) => {
+const EmailGeneratorPage = ({ domainVerified, email, plan }) => {
   const [alert, setAlert] = useState(null);
 
   const {
@@ -77,7 +77,7 @@ const EmailGeneratorPage = ({ brevoApiKey, email, plan }) => {
   });
 
   useEffect(() => {
-    if (!brevoApiKey) {
+    if (!domainVerified) {
       setMessages([
         {
           role: "system",
@@ -86,7 +86,7 @@ const EmailGeneratorPage = ({ brevoApiKey, email, plan }) => {
         },
       ]);
     }
-  }, [brevoApiKey]);
+  }, [domainVerified]);
 
   const disabledChat = useMemo(() => {
     return messages.some((msg) =>
