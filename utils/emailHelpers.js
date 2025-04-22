@@ -135,8 +135,8 @@ const sendTransactionalEmail = async (
         name: fromName,
       },
       to,
-      subject,
-      htmlContent: body,
+      subject: subject || "No Subject",
+      htmlContent: body || "<p></p>",
       trackOpens: true, // Enable open tracking
       trackClicks: true, // Enable click tracking
     }),

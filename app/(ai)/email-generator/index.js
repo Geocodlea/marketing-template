@@ -9,12 +9,12 @@ import StaticbarDashboard from "@/components/Common/StaticBarDashboard";
 import { useChat } from "@ai-sdk/react";
 import Alert from "@/components/Common/Alert";
 
-const sendEmail = async (from, to, subject, html) => {
+const sendEmail = async (from, to, subject, body) => {
   try {
     const response = await fetch(`/api/emails/`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ from, to, subject, html }),
+      body: JSON.stringify({ from, to, subject, body }),
     });
     const result = await response.json();
     return result;
