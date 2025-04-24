@@ -5,8 +5,8 @@ import { stripe } from "@/utils/stripe";
 
 export async function POST(req) {
   const { plan, email } = await req.json();
-  let price;
 
+  let price;
   if (plan === "Premium") price = "price_1RCbWDR50rqLKtmOimuvqfq4";
   if (plan === "Enterprise") price = "price_1RCeEQR50rqLKtmOVGxlW6yX";
 

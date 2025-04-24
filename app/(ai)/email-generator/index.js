@@ -9,12 +9,12 @@ import StaticbarDashboard from "@/components/Common/StaticBarDashboard";
 import { useChat } from "@ai-sdk/react";
 import Alert from "@/components/Common/Alert";
 
-const sendEmail = async (from, to, subject, body) => {
+const sendEmail = async (fromEmail, fromName, to, subject, body) => {
   try {
     const response = await fetch(`/api/emails/`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ from, to, subject, body }),
+      body: JSON.stringify({ fromEmail, fromName, to, subject, body }),
     });
     const result = await response.json();
     return result;
@@ -23,7 +23,12 @@ const sendEmail = async (from, to, subject, body) => {
   }
 };
 
-const EmailGeneratorPage = ({ domainVerified, email, plan }) => {
+const EmailGeneratorPage = ({
+  brevoEmail,
+  brevoName,
+  domainVerified,
+  plan,
+}) => {
   const [alert, setAlert] = useState(null);
 
   const {
@@ -44,7 +49,8 @@ const EmailGeneratorPage = ({ domainVerified, email, plan }) => {
     async onToolCall({ toolCall }) {
       if (toolCall.toolName === "createEmail") {
         const result = await sendEmail(
-          email,
+          brevoEmail,
+          brevoName,
           toolCall.args.to,
           toolCall.args.subject,
           toolCall.args.body
@@ -77,7 +83,7 @@ const EmailGeneratorPage = ({ domainVerified, email, plan }) => {
   });
 
   useEffect(() => {
-    if (!domainVerified) {
+    if (!domainVerified || !brevoEmail || !brevoName) {
       setMessages([
         {
           role: "system",
@@ -86,7 +92,7 @@ const EmailGeneratorPage = ({ domainVerified, email, plan }) => {
         },
       ]);
     }
-  }, [domainVerified]);
+  }, [domainVerified, brevoEmail, brevoName]);
 
   const disabledChat = useMemo(() => {
     return messages.some((msg) =>

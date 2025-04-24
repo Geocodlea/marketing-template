@@ -9,13 +9,15 @@ const EmailGeneratorLayout = async () => {
   const session = await getServerSession(authOptions);
   if (!session) redirect(`/signin`);
 
-  const email = session.user.email;
+  const userId = session.user.id;
 
   await dbConnect();
-  const user = await User.findOne({ email });
+  const user = await User.findOne({ _id: userId });
+  const brevoEmail = user.brevo.email;
+  const brevoName = user.brevo.name;
 
   const respone = await fetch(
-    `${process.env.NEXTAUTH_URL}/api/emails/brevo/${user.emailBrevo}`,
+    `${process.env.NEXTAUTH_URL}/api/emails/brevo/${brevoEmail}`,
     {
       method: "PUT",
     }
@@ -26,7 +28,8 @@ const EmailGeneratorLayout = async () => {
   return (
     <>
       <EmailGeneratorPage
-        email={email}
+        brevoEmail={brevoEmail}
+        brevoName={brevoName}
         domainVerified={domainVerified}
         plan={user.plan}
       />

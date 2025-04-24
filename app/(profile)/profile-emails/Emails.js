@@ -30,7 +30,7 @@ const EmailsPage = ({ emails }) => {
                 <thead>
                   <tr>
                     <th></th>
-                    <th>Email</th>
+                    <th>To</th>
                     <th>Subiect</th>
                     <th>Data</th>
                     <th style={{ minWidth: "150px" }}>Detalii</th>

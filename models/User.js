@@ -9,16 +9,21 @@ global.models.User =
     firstname: { type: String },
     lastname: { type: String },
     phone: { type: String },
+    stripe: {
+      customerId: { type: String },
+      subscriptionId: { type: String },
+    },
     plan: { type: String },
     planExpiresAt: { type: Date },
-    subscriptionId: { type: String },
-    customerId: { type: String },
     facebook: {
       adsRemaining: { type: Number, default: 0 },
       adAccountId: { type: String },
       pageId: { type: String },
     },
-    emailBrevo: { type: String },
+    brevo: {
+      email: { type: String },
+      name: { type: String },
+    },
   });
 
 export default global.models.User;

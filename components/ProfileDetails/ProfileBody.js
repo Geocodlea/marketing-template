@@ -37,9 +37,8 @@ const fbSchema = Yup.object().shape({
 });
 
 const emailSchema = Yup.object().shape({
-  emailBrevo: Yup.string()
-    .email("Emailul nu este valid.")
-    .required("Emailul este obligatoriu."),
+  brevoEmail: Yup.string().email("Emailul nu este valid."),
+  brevoName: Yup.string(),
 });
 
 const ProfileBody = ({ userData }) => {
@@ -72,10 +71,10 @@ const ProfileBody = ({ userData }) => {
   });
 
   const updateAccount = async (accountDetails) => {
-    if (accountDetails.emailBrevo) {
+    if (accountDetails.brevoEmail) {
       try {
         const response = await fetch(
-          `/api/emails/brevo/${accountDetails.emailBrevo}`,
+          `/api/emails/brevo/${accountDetails.brevoEmail}`,
           {
             method: "POST",
           }
@@ -147,13 +146,13 @@ const ProfileBody = ({ userData }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`/api/emails/brevo/${user.emailBrevo}`);
+      const response = await fetch(`/api/emails/brevo/${user.brevoEmail}`);
       const data = await response.json();
       setDnsRecords(data.dnsRecords);
     };
 
     fetchData();
-  }, [user.emailBrevo]);
+  }, [user.brevoEmail]);
 
   console.log("dnsRecords", dnsRecords);
 
@@ -382,21 +381,39 @@ const ProfileBody = ({ userData }) => {
               >
                 <div className="col-lg-6 col-md-6 col-sm-6 col-12">
                   <div className="form-group">
-                    <label htmlFor="emailBrevo">Email Utilizat</label>
+                    <label htmlFor="brevoEmail">Email Utilizat</label>
                     <input
-                      id="emailBrevo"
+                      id="brevoEmail"
                       type="text"
-                      placeholder={
-                        user.emailBrevo ? "Setat" : "Ex.: contact@adpilot.ro"
-                      }
-                      {...registerEmail("emailBrevo")}
+                      placeholder={user.brevo.email || "contact@adpilot.ro"}
+                      {...registerEmail("brevoEmail")}
                       className={`form-control ${
-                        emailErrors.emailBrevo ? "is-invalid" : ""
+                        emailErrors.brevoEmail ? "is-invalid" : ""
                       }`}
                     />
-                    {emailErrors.emailBrevo && (
+                    {emailErrors.brevoEmail && (
                       <div className="invalid-feedback">
-                        {emailErrors.emailBrevo.message}
+                        {emailErrors.brevoEmail.message}
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                <div className="col-lg-6 col-md-6 col-sm-6 col-12">
+                  <div className="form-group">
+                    <label htmlFor="brevoName">Nume Email</label>
+                    <input
+                      id="brevoName"
+                      type="text"
+                      placeholder={user.brevo.name || "Adpilot"}
+                      {...registerEmail("brevoName")}
+                      className={`form-control ${
+                        emailErrors.brevoName ? "is-invalid" : ""
+                      }`}
+                    />
+                    {emailErrors.brevoName && (
+                      <div className="invalid-feedback">
+                        {emailErrors.brevoName.message}
                       </div>
                     )}
                   </div>

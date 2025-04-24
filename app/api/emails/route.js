@@ -14,7 +14,7 @@ export async function POST(request) {
   const { fromEmail, fromName, to, subject, body } = await request.json();
 
   try {
-    await testEmail("geocodlea@gmail.com", "Test AI", to, subject, body);
+    await testEmail(fromEmail, fromName, to, subject, body);
 
     return NextResponse.json({
       status: "success",

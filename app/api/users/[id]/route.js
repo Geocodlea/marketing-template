@@ -16,8 +16,13 @@ export async function PATCH(request, { params }) {
 
   const { accountDetails } = await request.json();
 
+  const keys = Object.keys(accountDetails);
+
   const isFacebookDetails = ["adAccountId", "pageId"].every((key) =>
-    Object.keys(accountDetails).includes(key)
+    keys.includes(key)
+  );
+  const isBrevoDetails = ["brevoEmail", "brevoName"].some((key) =>
+    keys.includes(key)
   );
 
   let filteredDetails;
@@ -26,7 +31,16 @@ export async function PATCH(request, { params }) {
     filteredDetails = Object.fromEntries(
       Object.entries(accountDetails)
         .filter(([_, value]) => value !== "")
-        .map(([key, value]) => [`facebook.${key}`, value]) // nest under "facebook"
+        .map(([key, value]) => [`facebook.${key}`, value])
+    );
+  } else if (isBrevoDetails) {
+    filteredDetails = Object.fromEntries(
+      Object.entries(accountDetails)
+        .filter(([_, value]) => value !== "")
+        .map(([key, value]) => {
+          if (key === "brevoEmail") return ["brevo.email", value];
+          if (key === "brevoName") return ["brevo.name", value];
+        })
     );
   } else {
     filteredDetails = Object.fromEntries(

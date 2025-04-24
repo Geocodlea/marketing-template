@@ -16,6 +16,11 @@ export async function fulfillSubscription(sessionId) {
   }
 
   const email = session.customer_email;
+  const existingUser = await User.findOne({ email });
+  if (!existingUser) {
+    console.warn("⚠️ No user found with email:", email);
+    return;
+  }
 
   // Check if the session has subscription details
   if (session.subscription) {
@@ -46,23 +51,32 @@ export async function fulfillSubscription(sessionId) {
     const subscription30Days = subscriptionDate + 30 * 24 * 60 * 60;
     const planExpiresAt = new Date(subscription30Days * 1000);
 
-    const updatedUser = await User.findOneAndUpdate(
+    // Cancel old subscription if exists and is different
+    const oldSubscriptionId = existingUser.stripe?.subscriptionId;
+    if (oldSubscriptionId && oldSubscriptionId !== subscriptionId) {
+      try {
+        await stripe.subscriptions.cancel(oldSubscriptionId);
+        console.log(`🗑️ Cancelled old subscription: ${oldSubscriptionId}`);
+      } catch (error) {
+        console.error(
+          `❌ Error cancelling old subscription: ${oldSubscriptionId}`,
+          error
+        );
+      }
+    }
+
+    await User.findOneAndUpdate(
       { email },
       {
         $set: {
           plan,
           planExpiresAt,
-          subscriptionId,
-          customerId,
+          "stripe.subscriptionId": subscriptionId,
+          "stripe.customerId": customerId,
           "facebook.adsRemaining": plan === "enterprise" ? Infinity : 3,
         },
       }
     );
-
-    if (!updatedUser) {
-      console.warn("⚠️ No user found with email:", email);
-      return;
-    }
 
     console.log(`✅ Updated user ${email} to plan: ${plan}`);
   } else {
@@ -73,13 +87,12 @@ export async function fulfillSubscription(sessionId) {
 export async function fulfillCancelSubscription(customerId) {
   await dbConnect();
   const updatedUser = await User.findOneAndUpdate(
-    { customerId },
+    { "stripe.customerId": customerId },
     {
       $unset: {
         plan: "",
         planExpiresAt: "",
-        subscriptionId: "",
-        customerId: "",
+        stripe: "",
         "facebook.adsRemaining": "",
       },
     }

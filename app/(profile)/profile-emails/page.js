@@ -22,10 +22,10 @@ const EmailsLayout = async () => {
 
   const apiBaseUrl = process.env.BREVO_API_URL;
 
-  let emails;
+  let filteredEmails;
   try {
     const response = await fetch(
-      `${apiBaseUrl}/smtp/emails?email=geocodlea@gmail.com`,
+      `${apiBaseUrl}/smtp/statistics/events?event=delivered`,
       {
         method: "GET",
         headers: {
@@ -35,13 +35,13 @@ const EmailsLayout = async () => {
       }
     );
 
-    emails = await response.json();
-    console.log("🚀 ~ page.js:46 ~ EmailsLayout ~ emails:", emails);
+    const { events } = await response.json();
+    filteredEmails = events.filter((event) => event.from === user.brevo.email);
   } catch (err) {
     throw new Error(`GET Ads error: ${err.message}`);
   }
 
-  return <Emails emails={emails.transactionalEmails} />;
+  return <Emails emails={filteredEmails} />;
 };
 
 export default EmailsLayout;
