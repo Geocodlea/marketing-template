@@ -123,24 +123,31 @@ const sendTransactionalEmail = async (
   subject,
   body
 ) => {
-  await fetch("https://api.brevo.com/v3/smtp/email", {
-    method: "POST",
-    headers: {
-      "api-key": process.env.BREVO_API_KEY,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      sender: {
-        email: fromEmail,
-        name: fromName,
+  const sendEmail = async (recipient) => {
+    await fetch(`${process.env.BREVO_API_URL}/smtp/email`, {
+      method: "POST",
+      headers: {
+        "api-key": process.env.BREVO_API_KEY,
+        "Content-Type": "application/json",
       },
-      to,
-      subject: subject || "No Subject",
-      htmlContent: body || "<p></p>",
-      trackOpens: true, // Enable open tracking
-      trackClicks: true, // Enable click tracking
-    }),
-  });
+      body: JSON.stringify({
+        sender: {
+          email: fromEmail,
+          name: fromName,
+        },
+        to: [recipient],
+        subject: subject || "No Subject",
+        htmlContent: body || "<p></p>",
+        trackOpens: true,
+        trackClicks: true,
+        tags: [fromEmail],
+      }),
+    });
+  };
+
+  for (const recipient of to) {
+    await sendEmail(recipient);
+  }
 };
 
 const testEmail = async (fromEmail, fromName, to, subject, body) => {

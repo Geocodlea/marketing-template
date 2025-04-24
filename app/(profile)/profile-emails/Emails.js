@@ -1,28 +1,24 @@
 "use client";
 
 import React, { useEffect } from "react";
-import Link from "next/link";
 import sal from "sal.js";
 
 import UserNav from "@/components/Common/UserNav";
+import { formattedDate } from "@/utils/helpers";
+import Stats from "./Stats";
 
 const EmailsPage = ({ emails }) => {
   useEffect(() => {
     sal();
   }, []);
 
-  const formatDate = (dateStr) =>
-    new Date(dateStr).toLocaleDateString("ro-RO", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-    });
-
   return (
     <>
       <UserNav title="Emails" />
 
-      <div className="rainbow-pricing-detailed-area mb--80">
+      <Stats emailData={emails} />
+
+      <div className="rainbow-pricing-detailed-area mt--80 mb--80">
         <div className="row row--15">
           <div className="col-lg-12">
             <div className="rainbow-compare-table style-2">
@@ -33,7 +29,7 @@ const EmailsPage = ({ emails }) => {
                     <th>To</th>
                     <th>Subiect</th>
                     <th>Data</th>
-                    <th style={{ minWidth: "150px" }}>Detalii</th>
+                    <th>Event</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -42,15 +38,8 @@ const EmailsPage = ({ emails }) => {
                       <td>{i + 1}</td>
                       <td>{email.email}</td>
                       <td>{email.subject}</td>
-                      <td>{formatDate(email.date)}</td>
-                      <td>
-                        <Link
-                          href={`/emails/${email.uuid}`}
-                          className="read-more-btn theme-gradient"
-                        >
-                          Vezi
-                        </Link>
-                      </td>
+                      <td>{formattedDate(email.date)}</td>
+                      <td>{email.event}</td>
                     </tr>
                   ))}
                 </tbody>

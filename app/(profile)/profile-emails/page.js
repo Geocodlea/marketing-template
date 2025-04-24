@@ -22,26 +22,21 @@ const EmailsLayout = async () => {
 
   const apiBaseUrl = process.env.BREVO_API_URL;
 
-  let filteredEmails;
-  try {
-    const response = await fetch(
-      `${apiBaseUrl}/smtp/statistics/events?event=delivered`,
-      {
-        method: "GET",
-        headers: {
-          accept: "application/json",
-          "api-key": process.env.BREVO_API_KEY,
-        },
-      }
-    );
+  const response = await fetch(
+    // `${apiBaseUrl}/smtp/statistics/events?email=geocodlea@gmail.com`,
+    `${apiBaseUrl}/smtp/statistics/events?tags=${user.brevo.email}`,
+    {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        "api-key": process.env.BREVO_API_KEY,
+      },
+    }
+  );
 
-    const { events } = await response.json();
-    filteredEmails = events.filter((event) => event.from === user.brevo.email);
-  } catch (err) {
-    throw new Error(`GET Ads error: ${err.message}`);
-  }
+  const { events } = await response.json();
 
-  return <Emails emails={filteredEmails} />;
+  return <Emails emails={events} />;
 };
 
 export default EmailsLayout;
