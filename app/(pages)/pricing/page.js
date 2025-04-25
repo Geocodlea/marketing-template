@@ -12,10 +12,11 @@ export const metadata = {
 
 const PricingLayout = async () => {
   const session = await getServerSession(authOptions);
+  const userId = session?.user?.id;
 
   await dbConnect();
-  const user = await User.findOne({ _id: session.user.id }).select("plan");
-  const plan = user.plan;
+  const user = await User.findOne({ _id: userId }).select("plan");
+  const plan = user?.plan;
 
   return (
     <>
