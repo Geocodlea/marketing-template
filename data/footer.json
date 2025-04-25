@@ -16,14 +16,6 @@
             {
               "link": "/utilize",
               "text": "Utilizare"
-            },
-            {
-              "link": "/setup",
-              "text": "Setup"
-            },
-            {
-              "link": "/blog",
-              "text": "Blog"
             }
           ]
         }
@@ -57,9 +49,9 @@
       ],
       "contact": [
         {
-          "location": "8819 Ohio St. South Gate, North America, USA",
-          "mail": "example@domain.com",
-          "number": "1 386-688-3295"
+          "location": "Strada Bulevardul Unirii 15, Sector 3, București, România",
+          "mail": "support@adpilot.ro",
+          "number": "0721 138 546"
         }
       ]
     }

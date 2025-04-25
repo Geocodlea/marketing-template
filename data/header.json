@@ -75,12 +75,6 @@
       "dropdown": true,
       "subItem": [
         {
-          "link": "/blog",
-          "isDisable": false,
-          "title": "Blog",
-          "badge": ""
-        },
-        {
           "link": "/pricing",
           "isDisable": false,
           "title": "Prețuri",
@@ -99,12 +93,7 @@
           "title": "Sign In",
           "badge": ""
         },
-        {
-          "link": "/about",
-          "isDisable": false,
-          "title": "Despre Noi",
-          "badge": ""
-        },
+
         {
           "link": "/terms-policy",
           "isDisable": false,
@@ -124,12 +113,6 @@
       "isIcon": false,
       "isMenu": false,
       "text": "Utilizare"
-    },
-    {
-      "link": "/setup",
-      "isIcon": false,
-      "isMenu": false,
-      "text": "Setup"
     }
   ],
   "smallNavItem": [

@@ -52,7 +52,7 @@ const SmallNav = ({ closeMenu }) => {
 
         <ul className="submenu rbt-default-sidebar-list">
           {SmallNavItem &&
-            SmallNavItem.smallNavItem.slice(5, 7).map((data, index) => (
+            SmallNavItem.smallNavItem.slice(5, 6).map((data, index) => (
               <li key={index}>
                 <Link onClick={closeMenu} href={data.link}>
                   <i className={`feather-${data.icon}`}></i>

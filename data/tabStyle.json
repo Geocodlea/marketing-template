@@ -2,7 +2,7 @@
   "TabStyleOne": [
     {
       "title": "Creeaza Reclame Automate de inalta calitate cu AI avansat.",
-      "img": "/images/generator-img/chat-export-vedio.png",
+      "img": "/images/generator-img/imagine reclame automate.png",
       "menuId": "video-generator",
       "text": "Reclame Automate",
       "target": "video-generate",
@@ -25,7 +25,7 @@
     },
     {
       "title": "Creează audio de înaltă calitate cu AI avansat.",
-      "img": "/images/generator-img/chat-export-audio.png",
+      "img": "/images/generator-img/imagine email.png",
       "menuId": "audio-generator",
       "text": "Email Marketing",
       "target": "audio-generate",
@@ -48,7 +48,7 @@
     },
     {
       "title": "Generează imagini uimitoare cu ajutorul AI-ului.",
-      "img": "/images/generator-img/chat-export-photo.png",
+      "img": "/images/generator-img/imagine vanzari.png",
       "menuId": "photo-generator",
       "text": "Dezvoltare Vânzări",
       "target": "photo-generate",
@@ -71,7 +71,7 @@
     },
     {
       "title": "Scrie texte creative și convingătoare automat.",
-      "img": "/images/generator-img/chat-export.png",
+      "img": "/images/generator-img/imagine mesaje.png",
       "menuId": "ads-generator",
       "text": "Mesaje Automate",
       "target": "text-generate",
@@ -94,7 +94,7 @@
     },
     {
       "title": "Scrie cod eficient și optimizat folosind AI.",
-      "img": "/images/generator-img/chat-export-code.png",
+      "img": "/images/generator-img/imagine postari.png",
       "menuId": "code-generator",
       "text": "Postări Automate",
       "target": "code-generate",

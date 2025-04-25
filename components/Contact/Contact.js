@@ -1,7 +1,9 @@
 import React from "react";
-import Link from "next/link";
 
 import ContactForm from "./ContactForm";
+import ContactData from "../../data/footer.json";
+
+const { location, mail, number } = ContactData.footer[0].contact[0];
 
 const Contact = () => {
   return (
@@ -60,7 +62,15 @@ const Contact = () => {
                   <div className="inner">
                     <h4 className="title">Locația noastră</h4>
                     <p className="b2">
-                      100 avenue of the moon, 12 new <br /> York, ny 1001B US.
+                      <a
+                        href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                          location
+                        )}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {location}
+                      </a>
                     </p>
                   </div>
                 </div>
@@ -71,10 +81,7 @@ const Contact = () => {
                   <div className="inner">
                     <h4 className="title">Numărul de contact</h4>
                     <p className="b2">
-                      <Link href="#">+444 555 666 777</Link>
-                    </p>
-                    <p className="b2">
-                      <Link href="#">+222 222 222 333</Link>
+                      <a href={`tel:${number}`}>{number}</a>
                     </p>
                   </div>
                 </div>
@@ -85,12 +92,7 @@ const Contact = () => {
                   <div className="inner">
                     <h4 className="title">Adresa noastră de email</h4>
                     <p className="b2">
-                      <Link href="mailto:admin@gmail.com">admin@gmail.com</Link>
-                    </p>
-                    <p className="b2">
-                      <Link href="mailto:example@gmail.com">
-                        example@gmail.com
-                      </Link>
+                      <a href={`mailto:${mail}`}>{mail}</a>
                     </p>
                   </div>
                 </div>

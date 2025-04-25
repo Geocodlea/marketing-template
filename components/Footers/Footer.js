@@ -28,8 +28,7 @@ const Footer = () => {
                     </Link>
                   </div>
                   <p className="b1 desc-text">
-                    It has long been known that a reader's <br /> attention will
-                    be diverted from{" "}
+                    Prima platformă de chatbot pentru crearea reclamelor online.
                   </p>
                   <h6 className="subtitle">Alăturați-vă unui Newsletter</h6>
                   <form className="newsletter-form" action="#">
@@ -78,15 +77,27 @@ const Footer = () => {
                             <ul className="footer-link contact-link">
                               <li>
                                 <i className="contact-icon fa-regular fa-location-dot"></i>
-                                <Link href="#">{inner.location}</Link>
+                                <a
+                                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                                    inner.location
+                                  )}`}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                >
+                                  {inner.location}
+                                </a>
                               </li>
                               <li>
                                 <i className="contact-icon fa-sharp fa-regular fa-envelope"></i>
-                                <Link href="#">{inner.mail}</Link>
+                                <a href={`mailto:${inner.mail}`}>
+                                  {inner.mail}
+                                </a>
                               </li>
                               <li>
                                 <i className="contact-icon fa-regular fa-phone"></i>
-                                <Link href="#">+{inner.number}</Link>
+                                <a href={`tel:${inner.number}`}>
+                                  {inner.number}
+                                </a>
                               </li>
                             </ul>
                           </div>
