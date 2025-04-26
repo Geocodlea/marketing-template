@@ -5,6 +5,8 @@ import { signOut } from "next-auth/react";
 import Alert from "@/components/Common/Alert";
 import Modal from "@/components/Common/Modal";
 
+import CsvUploader from "@/components/Common/CsvUploader";
+
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
@@ -478,6 +480,22 @@ const ProfileBody = ({ userData }) => {
                   </div>
                 </div>
               </form>
+
+              <p className="my-5">
+                Pentru a adauga o listă de adrese de email, adaugă un fișier CSV
+                de forma:
+                <br />
+                <a
+                  href="/downloads/exemplu.csv"
+                  download
+                  className="text-blue-500 text-sm"
+                >
+                  <i className="fa-sharp fa-solid fa-download me-2"></i>Download
+                  fișier exemplu (.csv)
+                </a>
+              </p>
+
+              <CsvUploader api={`/api/emails/uploadList/${user._id}`} />
             </div>
 
             <div
