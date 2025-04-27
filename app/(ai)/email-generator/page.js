@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth/next";
 import { redirect } from "next/navigation";
 import dbConnect from "@/utils/dbConnect";
 import User from "@/models/User";
+import EmailList from "@/models/EmailList";
 import EmailGeneratorPage from "./index";
 
 const EmailGeneratorLayout = async () => {
@@ -25,12 +26,18 @@ const EmailGeneratorLayout = async () => {
   const data = await respone.json();
   const domainVerified = data.status === 200;
 
+  const emailList = await EmailList.findOne({ userId })
+    .select("contacts")
+    .lean();
+  const contacts = emailList?.contacts || [];
+
   return (
     <>
       <EmailGeneratorPage
         brevoEmail={brevoEmail}
         brevoName={brevoName}
         domainVerified={domainVerified}
+        contacts={contacts}
         plan={user.plan}
       />
     </>

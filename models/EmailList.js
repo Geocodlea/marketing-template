@@ -27,8 +27,8 @@ global.models.EmailList =
           type: String,
           trim: true,
         },
+        _id: false,
       },
-      { _id: false },
     ],
   });
 

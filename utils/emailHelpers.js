@@ -123,7 +123,7 @@ const sendTransactionalEmail = async (
   subject,
   body
 ) => {
-  const sendEmail = async (recipient) => {
+  const sendEmail = async (recipient, personalizedBody) => {
     await fetch(`${process.env.BREVO_API_URL}/smtp/email`, {
       method: "POST",
       headers: {
@@ -135,9 +135,15 @@ const sendTransactionalEmail = async (
           email: fromEmail,
           name: fromName,
         },
-        to: [recipient],
+        to: [
+          {
+            email: recipient.email,
+            prenume: recipient.prenume,
+            nume_familie: recipient.nume_familie,
+          },
+        ],
         subject: subject || "No Subject",
-        htmlContent: body || "<p></p>",
+        htmlContent: personalizedBody || "<p></p>",
         trackOpens: true,
         trackClicks: true,
         tags: [fromEmail],
@@ -146,7 +152,12 @@ const sendTransactionalEmail = async (
   };
 
   for (const recipient of to) {
-    await sendEmail(recipient);
+    // Replace placeholders
+    const personalizedBody = body
+      .replace(/{prenume}/g, recipient.prenume || "")
+      .replace(/{nume_familie}/g, recipient.nume_familie || "");
+
+    await sendEmail(recipient, personalizedBody);
   }
 };
 

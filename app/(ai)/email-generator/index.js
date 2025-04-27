@@ -27,6 +27,7 @@ const EmailGeneratorPage = ({
   brevoEmail,
   brevoName,
   domainVerified,
+  contacts,
   plan,
 }) => {
   const [alert, setAlert] = useState(null);
@@ -44,7 +45,7 @@ const EmailGeneratorPage = ({
     data,
   } = useChat({
     api: "/api/emails/chat",
-    body: {},
+    body: { contacts },
     maxSteps: 5,
     async onToolCall({ toolCall }) {
       if (toolCall.toolName === "createEmail") {

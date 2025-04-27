@@ -8,12 +8,12 @@ export const renderToolInvocation = (part, addToolResult) => {
   switch (toolName) {
     case "generateAdPreview": {
       if (state === "call") {
-        return <div key={callId}>Generating preview...</div>;
+        return <div key={callId}>Se generează previzualizarea...</div>;
       }
       if (state === "result") {
         return (
           <div key={callId}>
-            <p>Here is your ad preview:</p>
+            <p>Iată previzualizarea reclamei tale:</p>
             <AdPreview html={part.toolInvocation.result.data[0].body} />
           </div>
         );
@@ -36,7 +36,7 @@ export const renderToolInvocation = (part, addToolResult) => {
                 }
                 className="btn btn-default btn-border btn-small"
               >
-                Approve ✅
+                Aprobă ✅
               </button>
               <button
                 onClick={() =>
@@ -47,7 +47,7 @@ export const renderToolInvocation = (part, addToolResult) => {
                 }
                 className="btn btn-default btn-border btn-small"
               >
-                Modify ✏️
+                Modifică ✏️
               </button>
             </div>
           </div>
@@ -61,7 +61,7 @@ export const renderToolInvocation = (part, addToolResult) => {
 
     case "createAd": {
       if (state === "call") {
-        return <div key={callId}>Creating ad...</div>;
+        return <div key={callId}>Se creează reclama...</div>;
       }
       if (state === "result") {
         return null;
@@ -71,17 +71,20 @@ export const renderToolInvocation = (part, addToolResult) => {
 
     case "generateEmail": {
       if (state === "call") {
-        return <div key={callId}>Generating preview...</div>;
+        return <div key={callId}>Se generează previzualizarea...</div>;
       }
       if (state === "result") {
+        const recipients = part.toolInvocation.args.to;
+        const isSingleRecipient = recipients.length === 1;
+        const recipientText = isSingleRecipient
+          ? recipients[0].email
+          : "lista ta de contacte";
+
         return (
           <div key={callId}>
             <p>
-              Here is your email preview, that will be sent to{" "}
-              {part.toolInvocation.args.to
-                .map((recipient) => recipient.email)
-                .join(", ")}
-              :
+              Iată previzualizarea emailului tău, care va fi trimis către{" "}
+              {recipientText}:
             </p>
             <div className="container my-5 p-4 border rounded shadow-sm bg-white">
               <h5 className="text-primary mb-4">
@@ -102,7 +105,7 @@ export const renderToolInvocation = (part, addToolResult) => {
 
     case "createEmail": {
       if (state === "call") {
-        return <div key={callId}>Creating email...</div>;
+        return <div key={callId}>Se creează emailul...</div>;
       }
       if (state === "result") {
         return null;
