@@ -2,6 +2,17 @@ import dbConnect from "@/utils/dbConnect";
 import EmailList from "@/models/EmailList";
 import { NextResponse } from "next/server";
 
+export async function GET(request, { params }) {
+  const { id } = params;
+
+  await dbConnect();
+  const userList = await EmailList.findOne({ userId: id });
+
+  return NextResponse.json({
+    contacts: userList?.contacts,
+  });
+}
+
 export async function POST(request, { params }) {
   const { id } = params;
 
@@ -38,7 +49,7 @@ export async function POST(request, { params }) {
 
     return NextResponse.json({
       status: "success",
-      message: "CSV-ul a fost incarcat cu succes!",
+      message: "CSV-ul a fost încărcat cu succes!",
     });
   } catch (error) {
     console.error("Error uploading CSV:", error);

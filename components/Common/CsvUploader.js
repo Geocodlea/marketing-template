@@ -1,14 +1,20 @@
 "use client";
 
-import { useCallback } from "react";
+import { useState, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import Papa from "papaparse";
+import Alert from "@/components/Common/Alert";
 
-export default function CsvUploader({ api }) {
+export default function CsvUploader({ api, onUploadSuccess }) {
+  const [alert, setAlert] = useState(null);
+
   const onDrop = useCallback(
     async (acceptedFiles) => {
       if (!acceptedFiles || acceptedFiles.length === 0) {
-        alert("Doar fișiere CSV sunt acceptate.");
+        setAlert({
+          status: "danger",
+          message: "Doar fișiere CSV sunt acceptate.",
+        });
         return;
       }
 
@@ -28,16 +34,23 @@ export default function CsvUploader({ api }) {
             });
 
             const data = await res.json();
-            console.log(data);
-            alert(data.message);
+            setAlert(data);
+
+            // ✅ Call onUploadSuccess after successful upload
+            if (res.ok && typeof onUploadSuccess === "function") {
+              onUploadSuccess();
+            }
           } catch (error) {
             console.error("Upload failed", error);
-            alert("Upload failed");
+            setAlert({
+              status: "danger",
+              message: "Eroare la upload.",
+            });
           }
         },
       });
     },
-    [api]
+    [api, onUploadSuccess]
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -73,6 +86,7 @@ export default function CsvUploader({ api }) {
           <p className="small">Accepted format: .csv</p>
         </>
       )}
+      {alert && <Alert alert={alert} setAlert={setAlert} />}
     </div>
   );
 }

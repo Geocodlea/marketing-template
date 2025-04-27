@@ -28,6 +28,14 @@ const Alert = ({ alert, setAlert }) => {
       data-sal="zoom-in"
       data-sal-duration="700"
       data-sal-easing="ease-out-bounce"
+      style={{
+        position: "fixed",
+        bottom: "20px",
+        left: "50%",
+        transform: "translateX(-50%)",
+        zIndex: 9999,
+        minWidth: "300px",
+      }}
     >
       {alert.message}
       <button
