@@ -9,7 +9,29 @@ import tiktok from "@/public/images/sign-up/tiktok.webp";
 
 import { signIn } from "next-auth/react";
 
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as Yup from "yup";
+
+const emailSchema = Yup.object({
+  email: Yup.string()
+    .email("Emailul nu este valid.")
+    .required("Emailul este obligatoriu."),
+});
+
 const SigninPage = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(emailSchema),
+  });
+
+  const sendEmail = ({ email }) => {
+    signIn("email", { email, callbackUrl: "/" });
+  };
+
   return (
     <>
       <main className="page-wrapper">
@@ -28,7 +50,7 @@ const SigninPage = () => {
                   </div>
                   <div className="signup-box-bottom">
                     <div className="signup-box-content">
-                      <div className="social-btn-grp">
+                      {/* <div className="social-btn-grp">
                         <button
                           className="btn-default btn-border"
                           onClick={() =>
@@ -43,14 +65,12 @@ const SigninPage = () => {
                               alt="Facebook Icon"
                             />
                           </span>
-                          Login with Facebook
+                          Login cu Facebook
                         </button>
                       </div>
-                    </div>
-                  </div>
-                  <br />
-                  <div className="signup-box-bottom">
-                    <div className="signup-box-content">
+
+                      <br />
+
                       <div className="social-btn-grp">
                         <button
                           className="btn-default btn-border"
@@ -64,9 +84,44 @@ const SigninPage = () => {
                               alt="TikTok Icon"
                             />
                           </span>
-                          Login with TikTok
+                          Login cu TikTok
                         </button>
                       </div>
+
+                      <div className="rbt-sm-separator"></div> */}
+
+                      <form onSubmit={handleSubmit(sendEmail)}>
+                        <div className="social-btn-grp">
+                          <div className="signup-wrapper">
+                            <input
+                              id="email"
+                              type="text"
+                              placeholder="contact@adpilot.ro"
+                              {...register("email")}
+                              className={`signup-email form-control ${
+                                errors.email ? "is-invalid" : ""
+                              }`}
+                            />
+                            {errors.email && (
+                              <div className="invalid-feedback">
+                                {errors.email.message}
+                              </div>
+                            )}
+                          </div>
+                        </div>
+
+                        <div className="social-btn-grp">
+                          <button
+                            type="submit"
+                            className="btn-default btn-border"
+                          >
+                            <span className="icon-left">
+                              <i className="contact-icon fa-sharp fa-regular fa-envelope"></i>
+                            </span>
+                            Login cu Email
+                          </button>
+                        </div>
+                      </form>
                     </div>
                   </div>
                 </div>

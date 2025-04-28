@@ -9,7 +9,7 @@ import User from "@/models/User";
 
 const ProfileDetails = async () => {
   const session = await getServerSession(authOptions);
-  if (!session) redirect(`/signin`);
+  if (!session) redirect(`/auth/signin`);
 
   await dbConnect();
   const user = await User.findOne({ _id: session.user.id });

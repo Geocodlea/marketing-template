@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useAppContext } from "@/context/Context";
 
 import logo from "../../public/images/logo/logo.png";
-import avatar from "../../public/images/team/team-01sm.jpg";
+import avatar from "../../public/images/team/avatar.png";
 
 import Nav from "./Nav";
 import UserMenu from "./UserMenu";
@@ -102,7 +102,7 @@ const HeaderDashboard = ({ display }) => {
                     </div>
                   </div>
                 ) : (
-                  <Link href="/signin">SignIn</Link>
+                  <Link href="/auth/signin">SignIn</Link>
                 )}
 
                 {/* <div className={`expand-btn-grp ${display}`}>

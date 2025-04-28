@@ -36,7 +36,7 @@ const EmailForm = ({ user, updateAccount, dnsRecords }) => {
             <input
               id="brevoEmail"
               type="text"
-              placeholder={user.brevo.email || "contact@adpilot.ro"}
+              placeholder={user.brevo?.email || "contact@adpilot.ro"}
               {...registerEmail("brevoEmail")}
               className={`form-control ${
                 emailErrors.brevoEmail ? "is-invalid" : ""
@@ -56,7 +56,7 @@ const EmailForm = ({ user, updateAccount, dnsRecords }) => {
             <input
               id="brevoName"
               type="text"
-              placeholder={user.brevo.name || "Adpilot"}
+              placeholder={user.brevo?.name || "Adpilot"}
               {...registerEmail("brevoName")}
               className={`form-control ${
                 emailErrors.brevoName ? "is-invalid" : ""

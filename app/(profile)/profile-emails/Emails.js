@@ -16,7 +16,7 @@ const EmailsPage = ({ emails }) => {
     <>
       <UserNav title="Emails" />
 
-      <Stats emailData={emails} />
+      {emails && emails.length > 0 && <Stats emailData={emails} />}
 
       <div className="rainbow-pricing-detailed-area mt--80 mb--80">
         <div className="row row--15">

@@ -14,7 +14,7 @@ export default function NewUser() {
           <div className="d-flex flex-column gap-4 text-center">
             <div className="banner-area"></div>
 
-            <h1 className="mb-3">Bine ai venit în aplicația noastră!</h1>
+            <h2 className="mb-3">Bine ai venit în aplicația noastră!</h2>
 
             <p className="mb-3">
               Ne bucurăm să te avem alături! Pentru a beneficia de toate

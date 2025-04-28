@@ -24,7 +24,7 @@ const Pricing = ({ start, end, parentClass, isBadge, gap, plan }) => {
   };
 
   const planSelect = async (selectedPlan) => {
-    if (!session) router.push("/signin");
+    if (!session) router.push("/auth/signin");
     if (plan === selectedPlan.toLowerCase() || selectedPlan === "Basic") {
       router.push("/ads-generator");
     } else {

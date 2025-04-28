@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import avatar from "../../public/images/team/team-01sm.jpg";
+import avatar from "../../public/images/team/avatar.png";
 
 import SmallNavItem from "../../data/header.json";
 import { useAppContext } from "@/context/Context";

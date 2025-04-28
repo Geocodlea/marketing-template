@@ -12,7 +12,7 @@ import AdsGeneratorPage from "./index";
 
 const AdsGeneratorLayout = async () => {
   const session = await getServerSession(authOptions);
-  if (!session) redirect(`/signin`);
+  if (!session) redirect(`/auth/signin`);
 
   const userId = session.user.id;
 

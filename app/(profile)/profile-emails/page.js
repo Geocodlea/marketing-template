@@ -13,7 +13,7 @@ export const metadata = {
 
 const EmailsLayout = async () => {
   const session = await getServerSession(authOptions);
-  if (!session) redirect(`/signin`);
+  if (!session) redirect(`/auth/signin`);
 
   const userId = session.user.id;
 

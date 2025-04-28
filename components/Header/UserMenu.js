@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import avatar from "../../public/images/team/team-01sm.jpg";
+import avatar from "../../public/images/team/avatar.png";
 import UserMenuItems from "./HeaderProps/UserMenuItem";
 
 import { signOut } from "next-auth/react";

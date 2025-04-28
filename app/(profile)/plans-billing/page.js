@@ -14,7 +14,7 @@ export const metadata = {
 
 const PlansBillingLayout = async ({ searchParams }) => {
   const session = await getServerSession(authOptions);
-  if (!session) redirect(`/signin`);
+  if (!session) redirect(`/auth/signin`);
 
   const userId = session.user.id;
 

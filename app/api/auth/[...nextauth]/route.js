@@ -1,15 +1,23 @@
 import NextAuth from "next-auth";
 import { MongoDBAdapter } from "@auth/mongodb-adapter";
 import clientPromise from "/utils/dbMongoClient";
+import EmailProvider from "next-auth/providers/email";
 import FacebookProvider from "next-auth/providers/facebook";
 import TikTokProvider from "@/utils/TikTokProvider";
 import dbConnect from "@/utils/dbConnect";
 import User from "@/models/User";
+import sendVerificationRequest from "/utils/sendEmailVerification";
 
 export const authOptions = {
   adapter: MongoDBAdapter(clientPromise),
   secret: process.env.NEXTAUTH_SECRET,
   providers: [
+    EmailProvider({
+      server: process.env.EMAIL_SERVER,
+      from: process.env.EMAIL_FROM,
+      sendVerificationRequest,
+    }),
+
     FacebookProvider({
       clientId: process.env.FACEBOOK_APP_ID,
       clientSecret: process.env.FACEBOOK_APP_SECRET,
@@ -54,6 +62,8 @@ export const authOptions = {
   },
 
   pages: {
+    signIn: "/auth/signin",
+    verifyRequest: "/auth/verify-request", // (used for check email message)
     newUser: "/auth/new-user", // New users will be directed here on first sign in (leave the property out if not of interest)
   },
 };

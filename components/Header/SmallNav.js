@@ -3,7 +3,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import SmallNavItem from "../../data/header.json";
 
-import avatar from "../../public/images/team/team-01sm.jpg";
+import avatar from "../../public/images/team/avatar.png";
 import { useSession } from "next-auth/react";
 
 const SmallNav = ({ closeMenu }) => {
@@ -94,7 +94,7 @@ const SmallNav = ({ closeMenu }) => {
         ) : (
           <ul className="submenu rbt-default-sidebar-list">
             <li>
-              <Link onClick={closeMenu} href="/signin">
+              <Link onClick={closeMenu} href="/auth/signin">
                 <i className="feather-user"></i>
                 <span>Sign In</span>
               </Link>

@@ -88,7 +88,7 @@
           "badge": ""
         },
         {
-          "link": "/signin",
+          "link": "/auth/signin",
           "isDisable": false,
           "title": "Sign In",
           "badge": ""

@@ -14,7 +14,7 @@ export const metadata = {
 
 const AdsLayout = async () => {
   const session = await getServerSession(authOptions);
-  if (!session) redirect(`/signin`);
+  if (!session) redirect(`/auth/signin`);
 
   const userId = session.user.id;
 
@@ -22,8 +22,8 @@ const AdsLayout = async () => {
   const user = await User.findOne({ _id: userId });
   const account = await Account.findOne({ userId });
 
-  const accessToken = account.access_token;
-  const adAccountId = user.facebook.adAccountId;
+  const accessToken = account?.access_token;
+  const adAccountId = user.facebook?.adAccountId;
   const apiBaseUrl = process.env.FACEBOOK_API_URL;
 
   const fields = [
