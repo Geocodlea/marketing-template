@@ -1,22 +1,22 @@
 {
   "team": [
     {
-      "img": "/images/team/team-07.png",
-      "name": "Rafi Dev",
-      "profission": "Dezvoltator Frontend",
-      "location": "CO Miego, AD, SUA"
+      "img": "/images/team/1.jpg",
+      "name": "Andrei Marinescu",
+      "profission": "Specialist Social Media",
+      "location": "București, România"
     },
     {
-      "img": "/images/team/team-08.png",
-      "name": "Christopher",
-      "profission": "Designer UI/UX",
-      "location": "CO Miego, AD, SUA"
+      "img": "/images/team/2.jpg",
+      "name": "Ioana Popa",
+      "profission": "Copywriter Digital",
+      "location": "Cluj-Napoca, România"
     },
     {
-      "img": "/images/team/team-09.png",
-      "name": "Robert Song",
-      "profission": "Designer UI/UX",
-      "location": "CO Miego, AD, SUA"
+      "img": "/images/team/3.jpg",
+      "name": "Mihai Radu",
+      "profission": "Strateg Marketing Online",
+      "location": "Timișoara, România"
     },
     {
       "img": "/images/team/team-01.png",

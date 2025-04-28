@@ -1,11 +1,7 @@
-import Image from "next/image";
-import Link from "next/link";
-import React from "react";
-
 import FooterData from "../../data/footer.json";
-
-import logo from "../../public/images/logo/logo.png";
 import FooterProps from "./FooterProps";
+
+import Newsletter from "./Newsletter";
 
 const Footer = () => {
   return (
@@ -15,37 +11,7 @@ const Footer = () => {
           <div className="container">
             <div className="row justify-content-between">
               <div className="col-lg-4 col-md-6 col-sm-12 col-12">
-                <div className="rainbow-footer-widget">
-                  <div className="logo">
-                    <Link href="/">
-                      <Image
-                        className="logo-light"
-                        src={logo}
-                        width={135}
-                        height={35}
-                        alt="ChatBot Logo"
-                      />
-                    </Link>
-                  </div>
-                  <p className="b1 desc-text">
-                    Prima platformă de chatbot pentru crearea reclamelor online.
-                  </p>
-                  <h6 className="subtitle">Alăturați-vă unui Newsletter</h6>
-                  <form className="newsletter-form" action="#">
-                    <div className="form-group">
-                      <input
-                        type="email"
-                        placeholder="Introdu e-mail-ul tău aici"
-                      />
-                      <button
-                        className="btn-default bg-solid-primary"
-                        type="submit"
-                      >
-                        <i className="fa-sharp fa-regular fa-arrow-right"></i>
-                      </button>
-                    </div>
-                  </form>
-                </div>
+                <Newsletter />
               </div>
 
               <div className="col-lg-2 col-md-6 col-sm-6 col-12">

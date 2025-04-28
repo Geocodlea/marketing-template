@@ -10,6 +10,10 @@
               "text": "Prețuri"
             },
             {
+              "link": "/about",
+              "text": "Despre noi"
+            },
+            {
               "link": "/contact",
               "text": "Contact"
             },
@@ -26,23 +30,23 @@
           "innerItem": [
             {
               "link": "/ads-generator",
-              "text": "Creează Reclamă Facebook"
+              "text": "Marketer"
+            },
+            {
+              "link": "/email-generator",
+              "text": "Promoter"
             },
             {
               "link": "#",
-              "text": "Email Marketing"
+              "text": "Comunicator"
             },
             {
               "link": "#",
-              "text": "Social Media Manager"
+              "text": "Consultant"
             },
             {
               "link": "#",
-              "text": "Customer Support"
-            },
-            {
-              "link": "#",
-              "text": "Strategist Vânzări"
+              "text": "Strategist"
             }
           ]
         }

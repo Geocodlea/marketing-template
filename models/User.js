@@ -24,6 +24,7 @@ global.models.User =
       email: { type: String },
       name: { type: String },
     },
+    newsletterEmail: { type: String },
   });
 
 export default global.models.User;

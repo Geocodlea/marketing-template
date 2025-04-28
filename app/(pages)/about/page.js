@@ -9,7 +9,7 @@ export const metadata = {
 const AboutPage = () => {
   return (
     <>
-      <Breadcrumb title="Our Team" text="Team" />
+      <Breadcrumb title="Echipa nostră" text="Echipa" />
 
       <Team />
     </>

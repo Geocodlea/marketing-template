@@ -109,6 +109,12 @@
       ]
     },
     {
+      "link": "/about",
+      "isIcon": false,
+      "isMenu": false,
+      "text": "Despre Noi"
+    },
+    {
       "link": "/utilize",
       "isIcon": false,
       "isMenu": false,

@@ -115,6 +115,8 @@
     padding: 100px 0;
     padding-bottom: 70px;
     .rainbow-footer-widget {
+      margin: 16px;
+
       .text-big {
         font-size: 21px;
         margin-top: 30px;
@@ -150,7 +152,6 @@
       .subtitle {
         font-weight: 500;
         font-size: 20px;
-        padding-right: 31%;
         line-height: 28px;
         margin-bottom: 16px;
         color: var(--color-heading);
