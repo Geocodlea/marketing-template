@@ -157,7 +157,7 @@
   &.style-aiwave {
     height: 100%;
     position: relative;
-    display: inline-block;
+    display: flex;
     padding: 2px;
     transition: all 0.3s ease-in-out;
     &::before,
@@ -219,6 +219,7 @@
       line-height: var(--line-height-b1);
     }
     .pricing-table-inner {
+      flex-grow: 1;
       position: relative;
       z-index: 3;
       padding: 30px;

@@ -38,7 +38,7 @@
         {
           "link": "/ads-generator",
           "isDisable": false,
-          "title": "Creează Reclamă Facebook",
+          "title": "Creează Reclamă",
           "badge": ""
         },
         {
@@ -51,19 +51,19 @@
           "link": "#",
           "isDisable": true,
           "title": "Social Media Manager",
-          "badge": "Coming"
+          "badge": ""
         },
         {
           "link": "#",
           "isDisable": true,
           "title": "Customer Support",
-          "badge": "Coming"
+          "badge": ""
         },
         {
           "link": "#",
           "isDisable": true,
           "title": "Strategist Vânzări",
-          "badge": "Coming"
+          "badge": ""
         }
       ]
     },
@@ -121,7 +121,7 @@
       "isDisable": false,
       "type": "default",
       "img": "/images/generator-icon/text.png",
-      "text": "Creează Reclamă Facebook",
+      "text": "Creează Reclamă",
       "badge": "",
       "icon": ""
     },
@@ -140,7 +140,7 @@
       "type": "default",
       "img": "/images/generator-icon/photo.png",
       "text": "Social Media Manager",
-      "badge": "Coming",
+      "badge": "",
       "icon": ""
     },
     {
@@ -149,7 +149,7 @@
       "type": "default",
       "img": "/images/generator-icon/lyrics.png",
       "text": "Customer Support",
-      "badge": "Coming",
+      "badge": "",
       "icon": ""
     },
     {
@@ -158,7 +158,7 @@
       "type": "default",
       "img": "/images/generator-icon/website-design.png",
       "text": "Strategist Vânzări",
-      "badge": "Coming",
+      "badge": "",
       "icon": ""
     },
     {
@@ -892,7 +892,7 @@
     {
       "link": "/ads-generator",
       "isDisable": false,
-      "title": "Creează Reclamă Facebook",
+      "title": "Creează Reclamă",
       "img": "/images/generator-icon/text.png",
       "badge": ""
     },
@@ -908,21 +908,21 @@
       "isDisable": true,
       "title": "Social Media Manager",
       "img": "/images/generator-icon/website-design.png",
-      "badge": "Coming"
+      "badge": ""
     },
     {
       "link": "#",
       "isDisable": true,
       "title": "Customer Support",
       "img": "/images/generator-icon/lyrics.png",
-      "badge": "Coming"
+      "badge": ""
     },
     {
       "link": "#",
       "isDisable": true,
       "title": "Strategist Vânzări",
       "img": "/images/generator-icon/document.png",
-      "badge": "Coming"
+      "badge": ""
     }
   ]
 }

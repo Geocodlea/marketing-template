@@ -54,7 +54,7 @@ export const authOptions = {
         { _id: user.id },
         {
           $set: {
-            "facebook.adsRemaining": 1,
+            "facebook.adsRemaining": 10,
           },
         }
       );

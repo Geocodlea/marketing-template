@@ -97,16 +97,16 @@ const Testimonial = () => {
                           <div className="meta-info-section">
                             <p className="title-text">{data.name}</p>
                             <p className="desc">{data.post}</p>
-                            <div className="desc-img">
+                            {/* <div className="desc-img">
                               <Image
                                 src={data.brandImg}
                                 width={86}
                                 height={23}
                                 alt="Brand Image"
                               />
-                            </div>
+                            </div> */}
                           </div>
-                          <div className="meta-img-section">
+                          {/* <div className="meta-img-section">
                             <Link
                               className="btn-default rounded-player style-two xs-size popup-video"
                               href="https://www.youtube.com/watch?v=ikEdN260zRg"
@@ -124,7 +124,7 @@ const Testimonial = () => {
                                 alt=""
                               />
                             </a>
-                          </div>
+                          </div> */}
                         </div>
                       </div>
                     </div>

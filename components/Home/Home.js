@@ -57,7 +57,7 @@ const Home = () => {
             <div className="col-lg-12">
               <div className="inner text-center mt--140">
                 <h1 className="title display-one">
-                  Creează reclame pe Facebook
+                  Lansează campanii publicitare
                   <div>
                     <span className="header-caption">
                       <span className="cd-headline rotate-1">
@@ -95,10 +95,10 @@ const Home = () => {
                   </div>
                 </h1>
                 <p className="description">
-                  Lansează reclame în 5 minute, optimizate automat pentru
-                  conversii.
+                  Creează reclame pentru Facebook, TikTok și Google în câteva
+                  minute, optimizate automat pentru performanță maximă.
                 </p>
-                <Link className="btn-default " href="/ads-generator">
+                <Link className="btn-default" href="/ads-generator">
                   Încearcă gratuit
                 </Link>
 
@@ -182,11 +182,11 @@ const Home = () => {
               </div>
             </div>
           </div>
-          <div className="row">
+          {/* <div className="row">
             <div className="col-lg-12 mt--10">
               <BrandList />
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
 
@@ -202,11 +202,12 @@ const Home = () => {
               >
                 <h4 className="subtitle">
                   <span className="theme-gradient">
-                    RAINBOW UNLOCKS THE POTENTIAL OF AI
+                    ADPILOT DEZVĂLUIE POTENȚIALUL AI
                   </span>
                 </h4>
                 <h2 className="title mb--0">
-                  Generative AI made for <br /> creators.
+                  Inteligență Artificială Generativă <br /> creată pentru
+                  afaceri.
                 </h2>
               </div>
             </div>
@@ -226,7 +227,7 @@ const Home = () => {
                 data-sal-delay="150"
               >
                 <h4 className="subtitle">
-                  <span className="theme-gradient">Asistență individuala</span>
+                  <span className="theme-gradient">Asistență individuală</span>
                 </h4>
                 <h2 className="title mb--60">Creează reclame mai inteligent</h2>
               </div>
@@ -280,7 +281,7 @@ const Home = () => {
                   src={SplitImg}
                   width={1305}
                   height={712}
-                  alt="collabration-image"
+                  alt="collaboration-image"
                 />
                 <div className="logo-section">
                   <div className="center-logo">
@@ -298,12 +299,6 @@ const Home = () => {
         </div>
       </div>
 
-      {/* <div className="rainbow-rn-cta">
-        <div className="container">
-          <CtaOne />
-        </div>
-      </div> */}
-
       <div className="aiwave-pricing-area wrapper rainbow-section-gap-big">
         <div className="container">
           <div className="row">
@@ -318,41 +313,9 @@ const Home = () => {
                   <span className="theme-gradient">Prețuri</span>
                 </h4>
                 <h2 className="title w-600 mb--40">
-                  Planuri și Prețuri pentru oricine
+                  Planuri și Prețuri pentru toți
                 </h2>
               </div>
-
-              <nav className="aiwave-tab">
-                <div
-                  className="tab-btn-grp nav nav-tabs text-center justify-content-center"
-                  id="nav-tab"
-                  role="tablist"
-                >
-                  {PricingData &&
-                    PricingData.pricing.map((data, index) => (
-                      <button
-                        className={`nav-link ${data.isSelect ? "active" : ""}`}
-                        id={`${data.priceId}-tab`}
-                        data-bs-toggle="tab"
-                        data-bs-target={`#${data.priceId}`}
-                        type="button"
-                        role="tab"
-                        aria-controls={data.priceId}
-                        aria-selected="false"
-                        key={index}
-                      >
-                        {data.priceType}{" "}
-                        {data.discount ? (
-                          <span className="rainbow-badge-card badge-border">
-                            -{data.discount}%
-                          </span>
-                        ) : (
-                          ""
-                        )}
-                      </button>
-                    ))}
-                </div>
-              </nav>
             </div>
           </div>
 
@@ -385,9 +348,9 @@ const Home = () => {
                 data-sal-delay="150"
               >
                 <h4 className="subtitle">
-                  <span className="theme-gradient">Asistență individuala</span>
+                  <span className="theme-gradient">Opiniile comunității</span>
                 </h4>
-                <h2 className="title mb--60">Opiniile comunității</h2>
+                <h2 className="title mb--60">Ce spun utilizatorii noștri</h2>
               </div>
             </div>
           </div>
@@ -422,13 +385,13 @@ const Home = () => {
                     <i className="fa-sharp fa-solid fa-star"></i>
                   </a>
                 </div>
-                <p className="subtitle mb--0">
-                  Bazat pe 20.000+ de recenzii pe
-                </p>
+                <p className="subtitle mb--0">Bazat pe sute de recenzii</p>
               </div>
             </div>
           </div>
-          <BrandTwo />
+
+          {/* <BrandTwo /> */}
+
           <div className="bg-shape-left">
             <Image
               src={bgShapeThree}
@@ -445,12 +408,6 @@ const Home = () => {
           </div>
         </div>
       </div>
-
-      {/* <div className="rainbow-cta-area rainbow-section-gap rainbow-section-gapBottom-big">
-        <div className="container">
-          <CtaTwo />
-        </div>
-      </div> */}
     </>
   );
 };

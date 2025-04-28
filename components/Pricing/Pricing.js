@@ -57,6 +57,38 @@ const Pricing = ({ start, end, parentClass, isBadge, gap, plan }) => {
 
   return (
     <>
+      <nav className="aiwave-tab">
+        <div
+          className="tab-btn-grp nav nav-tabs text-center justify-content-center"
+          id="nav-tab"
+          role="tablist"
+        >
+          {PricingData &&
+            PricingData.pricing.map((data, index) => (
+              <button
+                className={`nav-link ${data.isSelect ? "active" : ""}`}
+                id={`${data.priceId}-tab`}
+                data-bs-toggle="tab"
+                data-bs-target={`#${data.priceId}`}
+                type="button"
+                role="tab"
+                aria-controls={data.priceId}
+                aria-selected="false"
+                key={index}
+              >
+                {data.priceType}{" "}
+                {data.discount ? (
+                  <span className="rainbow-badge-card badge-border">
+                    -{data.discount}%
+                  </span>
+                ) : (
+                  ""
+                )}
+              </button>
+            ))}
+        </div>
+      </nav>
+
       <div
         className="tab-content p-0 bg-transparent border-0 border bg-light"
         id="nav-tabContent"

@@ -45,16 +45,16 @@ const UserMenu = () => {
           </li>
           <li>
             <Link href="/utilize">
-              <i className="fa-sharp fa-solid fa-gears"></i>
+              <i className="fa-sharp fa-solid fa-screwdriver-wrench"></i>
               <span>Utilizare</span>
             </Link>
           </li>
-          <li>
+          {/* <li>
             <Link href="/setup">
               <i className="fa-sharp fa-solid fa-gears"></i>
               <span>Setup</span>
             </Link>
-          </li>
+          </li> */}
         </ul>
         <hr className="mt--10 mb--10" />
         <ul className="user-list-wrapper">

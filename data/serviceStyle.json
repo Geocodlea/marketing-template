@@ -2,50 +2,50 @@
   "serviceOne": [
     {
       "img": "/images/icons/service-icon-01.svg",
-      "title": "Întreabă orice",
-      "desc": "Permite utilizatorilor să găsească rapid răspunsuri la întrebările lor fără a fi nevoie să caute prin mai multe surse."
+      "title": "Răspuns instant",
+      "desc": "Răspunde rapid la întrebările clienților tăi pe toate rețelele sociale."
     },
     {
       "img": "/images/icons/service-icon-02.svg",
-      "title": "Conectează-te oriunde",
-      "desc": "Permite utilizatorilor să găsească rapid răspunsuri la întrebările lor fără a fi nevoie să caute prin mai multe surse."
+      "title": "Acces rapid la întrebări",
+      "desc": "Permite utilizatorilor să interacționeze rapid cu afacerea ta de oriunde."
     },
     {
       "img": "/images/icons/service-icon-03.svg",
-      "title": "Răspuns rapid",
-      "desc": "Permite utilizatorilor să găsească rapid răspunsuri la întrebările lor fără a fi nevoie să caute prin mai multe surse."
+      "title": "Automatizare completă",
+      "desc": "Automatizează răspunsurile la comentarii și mesaje, oferind răspunsuri personalizate."
     },
     {
       "img": "/images/icons/service-icon-01.svg",
-      "title": "Întreabă orice",
-      "desc": "Permite utilizatorilor să găsească rapid răspunsuri la întrebările lor fără a fi nevoie să caute prin mai multe surse."
+      "title": "Suport automatizat",
+      "desc": "Fiecare întrebare primește un răspuns rapid, fără necesitatea verificării manuale a mesajelor."
     },
     {
       "img": "/images/icons/service-icon-02.svg",
-      "title": "Conectează-te oriunde",
-      "desc": "Permite utilizatorilor să găsească rapid răspunsuri la întrebările lor fără a fi nevoie să caute prin mai multe surse."
+      "title": "Gestionare centralizată",
+      "desc": "Administrează toate comentariile și mesajele din platformele sociale într-un singur loc."
     },
     {
       "img": "/images/icons/service-icon-03.svg",
-      "title": "Răspuns rapid",
-      "desc": "Permite utilizatorilor să găsească rapid răspunsuri la întrebările lor fără a fi nevoie să caute prin mai multe surse."
+      "title": "Asistență disponibilă 24/7",
+      "desc": "Fii disponibil nonstop pentru clienții tăi, cu răspunsuri automate și personalizate."
     }
   ],
   "serviceTwo": [
     {
       "img": "/images/service/service-icon-01.png",
-      "title": "100% Fără risc, garanție de returnare a banilor!",
-      "desc": "Restituirile vor fi emise în termen de 14 zile de la data achiziției."
+      "title": "Fără risc",
+      "desc": "Dacă nu ești mulțumit de serviciile noastre, îți returnăm banii în termen de 14 zile, fără întrebări."
     },
     {
       "img": "/images/service/service-icon-02.png",
-      "title": "Actualizează sau anulează oricând",
-      "desc": "Există multe variante disponibile."
+      "title": "Flexibilitate totală",
+      "desc": "Poți actualiza sau anula serviciile oricând, în funcție de nevoile afacerii tale."
     },
     {
       "img": "/images/service/service-icon-03.png",
-      "title": "Nu ești sigur încă, încearcă gratuit",
-      "desc": "Restituirile vor fi emise în termen de 14 zile de la data achiziției."
+      "title": "Testare gratuită",
+      "desc": "Încearcă serviciile noastre fără obligații, iar dacă nu îți aduc valoare, îți returnăm banii."
     }
   ]
 }

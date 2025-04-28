@@ -67,44 +67,6 @@ const PlansBilling = ({
       <div className="content-page pb--50">
         <div className="aiwave-pricing-area wrapper">
           <div className="container">
-            <div className="row">
-              <div className="col-lg-12">
-                <nav className="aiwave-tab">
-                  <div
-                    className="tab-btn-grp nav nav-tabs text-center justify-content-center"
-                    id="nav-tab"
-                    role="tablist"
-                  >
-                    {PricingData &&
-                      PricingData.pricing.map((data, index) => (
-                        <button
-                          className={`nav-link ${
-                            data.isSelect ? "active" : ""
-                          }`}
-                          id={`${data.priceId}-tab`}
-                          data-bs-toggle="tab"
-                          data-bs-target={`#${data.priceId}`}
-                          type="button"
-                          role="tab"
-                          aria-controls={data.priceId}
-                          aria-selected={data.isSelect}
-                          key={index}
-                        >
-                          {data.priceType}{" "}
-                          {data.discount ? (
-                            <span className="rainbow-badge-card badge-border">
-                              -{data.discount}%
-                            </span>
-                          ) : (
-                            ""
-                          )}
-                        </button>
-                      ))}
-                  </div>
-                </nav>
-              </div>
-            </div>
-
             <Pricing
               parentClass="col-lg-6 col-md-6 col-12"
               start={1}
