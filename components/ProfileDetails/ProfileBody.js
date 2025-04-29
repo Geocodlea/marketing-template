@@ -95,13 +95,13 @@ const ProfileBody = ({ userData }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`/api/emails/brevo/${user.brevoEmail}`);
+      const response = await fetch(`/api/emails/brevo/${user.brevo?.email}`);
       const data = await response.json();
       setDnsRecords(data.dnsRecords);
     };
 
     fetchData();
-  }, [user.brevoEmail]);
+  }, [user.brevo?.email]);
 
   return (
     <>
