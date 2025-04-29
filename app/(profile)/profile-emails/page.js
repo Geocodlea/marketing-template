@@ -6,11 +6,6 @@ import User from "@/models/User";
 
 import Emails from "./Emails";
 
-export const metadata = {
-  title: "Plans & Billing - || AiWave - AI SaaS Website NEXTJS14 UI Kit",
-  description: "AiWave - AI SaaS Website NEXTJS14 UI Kit",
-};
-
 const EmailsLayout = async () => {
   const session = await getServerSession(authOptions);
   if (!session) redirect(`/auth/signin`);
@@ -21,6 +16,7 @@ const EmailsLayout = async () => {
   const user = await User.findOne({ _id: userId });
 
   const apiBaseUrl = process.env.BREVO_API_URL;
+  const brevoApiKey = process.env.BREVO_API_KEY;
 
   const response = await fetch(
     // `${apiBaseUrl}/smtp/statistics/events?email=geocodlea@gmail.com`,
@@ -29,12 +25,13 @@ const EmailsLayout = async () => {
       method: "GET",
       headers: {
         accept: "application/json",
-        "api-key": process.env.BREVO_API_KEY,
+        "api-key": brevoApiKey,
       },
     }
   );
 
-  const { events } = await response.json();
+  const data = await response.json();
+  const events = data?.events;
 
   return <Emails emails={events} />;
 };

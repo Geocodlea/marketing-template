@@ -2,8 +2,9 @@ import Breadcrumb from "@/components/Common/Breadcrumb";
 import Roadmap from "@/components/Roadmap/Roadmap";
 
 export const metadata = {
-  title: "Roadmap - || AiWave - AI SaaS Website NEXTJS14 UI Kit",
-  description: "AiWave - AI SaaS Website NEXTJS14 UI Kit",
+  title: "Ghid de Utilizare",
+  description:
+    "Află cum să folosești platforma noastră de marketing automatizat cu AI. Ghid pas cu pas pentru a maximiza beneficiile funcționalităților disponibile.",
 };
 
 const UtilizePage = () => {

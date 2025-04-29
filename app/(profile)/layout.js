@@ -5,6 +5,12 @@ import PopupMobileMenu from "@/components/Header/PopUpMobileMenu";
 import Footer from "@/components/Footers/Footer";
 import Copyright from "@/components/Footers/Copyright";
 
+export const metadata = {
+  title: "Profilul Meu",
+  description:
+    "Accesează și editează informațiile contului tău, gestionează setările platformei și personalizează-ți experiența cu ajutorul funcționalităților noastre de marketing AI.",
+};
+
 const ProfileLayout = ({ children }) => {
   return (
     <Context>

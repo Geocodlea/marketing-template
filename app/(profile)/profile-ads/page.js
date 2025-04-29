@@ -3,14 +3,8 @@ import { getServerSession } from "next-auth/next";
 import { redirect } from "next/navigation";
 import dbConnect from "@/utils/dbConnect";
 import User from "@/models/User";
-import Account from "@/models/Account";
 
 import Ads from "./Ads";
-
-export const metadata = {
-  title: "Plans & Billing - || AiWave - AI SaaS Website NEXTJS14 UI Kit",
-  description: "AiWave - AI SaaS Website NEXTJS14 UI Kit",
-};
 
 const AdsLayout = async () => {
   const session = await getServerSession(authOptions);

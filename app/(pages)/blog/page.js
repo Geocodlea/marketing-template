@@ -2,8 +2,9 @@ import Breadcrumb from "@/components/Common/Breadcrumb";
 import Blog from "@/components/Blog/Blog";
 
 export const metadata = {
-  title: "Blog - || AiWave - AI SaaS Website NEXTJS14 UI Kit",
-  description: "AiWave - AI SaaS Website NEXTJS14 UI Kit",
+  title: "Blog",
+  description:
+    "Citeste articole, ghiduri și sfaturi despre marketingul automatizat, strategii de vânzări și cum poți să îți crești afacerea cu ajutorul inteligenței artificiale.",
 };
 
 const BlogPage = () => {

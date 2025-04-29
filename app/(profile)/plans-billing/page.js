@@ -7,11 +7,6 @@ import { redirect } from "next/navigation";
 import dbConnect from "@/utils/dbConnect";
 import User from "@/models/User";
 
-export const metadata = {
-  title: "Plans & Billing - || AiWave - AI SaaS Website NEXTJS14 UI Kit",
-  description: "AiWave - AI SaaS Website NEXTJS14 UI Kit",
-};
-
 const PlansBillingLayout = async ({ searchParams }) => {
   const session = await getServerSession(authOptions);
   if (!session) redirect(`/auth/signin`);

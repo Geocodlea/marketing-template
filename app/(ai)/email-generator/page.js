@@ -1,3 +1,9 @@
+export const metadata = {
+  title: "Email Marketing cu AI",
+  description:
+    "Creează și trimite campanii de email personalizate cu ajutorul AI – texte optimizate, follow-up-uri automate, încărcare audiență și statistici în timp real.",
+};
+
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth/next";
 import { redirect } from "next/navigation";
@@ -14,8 +20,8 @@ const EmailGeneratorLayout = async () => {
 
   await dbConnect();
   const user = await User.findOne({ _id: userId });
-  const brevoEmail = user.brevo.email;
-  const brevoName = user.brevo.name;
+  const brevoEmail = user.brevo?.email;
+  const brevoName = user.brevo?.name;
 
   const respone = await fetch(
     `${process.env.NEXTAUTH_URL}/api/emails/brevo/${brevoEmail}`,
@@ -26,9 +32,7 @@ const EmailGeneratorLayout = async () => {
   const data = await respone.json();
   const domainVerified = data.status === 200;
 
-  const emailList = await EmailList.findOne({ userId })
-    .select("contacts")
-    .lean();
+  const emailList = await EmailList.findOne({ userId }).select("contacts");
   const contacts = emailList?.contacts || [];
 
   return (

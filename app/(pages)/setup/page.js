@@ -2,8 +2,9 @@ import Breadcrumb from "@/components/Common/Breadcrumb";
 import Utilize from "@/components/Utilize/Utilize";
 
 export const metadata = {
-  title: "How to use - || AiWave - AI SaaS Website NEXTJS14 UI Kit",
-  description: "AiWave - AI SaaS Website NEXTJS14 UI Kit",
+  title: "Configurare",
+  description:
+    "Urmează pașii simpli pentru a configura platforma și a începe să folosești funcționalitățile noastre de marketing automatizat cu AI. Ghid complet pentru o integrare rapidă.",
 };
 
 const SetupPage = () => {

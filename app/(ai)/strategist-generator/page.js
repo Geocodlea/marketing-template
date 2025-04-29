@@ -1,7 +1,7 @@
 export const metadata = {
-  title: "Generare Reclame cu AI",
+  title: "Strategie de Vânzări cu AI",
   description:
-    "Creează reclame eficiente pentru Facebook și alte platforme cu ajutorul inteligenței artificiale – texte persuasive, sugestii vizuale și segmentare automată a audienței.",
+    "Obține planuri de vânzare personalizate și recomandări inteligente pentru creșterea afacerii tale, generate automat cu ajutorul AI.",
 };
 
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
@@ -9,9 +9,9 @@ import { getServerSession } from "next-auth/next";
 import { redirect } from "next/navigation";
 import dbConnect from "@/utils/dbConnect";
 import User from "@/models/User";
-import AdsGeneratorPage from "./index";
+import StrategistGeneratorPage from "./index";
 
-const AdsGeneratorLayout = async () => {
+const StrategistGeneratorLayout = async () => {
   const session = await getServerSession(authOptions);
   if (!session) redirect(`/auth/signin`);
 
@@ -22,7 +22,7 @@ const AdsGeneratorLayout = async () => {
 
   return (
     <>
-      <AdsGeneratorPage
+      <StrategistGeneratorPage
         userId={userId}
         userFacebook={JSON.stringify(user.facebook)}
         plan={user.plan}
@@ -31,4 +31,4 @@ const AdsGeneratorLayout = async () => {
   );
 };
 
-export default AdsGeneratorLayout;
+export default StrategistGeneratorLayout;

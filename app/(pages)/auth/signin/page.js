@@ -5,8 +5,9 @@ import { getServerSession } from "next-auth/next";
 import { redirect } from "next/navigation";
 
 export const metadata = {
-  title: "Sign In - || AiWave - AI SaaS Website NEXTJS14 UI Kit",
-  description: "AiWave - AI SaaS Website NEXTJS14 UI Kit",
+  title: "Autentificare",
+  description:
+    "Accesează-ți contul pentru a începe să folosești platforma noastră de marketing automatizat cu AI. Conectează-te acum pentru a beneficia de toate funcționalitățile.",
 };
 
 const SigninLayout = async () => {

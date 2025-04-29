@@ -6,8 +6,9 @@ import dbConnect from "@/utils/dbConnect";
 import User from "@/models/User";
 
 export const metadata = {
-  title: "Pricing - || AiWave - AI SaaS Website NEXTJS14 UI Kit",
-  description: "AiWave - AI SaaS Website NEXTJS14 UI Kit",
+  title: "Prețuri",
+  description:
+    "Descoperă planurile noastre de preț și alege opțiunea care se potrivește cel mai bine nevoilor afacerii tale. Beneficiază de toate funcționalitățile platformei noastre de marketing AI.",
 };
 
 const PricingLayout = async () => {

@@ -48,20 +48,20 @@
           "badge": ""
         },
         {
-          "link": "#",
-          "isDisable": true,
+          "link": "/social-generator",
+          "isDisable": false,
           "title": "Social Media Manager",
           "badge": ""
         },
         {
-          "link": "#",
-          "isDisable": true,
+          "link": "/support-generator",
+          "isDisable": false,
           "title": "Customer Support",
           "badge": ""
         },
         {
-          "link": "#",
-          "isDisable": true,
+          "link": "/strategist-generator",
+          "isDisable": false,
           "title": "Strategist Vânzări",
           "badge": ""
         }
@@ -141,8 +141,8 @@
       "icon": ""
     },
     {
-      "link": "#",
-      "isDisable": true,
+      "link": "/social-generator",
+      "isDisable": false,
       "type": "default",
       "img": "/images/generator-icon/photo.png",
       "text": "Social Media Manager",
@@ -150,8 +150,8 @@
       "icon": ""
     },
     {
-      "link": "#",
-      "isDisable": true,
+      "link": "/support-generator",
+      "isDisable": false,
       "type": "default",
       "img": "/images/generator-icon/lyrics.png",
       "text": "Customer Support",
@@ -159,8 +159,8 @@
       "icon": ""
     },
     {
-      "link": "#",
-      "isDisable": true,
+      "link": "/strategist-generator",
+      "isDisable": false,
       "type": "default",
       "img": "/images/generator-icon/website-design.png",
       "text": "Strategist Vânzări",
@@ -910,22 +910,22 @@
       "badge": ""
     },
     {
-      "link": "#",
-      "isDisable": true,
+      "link": "/social-generator",
+      "isDisable": false,
       "title": "Social Media Manager",
       "img": "/images/generator-icon/website-design.png",
       "badge": ""
     },
     {
-      "link": "#",
-      "isDisable": true,
+      "link": "/support-generator",
+      "isDisable": false,
       "title": "Customer Support",
       "img": "/images/generator-icon/lyrics.png",
       "badge": ""
     },
     {
-      "link": "#",
-      "isDisable": true,
+      "link": "/strategist-generator",
+      "isDisable": false,
       "title": "Strategist Vânzări",
       "img": "/images/generator-icon/document.png",
       "badge": ""
