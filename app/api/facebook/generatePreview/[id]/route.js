@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import User from "@/models/User";
-import Account from "@/models/Account";
 import dbConnect from "@/utils/dbConnect";
 
 export async function POST(req, { params }) {
@@ -9,9 +8,11 @@ export async function POST(req, { params }) {
 
   await dbConnect();
   const user = await User.findOne({ _id: id });
-  const account = await Account.findOne({
-    userId: id,
-  });
+
+  const accessToken = user.facebook.accessToken;
+  const adAccountId = user.facebook.adAccountId;
+  const pageId = user.facebook.pageId;
+  const apiBaseUrl = process.env.FACEBOOK_API_URL;
 
   // Prepare the Facebook API request payload
   const creative = {
@@ -24,7 +25,7 @@ export async function POST(req, { params }) {
         description: adDetails.description,
         call_to_action: adDetails.CTA,
       },
-      page_id: user.facebook.pageId,
+      page_id: pageId,
     },
   };
 
@@ -32,17 +33,13 @@ export async function POST(req, { params }) {
   const queryParams = new URLSearchParams({
     creative: JSON.stringify(creative),
     ad_format: "MOBILE_FEED_STANDARD",
-    access_token: account.access_token,
+    access_token: accessToken,
   });
 
   try {
     const response = await fetch(
-      `${process.env.FACEBOOK_API_URL}/act_${
-        user.facebook.adAccountId
-      }/generatepreviews?${queryParams.toString()}`,
-      {
-        method: "GET",
-      }
+      `${apiBaseUrl}/act_${adAccountId}/generatepreviews?${queryParams.toString()}`,
+      { method: "GET" }
     );
 
     const result = await response.json();
