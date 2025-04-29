@@ -45,7 +45,7 @@ const AIGenerator = ({ title, messages, reload, addToolResult }) => {
                     height={40}
                     src={
                       msg.role === "user"
-                        ? session?.user?.image
+                        ? session?.user?.image || "/images/team/avatar.png"
                         : "/images/ai/chatgpt.png"
                     }
                     alt={msg.role}

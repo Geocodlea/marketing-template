@@ -1,5 +1,7 @@
 "use client";
 
+import { signIn } from "next-auth/react";
+
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
@@ -37,6 +39,19 @@ const FbForm = ({ user, updateAccount }) => {
       role="tabpanel"
       aria-labelledby="fb-tab"
     >
+      {user.facebook?.accessToken ? (
+        <p>Facebook Business Account - Conectat</p>
+      ) : (
+        <button
+          className="btn-default mb-5"
+          onClick={() =>
+            signIn("facebook", { callbackUrl: "/profile-details#fb" })
+          }
+        >
+          Adaugă Facebook Business Account
+        </button>
+      )}
+
       <form
         onSubmit={handleSubmitFb(updateAccount)}
         className="rbt-profile-row rbt-default-form row row--15"

@@ -16,9 +16,10 @@ global.models.User =
     plan: { type: String },
     planExpiresAt: { type: Date },
     facebook: {
-      adsRemaining: { type: Number, default: 0 },
-      adAccountId: { type: String },
+      accessToken: { type: String },
       pageId: { type: String },
+      adAccountId: { type: String },
+      adsRemaining: { type: Number, default: 0 },
     },
     brevo: {
       email: { type: String },

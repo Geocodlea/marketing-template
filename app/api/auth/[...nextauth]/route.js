@@ -8,6 +8,8 @@ import dbConnect from "@/utils/dbConnect";
 import User from "@/models/User";
 import sendVerificationRequest from "/utils/sendEmailVerification";
 
+import { getServerSession } from "next-auth/next";
+
 export const authOptions = {
   adapter: MongoDBAdapter(clientPromise),
   secret: process.env.NEXTAUTH_SECRET,
@@ -25,7 +27,7 @@ export const authOptions = {
         url: "https://www.facebook.com/v22.0/dialog/oauth",
         params: {
           scope:
-            "email,ads_read,ads_management,business_management,pages_read_engagement,pages_show_list,pages_manage_posts,pages_manage_ads,pages_read_user_content,leads_retrieval",
+            "email,public_profile,ads_read,ads_management,pages_read_engagement,pages_show_list",
         },
       },
     }),
@@ -38,12 +40,33 @@ export const authOptions = {
 
   callbacks: {
     async redirect({ url, baseUrl }) {
+      // Allow relative callback URLs (like "/profile-details")
+      if (url.startsWith("/")) return `${baseUrl}${url}`;
+
+      // Allow full URLs from the same origin
+      if (url.startsWith(baseUrl)) return url;
+
+      // Block anything else (external redirects)
       return baseUrl;
     },
 
     async session({ session, user }) {
       session.user.id = user.id;
       return session;
+    },
+
+    async signIn({ account }) {
+      const session = await getServerSession(authOptions);
+
+      if (account.provider === "facebook") {
+        await dbConnect();
+        await User.updateOne(
+          { _id: session.user.id },
+          { "facebook.accessToken": account.access_token }
+        );
+      }
+
+      return true;
     },
   },
 

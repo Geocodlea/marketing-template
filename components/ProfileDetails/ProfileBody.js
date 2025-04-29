@@ -1,5 +1,10 @@
 "use client";
 
+import dynamic from "next/dynamic";
+const HashTab = dynamic(() => import("@/components/Common/HashTab"), {
+  ssr: false,
+});
+
 import { useState, useEffect } from "react";
 import { signOut } from "next-auth/react";
 import Alert from "@/components/Common/Alert";
@@ -181,6 +186,7 @@ const ProfileBody = ({ userData }) => {
             <DeleteForm deleteAccount={deleteAccount} />
           </div>
 
+          <HashTab />
           {alert && <Alert alert={alert} setAlert={setAlert} />}
         </div>
       </div>

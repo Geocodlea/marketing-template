@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import User from "@/models/User";
-import Account from "@/models/Account";
 import dbConnect from "@/utils/dbConnect";
 
 export async function POST(req, { params }) {
@@ -20,24 +19,24 @@ export async function POST(req, { params }) {
   await dbConnect();
 
   try {
-    if (!campaign || !adSet || !adCreative) {
+    if (!campaign || !adSet || !leadForm || !adCreative) {
       return NextResponse.json({
         status: "error",
-        message: "Missing required data (campaign, ad set, or ad creative).",
+        message:
+          "Missing required data (campaign, ad set, lead form or ad creative).",
       });
     }
 
     const user = await User.findOne({ _id: id });
-    const account = await Account.findOne({ userId: id });
 
-    if (!user || !account) {
+    if (!user) {
       return NextResponse.json({
         status: "error",
-        message: "User or account not found.",
+        message: "User not found.",
       });
     }
 
-    const accessToken = account.access_token;
+    const accessToken = user.facebook.accessToken;
     const adAccountId = user.facebook.adAccountId;
     const pageId = user.facebook.pageId;
     const apiBaseUrl = process.env.FACEBOOK_API_URL;
