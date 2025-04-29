@@ -33,18 +33,12 @@ const AdsLayout = async () => {
     access_token: accessToken,
   });
 
-  let ads;
-  try {
-    const response = await fetch(
-      `${apiBaseUrl}/act_${adAccountId}/ads?${queryParams.toString()}`
-    );
+  const response = await fetch(
+    `${apiBaseUrl}/act_${adAccountId}/ads?${queryParams.toString()}`
+  );
+  const ads = await response.json();
 
-    ads = await response.json();
-  } catch (err) {
-    throw new Error(`GET Ads error: ${err.message}`);
-  }
-
-  return <Ads ads={ads.data} />;
+  return <Ads ads={ads?.data} />;
 };
 
 export default AdsLayout;

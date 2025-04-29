@@ -4,19 +4,14 @@ import React, { useEffect } from "react";
 import Link from "next/link";
 import sal from "sal.js";
 
+import { formattedDate } from "@/utils/helpers";
+
 import UserNav from "@/components/Common/UserNav";
 
 const AdsPage = ({ ads }) => {
   useEffect(() => {
     sal();
   }, []);
-
-  const formatDate = (dateStr) =>
-    new Date(dateStr).toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-    });
 
   return (
     <>
@@ -60,7 +55,7 @@ const AdsPage = ({ ads }) => {
                       <td>
                         {ad.targeting?.age_min} – {ad.targeting?.age_max}
                       </td>
-                      <td>{formatDate(ad.created_time)}</td>
+                      <td>{formattedDate(ad.created_time)}</td>
                       <td>
                         <Link
                           href={`/profile-ads/${ad.id}`}
