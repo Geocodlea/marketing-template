@@ -46,19 +46,21 @@ const Nav = () => {
                   className={`${!sectionStates[data.text] ? "open" : ""}`}
                   onClick={() => toggleSection(data.text)}
                 >
-                  {data.text}
-                  {data.isIcon ? (
-                    <i className="fa-regular fa-chevron-down"></i>
-                  ) : (
-                    ""
-                  )}
+                  <span className="d-inline-flex align-items-center gap-1">
+                    {data.text}
+                    {data.isIcon ? (
+                      <i className="fa-regular fa-chevron-down"></i>
+                    ) : (
+                      ""
+                    )}
+                  </span>
                 </a>
               ) : (
                 <Link
                   href={data.link}
                   className={isActive(data.link) ? "active" : ""}
                 >
-                  {data.text}
+                  <span className="text-nowrap">{data.text}</span>
                   {data.isIcon ? (
                     <i className="fa-regular fa-chevron-down"></i>
                   ) : (

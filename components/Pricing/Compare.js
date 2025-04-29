@@ -34,7 +34,7 @@ const Compare = ({ subTitle, title, postion, titleType }) => {
       </div>
       <div className="row row--15">
         <div className="col-lg-12">
-          <div className="rainbow-compare-table style-1">
+          <div className="rainbow-compare-table style-1 mb-5">
             <table className="table-responsive">
               <thead>
                 <tr>

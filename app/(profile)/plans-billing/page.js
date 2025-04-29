@@ -22,7 +22,7 @@ const PlansBillingLayout = async ({ searchParams }) => {
   const user = await User.findOne({ _id: userId });
   const plan = user.plan;
   const planExpiresAt = user.planExpiresAt;
-  const subscriptionId = user.stripe.subscriptionId;
+  const subscriptionId = user.stripe?.subscriptionId;
 
   let paymentStatus;
 

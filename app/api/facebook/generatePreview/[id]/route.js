@@ -38,8 +38,7 @@ export async function POST(req, { params }) {
 
   try {
     const response = await fetch(
-      `${apiBaseUrl}/act_${adAccountId}/generatepreviews?${queryParams.toString()}`,
-      { method: "GET" }
+      `${apiBaseUrl}/act_${adAccountId}/generatepreviews?${queryParams.toString()}`
     );
 
     const result = await response.json();

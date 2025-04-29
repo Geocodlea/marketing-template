@@ -20,9 +20,8 @@ const AdsLayout = async () => {
 
   await dbConnect();
   const user = await User.findOne({ _id: userId });
-  const account = await Account.findOne({ userId });
 
-  const accessToken = account?.access_token;
+  const accessToken = user.facebook?.accessToken;
   const adAccountId = user.facebook?.adAccountId;
   const apiBaseUrl = process.env.FACEBOOK_API_URL;
 
@@ -43,10 +42,7 @@ const AdsLayout = async () => {
   let ads;
   try {
     const response = await fetch(
-      `${apiBaseUrl}/act_${adAccountId}/ads?${queryParams.toString()}`,
-      {
-        method: "GET",
-      }
+      `${apiBaseUrl}/act_${adAccountId}/ads?${queryParams.toString()}`
     );
 
     ads = await response.json();

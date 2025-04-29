@@ -24,7 +24,7 @@ const EmailsLayout = async () => {
 
   const response = await fetch(
     // `${apiBaseUrl}/smtp/statistics/events?email=geocodlea@gmail.com`,
-    `${apiBaseUrl}/smtp/statistics/events?tags=${user.brevo.email}`,
+    `${apiBaseUrl}/smtp/statistics/events?tags=${user.brevo?.email}`,
     {
       method: "GET",
       headers: {
