@@ -21,7 +21,7 @@ const StaticbarDashboard = ({
           disabledChat={disabledChat}
         />
         <p className="b3 small-text">
-          AiWave can make mistakes. Consider checking important information.
+          AdPilot poate face greșeli. Verifică informațiile importante.
         </p>
       </div>
     </>

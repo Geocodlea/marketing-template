@@ -13,7 +13,7 @@ const Team = () => {
 
   return (
     <>
-      <div className="rbt-team-area bg-color-1 rainbow-section-gap-big pb--0">
+      <div className="rbt-team-area bg-color-1 rainbow-section-gap pb--0">
         <div className="container">
           <div className="section-title text-center">
             <h4 className="subtitle">
@@ -29,7 +29,7 @@ const Team = () => {
         </div>
       </div>
 
-      <div className="rbt-team-area bg-color-1 rainbow-section-gap-big">
+      <div className="rbt-team-area bg-color-1 rainbow-section-gap">
         <div className="container">
           <div className="row mb--60">
             <div className="col-lg-12">
@@ -89,7 +89,7 @@ const Team = () => {
         </div>
       </div>
 
-      <div className="rbt-team-area bg-color-1 rainbow-section-gap-big">
+      <div className="rbt-team-area bg-color-1 rainbow-section-gap">
         <div className="container text-center">
           <h2 className="title w-600 mb--20">Misiunea Noastră</h2>
           <p className="description b1">

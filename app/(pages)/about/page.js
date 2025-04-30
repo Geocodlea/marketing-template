@@ -10,7 +10,7 @@ export const metadata = {
 const AboutPage = () => {
   return (
     <>
-      <Breadcrumb title="Echipa nostră" text="Echipa" />
+      <Breadcrumb title="Echipa nostră" text="Despre Noi" />
 
       <Team />
     </>

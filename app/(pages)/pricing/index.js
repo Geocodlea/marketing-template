@@ -13,10 +13,7 @@ const PricingPage = ({ plan }) => {
 
   return (
     <>
-      <Breadcrumb
-        title="Alege planul potrivit pentru afacerea ta"
-        text="Prețuri"
-      />
+      <Breadcrumb title="Planuri de abonament" text="Prețuri" />
 
       <div className="rainbow-pricing-area rainbow-section-gap">
         <div className="container">
