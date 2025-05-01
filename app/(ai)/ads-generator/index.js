@@ -51,7 +51,9 @@ const AdsGeneratorPage = ({ userId, userFacebook, plan }) => {
     maxSteps: 5,
     async onToolCall({ toolCall }) {
       if (toolCall.toolName === "generateAdPreview") {
+        console.log("🚀 ~ index.js:55 ~ onToolCall ~ args:", toolCall.args);
         const result = await adFetch(toolCall.args, userId, "generatePreview");
+
         return result;
       }
       if (toolCall.toolName === "createAd") {
