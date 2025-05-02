@@ -31,6 +31,8 @@ const adDetailsSchema = z.object({
     targeting: z.object({
       geo_locations: z.object({
         countries: z.array(z.string().nullable()),
+        cities: z.array(z.object({ name: z.string().nullable() })).optional(),
+        regions: z.array(z.object({ name: z.string().nullable() })).optional(),
       }),
     }),
   }),
@@ -57,7 +59,7 @@ const adDetailsSchema = z.object({
       link_data: z.object({
         message: z.string().nullable(),
         link: z.string().url().nullable(),
-        picture: z.string().url().nullable(),
+        picture: z.string().url().nullable().default(null),
         CTA: z.object({
           type: z.enum(adCreativeCTAs).nullable(),
           value: z.object({
@@ -73,7 +75,7 @@ const generatePreviewSchema = z.object({
   name: z.string(),
   message: z.string(),
   link: z.string().url(),
-  picture: z.string().url().nullable(),
+  picture: z.string().url().nullable().default(null),
   CTA: z.object({
     type: z.enum(adCreativeCTAs),
     value: z.object({
@@ -86,7 +88,7 @@ const askForConfirmationSchema = z.object({
   message: z.string().describe("The message to ask for confirmation."),
 });
 
-const creatAdSchema = z.object({
+const createAdSchema = z.object({
   campaign: z.object({
     name: z.string(),
     status: z.enum(campaignStatuses),
@@ -97,6 +99,8 @@ const creatAdSchema = z.object({
     targeting: z.object({
       geo_locations: z.object({
         countries: z.array(z.string()),
+        cities: z.array(z.object({ name: z.string() })).optional(),
+        regions: z.array(z.object({ name: z.string() })).optional(),
       }),
     }),
   }),
@@ -361,7 +365,7 @@ const handleAdCreationStep = async (messages, step, adDetails) => {
         tools: {
           createAd: {
             description: "Create a Facebook ad.",
-            parameters: creatAdSchema,
+            parameters: createAdSchema,
           },
         },
         toolCallStreaming: true,

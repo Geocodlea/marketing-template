@@ -10,7 +10,7 @@ const contactSchema = z.object({
   nume_familie: z.string().optional(),
 });
 
-const generateEmailSchema = z.object({
+const generateEmailPreviewSchema = z.object({
   to: z
     .array(contactSchema)
     .describe(
@@ -96,9 +96,9 @@ export async function POST(req) {
       ...messages,
     ],
     tools: {
-      generateEmail: {
+      generateEmailPreview: {
         description: "Generate an email.",
-        parameters: generateEmailSchema,
+        parameters: generateEmailPreviewSchema,
         execute: async ({ to, subject, body }) => {
           return { to, subject, body };
         },

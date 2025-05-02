@@ -69,7 +69,7 @@ export const renderToolInvocation = (part, addToolResult) => {
       break;
     }
 
-    case "generateEmail": {
+    case "generateEmailPreview": {
       if (state === "call") {
         return <div key={callId}>Se generează previzualizarea...</div>;
       }

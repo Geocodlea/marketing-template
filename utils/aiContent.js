@@ -21,6 +21,13 @@ const details = (
   adDetails
 )}. Do not include any explanation, description, or extra text.
 
+Your task is to return a JSON object with **exactly these four top-level keys**:
+- campaign
+- adSet
+- leadForm
+- adCreative
+Each must be top-level. Do NOT nest any inside each other.
+
 Strict output rule:
 - Return ONLY the JSON object.
 - Do NOT wrap it in markdown.
@@ -29,12 +36,12 @@ Strict output rule:
 
 Guidelines:
 - **Do NOT infer the following critical details:**
- - Campaign status: Must match EXACTLY one of the valid enum values: ${campaignStatuses.join(
+ - Campaign status. Only if the user provides a campaign status, use it, but make sure it matches EXACTLY one of the valid enum values: ${campaignStatuses.join(
    ","
  )}
   - Ad set daily budget
   - Ad set targeting audience
-  - Ad creative picture: if user provides a picture, use it, otherwise leave it null
+  - Ad creative picture: if user provides a picture, use it, otherwise return null
 
 - **Infer all the following fields:**
   - Campaign: name
@@ -62,7 +69,17 @@ Guidelines:
 - If any field already exists, preserve its value.
 
 - **Return null for any missing details you cannot infer or are not allowed to infer.**
-- **Final Rule**: Validate field compatibility before returning the object. If a field is invalid in context, return it as null and await clarification from the user.`;
+- **Final Rules**: 
+  - Validate field compatibility before returning the object. If a field is invalid in context, return it as null and await clarification from the user.
+  - The final output must contain the field "adCreative.object_story_spec.link_data.picture", always.
+  - The final output must be a JSON object, of this form:
+    {
+      "campaign": {},
+      "adSet": {},
+      "leadForm": {}, 
+      "adCreative": {}
+    }
+`;
 
 const missingDetails = (
   missingFields
@@ -70,8 +87,7 @@ const missingDetails = (
   ", "
 )}).
 - Ask naturally for only the missing fields.
-- Keep it conversational and avoid overwhelming the user.
-- Example: "Could you provide a campaign name and its objective?"`;
+- Keep it conversational and avoid overwhelming the user.`;
 
 const generatePreview = (
   adDetails,
