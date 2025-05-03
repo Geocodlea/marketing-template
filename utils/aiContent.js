@@ -17,69 +17,50 @@ const details = (
   campaignStatuses,
   leadFormCTAs,
   adCreativeCTAs
-) => `You are a helpful assistant. Your task is to return a complete JSON object matching the schema provided using the previous messages and ${JSON.stringify(
-  adDetails
-)}. Do not include any explanation, description, or extra text.
+) => `You are a strict assistant. Your job is to fill ONLY the allowed fields in the Facebook ad JSON object.
 
-Your task is to return a JSON object with **exactly these four top-level keys**:
-- campaign
-- adSet
-- leadForm
-- adCreative
-Each must be top-level. Do NOT nest any inside each other.
+Input data:
+${JSON.stringify(adDetails, null, 2)}
 
-Strict output rule:
-- Return ONLY the JSON object.
-- Do NOT wrap it in markdown.
-- Do NOT add any headings or comments.
-- Always make the ad message longer, with subpoints, better formatted and with relevant emojis.
+⚠️ VERY IMPORTANT RULES:
+- Return ONLY a valid JSON object.
+- NO markdown. NO text. NO comments.
+- The adCreative message MUST be long, compelling, with subpoints, include emojis and be engaging.
 
-Guidelines:
-- **Do NOT infer the following critical details:**
- - Campaign status. Only if the user provides a campaign status, use it, but make sure it matches EXACTLY one of the valid enum values: ${campaignStatuses.join(
-   ","
- )}
-  - Ad set daily budget
-  - Ad set targeting audience
-  - Ad creative picture: if user provides a picture, use it, otherwise return null
+✅ You MAY infer and fill ONLY these fields and ONLY if missing:
+- campaign.name
+- adset.name
+- lead_form.name
+- lead_form.intro.title
+- lead_form.intro.body
+- lead_form.questions[0].label
+- lead_form.thank_you_page.title
+- lead_form.thank_you_page.body
+- lead_form.thank_you_page.button_text
+- lead_form.thank_you_page.website_url
+- adCreative.name
+- adCreative.object_story_spec.link_data.message
+- adCreative.object_story_spec.link_data.link, use a placeholder link (https://example.com)
+- adCreative.object_story_spec.link_data.CTA.type
+- adCreative.object_story_spec.link_data.CTA.value.link
 
-- **Infer all the following fields:**
-  - Campaign: name
-  - Ad set: name
-  - Lead form:
-    - name
-    - intro.title
-    - intro.body
-    - questions[0].label
-    - thank_you_page.title
-    - thank_you_page.body
-    - thank_you_page.button_text
-    - thank_you_page.button_type: Must match EXACTLY one of the valid enum values: ${leadFormCTAs.join(
-      ", "
-    )}
-    - thank_you_page.website_url
-  - Ad creative:
-    - name
-    - object_story_spec.link_data.message: A compelling ad message
-    - object_story_spec.link_data.link: Use a placeholder like https://example.com
-    - object_story_spec.link_data.CTA.type: Must match EXACTLY one of the valid enum values: ${adCreativeCTAs.join(
-      ", "
-    )}
-    - object_story_spec.link_data.CTA.value.link: Same as above link or another relevant one
-- If any field already exists, preserve its value.
+❌ DO NOT infer the following under ANY CIRCUMSTANCES:
+- campaign.status → Must be null unless present in input
+- adset.daily_budget → Must be null unless present in input
+- adset.targeting.geo_locations.cities[0].name → Must be null unless present in input
+- adCreative.object_story_spec.link_data.picture → Use only if provided, otherwise return null
 
-- **Return null for any missing details you cannot infer or are not allowed to infer.**
-- **Final Rules**: 
-  - Validate field compatibility before returning the object. If a field is invalid in context, return it as null and await clarification from the user.
-  - The final output must contain the field "adCreative.object_story_spec.link_data.picture", always.
-  - The final output must be a JSON object, of this form:
-    {
-      "campaign": {},
-      "adSet": {},
-      "leadForm": {}, 
-      "adCreative": {}
-    }
-`;
+🎯 Rules for specific values:
+- campaign.status → MUST match one of: ${campaignStatuses.join(", ")}
+- lead_form.thank_you_page.button_type → MUST match one of: ${leadFormCTAs.join(
+  ", "
+)}
+- adCreative.object_story_spec.link_data.CTA.type → MUST match one of: ${adCreativeCTAs.join(
+  ", "
+)}
+
+🛑 ANY field not allowed above must be set to null or excluded. DO NOT GUESS.
+Output only the final JSON object. No other output.`;
 
 const missingDetails = (
   missingFields

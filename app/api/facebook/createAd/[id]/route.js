@@ -2,6 +2,24 @@ import { NextResponse } from "next/server";
 import User from "@/models/User";
 import dbConnect from "@/utils/dbConnect";
 
+const getRegionKeys = async (apiBaseUrl, accessToken, cityList) => {
+  const results = await Promise.all(
+    cityList.map(async (city) => {
+      const response = await fetch(
+        `${apiBaseUrl}/search?type=adgeolocation&countries=['RO']&location_types=['city']&q=${encodeURIComponent(
+          city.name
+        )}&access_token=${accessToken}`
+      );
+      const result = await response.json();
+      const cityData = result.data[0];
+
+      return cityData ? { key: cityData.region_id } : null;
+    })
+  );
+
+  return results.filter(Boolean); // Remove any nulls if a region wasn't found
+};
+
 export async function POST(req, { params }) {
   const {
     adDetails: { campaign, adSet, leadForm, adCreative },
@@ -36,10 +54,18 @@ export async function POST(req, { params }) {
       });
     }
 
+    const apiBaseUrl = process.env.FACEBOOK_API_URL;
     const accessToken = user.facebook.accessToken;
     const adAccountId = user.facebook.adAccountId;
     const pageId = user.facebook.pageId;
-    const apiBaseUrl = process.env.FACEBOOK_API_URL;
+
+    const regionKeys = await getRegionKeys(
+      apiBaseUrl,
+      accessToken,
+      adSet.targeting.geo_locations.cities
+    );
+    const targetingLocations =
+      regionKeys.length > 0 ? { regions: regionKeys } : { countries: ["RO"] };
 
     // Step 1: Create Campaign
     const campaignPayload = {
@@ -84,9 +110,7 @@ export async function POST(req, { params }) {
       daily_budget: (adSet.daily_budget * 100).toFixed(0).toString(),
       destination_type: "ON_AD",
       targeting: {
-        geo_locations: {
-          countries: adSet.targeting.geo_locations.countries,
-        },
+        geo_locations: targetingLocations,
       },
       status: campaign.status,
       promoted_object: {
@@ -123,7 +147,7 @@ export async function POST(req, { params }) {
       name: leadForm.name + " " + new Date().toISOString(),
       locale: "ro_RO",
       privacy_policy: {
-        url: "https://marketing-template-xi.vercel.app/privacy-policy",
+        url: "https://www.adpilot.ro/privacy-policy",
         link_text: "Politica de confidențialitate",
       },
       intro: {

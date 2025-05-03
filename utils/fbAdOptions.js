@@ -8,9 +8,7 @@ const initialAdDetails = {
     daily_budget: null,
     targeting: {
       geo_locations: {
-        countries: ["RO"],
         cities: [{ name: null }],
-        regions: [{ name: null }],
       },
     },
   },

@@ -30,9 +30,7 @@ const adDetailsSchema = z.object({
     daily_budget: z.number().nullable(),
     targeting: z.object({
       geo_locations: z.object({
-        countries: z.array(z.string().nullable()),
-        cities: z.array(z.object({ name: z.string().nullable() })).optional(),
-        regions: z.array(z.object({ name: z.string().nullable() })).optional(),
+        cities: z.array(z.object({ name: z.string().nullable() })),
       }),
     }),
   }),
@@ -98,9 +96,7 @@ const createAdSchema = z.object({
     daily_budget: z.number(),
     targeting: z.object({
       geo_locations: z.object({
-        countries: z.array(z.string()),
-        cities: z.array(z.object({ name: z.string() })).optional(),
-        regions: z.array(z.object({ name: z.string() })).optional(),
+        cities: z.array(z.object({ name: z.string() })),
       }),
     }),
   }),
