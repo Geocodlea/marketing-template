@@ -103,7 +103,7 @@ STRICT output rules:
 - Do not wrap the tool call in markdown or text.
 - Do not explain anything.
 - DO NOT respond with JSON or text.
-- Your ONLY task is to immediately call the 'askForConfirmation' tool with the message "Do you approve this ad?".`;
+- Your ONLY task is to immediately call the 'askForConfirmation' tool with the message "Aprobi această reclamă?".`;
 
 const adCreation = (
   confirmationResult,
