@@ -26,11 +26,10 @@ const adFetch = async (adDetails, userId, api) => {
   }
 };
 
-const AdsGeneratorPage = ({ userId, userFacebook, plan }) => {
-  const userFb = JSON.parse(userFacebook);
+const AdsGeneratorPage = ({ userId, isFacebookData, fbAdsRemaining, plan }) => {
   const [step, setStep] = useState("validation");
   const [adDetails, setAdDetails] = useState(initialAdDetails);
-  const [adsRemaining, setAdsRemaining] = useState(userFb.adsRemaining);
+  const [adsRemaining, setAdsRemaining] = useState(fbAdsRemaining);
   const [alert, setAlert] = useState(null);
 
   const {
@@ -99,7 +98,7 @@ const AdsGeneratorPage = ({ userId, userFacebook, plan }) => {
             "Ai depășit numărul de reclame conform planului tău. Pentru a crea mai multe reclame va trebui să te abonezi la alt plan.",
         },
       ]);
-    } else if (!userFb.adAccountId || !userFb.pageId) {
+    } else if (!isFacebookData) {
       setMessages([
         {
           role: "system",
@@ -108,7 +107,7 @@ const AdsGeneratorPage = ({ userId, userFacebook, plan }) => {
         },
       ]);
     }
-  }, [adsRemaining, userFb.adAccountId, userFb.pageId, userFb.formId]);
+  }, [adsRemaining, isFacebookData]);
 
   useEffect(() => {
     if (data) {
@@ -139,7 +138,7 @@ const AdsGeneratorPage = ({ userId, userFacebook, plan }) => {
       )
     );
 
-    return isAskForConfirmation || !adsRemaining;
+    return isAskForConfirmation || !adsRemaining || !isFacebookData;
   }, [messages, adsRemaining]);
 
   return (

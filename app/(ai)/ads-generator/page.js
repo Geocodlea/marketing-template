@@ -20,11 +20,21 @@ const AdsGeneratorLayout = async () => {
   await dbConnect();
   const user = await User.findOne({ _id: userId });
 
+  const accessToken = user.facebook.accessToken;
+  const adAccountId = user.facebook.adAccountId;
+  const pageId = user.facebook.pageId;
+  const adsRemaining = user.facebook.adsRemaining;
+
+  const isFacebookData = Boolean(
+    accessToken && adAccountId && pageId && adsRemaining
+  );
+
   return (
     <>
       <AdsGeneratorPage
         userId={userId}
-        userFacebook={JSON.stringify(user.facebook)}
+        isFacebookData={isFacebookData}
+        fbAdsRemaining={adsRemaining}
         plan={user.plan}
       />
     </>
