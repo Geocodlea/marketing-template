@@ -1,4 +1,4 @@
-const formattedDate = (date) => {
+const longDate = (date) => {
   const dateObj = new Date(date);
 
   return dateObj.toLocaleDateString("ro-RO", {
@@ -8,4 +8,13 @@ const formattedDate = (date) => {
   });
 };
 
-export { formattedDate };
+const shortDate = (date) => {
+  const dateObj = new Date(date);
+
+  return dateObj.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+  });
+};
+
+export { longDate, shortDate };

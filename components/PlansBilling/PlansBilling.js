@@ -3,10 +3,9 @@
 import { useState } from "react";
 import UserNav from "../Common/UserNav";
 import Pricing from "../Pricing/Pricing";
-import PricingData from "../../data/pricing.json";
 import Compare from "../Pricing/Compare";
 
-import { formattedDate } from "@/utils/helpers";
+import { longDate } from "@/utils/helpers";
 import Alert from "@/components/Common/Alert";
 
 const PlansBilling = ({
@@ -59,7 +58,7 @@ const PlansBilling = ({
       {plan && (
         <p>
           Utilizați în prezent planul <strong>{plan}</strong>. Abonamentul dvs.
-          este valabil până în <strong>{formattedDate(planExpiresAt)}</strong>.
+          este valabil până în <strong>{longDate(planExpiresAt)}</strong>.
           Pentru a modifica sau reînnoi planul, accesați opțiunile de mai jos.
         </p>
       )}

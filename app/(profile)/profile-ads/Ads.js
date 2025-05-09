@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import Link from "next/link";
 import sal from "sal.js";
 
-import { formattedDate } from "@/utils/helpers";
+import { longDate } from "@/utils/helpers";
 
 import UserNav from "@/components/Common/UserNav";
 
@@ -55,13 +55,13 @@ const AdsPage = ({ ads }) => {
                       <td>
                         {ad.targeting?.age_min} – {ad.targeting?.age_max}
                       </td>
-                      <td>{formattedDate(ad.created_time)}</td>
+                      <td>{longDate(ad.created_time)}</td>
                       <td>
                         <Link
                           href={`/profile-ads/${ad.id}`}
                           className="read-more-btn theme-gradient"
                         >
-                          Vezi
+                          Vezi Detalii
                         </Link>
                       </td>
                     </tr>

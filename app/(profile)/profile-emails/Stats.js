@@ -1,168 +1,161 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import Chart from "chart.js/auto";
+import { useMemo } from "react";
+import Chart from "@/components/Common/Chart";
+import { shortDate } from "@/utils/helpers";
 
 const EmailGraph = ({ emailData }) => {
-  const chartRef = useRef(null);
-  const chartInstanceRef = useRef(null);
+  const { labels, datasets } = useMemo(() => {
+    const dates = emailData.map((event) =>
+      new Date(event.date).setHours(0, 0, 0, 0)
+    );
+    const minDate = new Date(Math.min(...dates));
+    const maxDate = new Date(Math.max(...dates));
 
-  // Format date as "MMM d" (e.g., "Apr 24")
-  const formatDate = (date) => {
-    return date.toLocaleDateString("en-US", { month: "short", day: "numeric" });
-  };
+    const labels = [];
+    for (let d = new Date(minDate); d <= maxDate; d.setDate(d.getDate() + 1)) {
+      labels.push(shortDate(new Date(d)));
+    }
 
-  // Extract unique days from the data
-  const dates = emailData.map((event) =>
-    new Date(event.date).setHours(0, 0, 0, 0)
-  );
-  const minDate = new Date(Math.min(...dates));
-  const maxDate = new Date(Math.max(...dates));
+    const generateCumulativeData = (eventName) =>
+      labels.map((_, i) => {
+        const endOfDay = new Date(minDate);
+        endOfDay.setDate(minDate.getDate() + i);
+        endOfDay.setHours(23, 59, 59, 999);
+        return emailData.filter(
+          (event) =>
+            new Date(event.date) <= endOfDay && event.event === eventName
+        ).length;
+      });
 
-  // Generate daily labels
-  const labels = [];
-  for (let d = new Date(minDate); d <= maxDate; d.setDate(d.getDate() + 1)) {
-    labels.push(formatDate(new Date(d)));
-  }
-
-  // Calculate cumulative counts for each parameter
-  const sentData = labels.map((_, i) => {
-    const endOfDay = new Date(minDate);
-    endOfDay.setDate(minDate.getDate() + i);
-    endOfDay.setHours(23, 59, 59, 999);
-    return emailData.filter(
-      (event) => new Date(event.date) <= endOfDay && event.event === "requests"
-    ).length;
-  });
-  const deliveredData = labels.map((_, i) => {
-    const endOfDay = new Date(minDate);
-    endOfDay.setDate(minDate.getDate() + i);
-    endOfDay.setHours(23, 59, 59, 999);
-    return emailData.filter(
-      (event) => new Date(event.date) <= endOfDay && event.event === "delivered"
-    ).length;
-  });
-  const estimatedOpenersData = labels.map((_, i) => {
-    const endOfDay = new Date(minDate);
-    endOfDay.setDate(minDate.getDate() + i);
-    endOfDay.setHours(23, 59, 59, 999);
-    return emailData.filter(
-      (event) =>
-        new Date(event.date) <= endOfDay && event.event === "loadedByProxy"
-    ).length;
-  });
-  const trackableOpenersData = labels.map((_, i) => {
-    const endOfDay = new Date(minDate);
-    endOfDay.setDate(minDate.getDate() + i);
-    endOfDay.setHours(23, 59, 59, 999);
-    return emailData.filter(
-      (event) => new Date(event.date) <= endOfDay && event.event === "opened"
-    ).length;
-  });
-  const uniqueClickersData = Array(labels.length).fill(0); // Placeholder if no click events
-  const bouncedData = Array(labels.length).fill(0); // Placeholder if no bounce events
-
-  // Create the chart
-  useEffect(() => {
-    const ctx = chartRef.current.getContext("2d");
-    chartInstanceRef.current = new Chart(ctx, {
-      type: "line",
-      data: {
-        labels,
-        datasets: [
-          {
-            label: "Sent",
-            data: sentData,
-            borderColor: "#00008B",
-            backgroundColor: "rgba(0, 0, 139, 0.1)",
-            fill: true,
-            tension: 0.3,
-            pointRadius: 3,
-            borderWidth: 2,
-          },
-          {
-            label: "Delivered",
-            data: deliveredData,
-            borderColor: "#1E90FF",
-            backgroundColor: "rgba(30, 144, 255, 0.1)",
-            fill: true,
-            tension: 0.3,
-            pointRadius: 3,
-            borderWidth: 2,
-          },
-          {
-            label: "Estimated openers",
-            data: estimatedOpenersData,
-            borderColor: "#00FFFF",
-            backgroundColor: "rgba(0, 255, 255, 0.1)",
-            fill: true,
-            tension: 0.3,
-            pointRadius: 3,
-            borderWidth: 2,
-          },
-          {
-            label: "Trackable openers",
-            data: trackableOpenersData,
-            borderColor: "#87CEEB",
-            backgroundColor: "rgba(135, 206, 235, 0.1)",
-            fill: true,
-            tension: 0.3,
-            pointRadius: 3,
-            borderWidth: 2,
-          },
-          {
-            label: "Unique clickers",
-            data: uniqueClickersData,
-            borderColor: "#32CD32",
-            backgroundColor: "rgba(50, 205, 50, 0.1)",
-            fill: true,
-            tension: 0.3,
-            pointRadius: 3,
-            borderWidth: 2,
-          },
-          {
-            label: "Bounced",
-            data: bouncedData,
-            borderColor: "#FF0000",
-            backgroundColor: "rgba(255, 0, 0, 0.1)",
-            fill: true,
-            tension: 0.3,
-            pointRadius: 3,
-            borderWidth: 2,
-          },
-        ],
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          legend: { display: true, position: "top" },
-          title: { display: true, text: "Email Campaign Performance" },
+    return {
+      labels,
+      datasets: [
+        {
+          label: "Sent",
+          data: generateCumulativeData("requests"),
+          borderColor: "#1E90FF",
+          backgroundColor: "rgba(30, 144, 255, 0.2)",
+          fill: true,
+          tension: 0.3,
+          pointRadius: 3,
+          borderWidth: 2,
         },
-        scales: {
-          x: {
-            title: { display: true, text: "Date" },
-            grid: { display: false },
-          },
-          y: {
-            beginAtZero: true,
-            title: { display: true, text: "Count" },
-            grid: { color: "rgba(0, 0, 0, 0.1)" },
-          },
+        {
+          label: "Delivered",
+          data: generateCumulativeData("delivered"),
+          borderColor: "#32CD32",
+          backgroundColor: "rgba(50, 205, 50, 0.2)",
+          fill: true,
+          tension: 0.3,
+          pointRadius: 3,
+          borderWidth: 2,
         },
-      },
-    });
-
-    // Clean up chart on unmount
-    return () => {
-      if (chartInstanceRef.current) chartInstanceRef.current.destroy();
+        {
+          label: "Estimated openers",
+          data: generateCumulativeData("loadedByProxy"),
+          borderColor: "#FFD700",
+          backgroundColor: "rgba(255, 215, 0, 0.2)",
+          fill: true,
+          tension: 0.3,
+          pointRadius: 3,
+          borderWidth: 2,
+        },
+        {
+          label: "Trackable openers",
+          data: generateCumulativeData("opened"),
+          borderColor: "#FF6347",
+          backgroundColor: "rgba(255, 99, 132, 0.2)",
+          fill: true,
+          tension: 0.3,
+          pointRadius: 3,
+          borderWidth: 2,
+        },
+        {
+          label: "Unique clickers",
+          data: Array(labels.length).fill(0),
+          borderColor: "#FF1493",
+          backgroundColor: "rgba(255, 20, 147, 0.2)",
+          fill: true,
+          tension: 0.3,
+          pointRadius: 3,
+          borderWidth: 2,
+        },
+        {
+          label: "Bounced",
+          data: Array(labels.length).fill(0),
+          borderColor: "#FF4500",
+          backgroundColor: "rgba(255, 69, 0, 0.2)",
+          fill: true,
+          tension: 0.3,
+          pointRadius: 3,
+          borderWidth: 2,
+        },
+      ],
     };
   }, [emailData]);
 
-  return (
-    <div className="w-full h-96">
-      <canvas ref={chartRef}></canvas>
-    </div>
-  );
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: true,
+        position: "top",
+        labels: {
+          color: "#fff",
+          font: {
+            size: 14,
+            weight: "500",
+          },
+        },
+      },
+      title: {
+        display: true,
+        text: "Email Campaign Performance",
+        color: "#fff",
+        font: {
+          size: 16,
+          weight: "600",
+        },
+      },
+    },
+    scales: {
+      x: {
+        title: {
+          display: true,
+          text: "Date",
+          color: "#fff",
+        },
+        grid: {
+          color: "rgba(255, 255, 255, 0.1)",
+        },
+        ticks: {
+          color: "#fff",
+          font: {
+            size: 12,
+          },
+        },
+      },
+      y: {
+        title: {
+          display: true,
+          text: "Count",
+          color: "#fff",
+        },
+        grid: {
+          color: "rgba(255, 255, 255, 0.1)",
+        },
+        ticks: {
+          color: "#fff",
+          font: {
+            size: 12,
+          },
+        },
+      },
+    },
+  };
+
+  return <Chart type="line" data={{ labels, datasets }} options={options} />;
 };
 
 export default EmailGraph;

@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import sal from "sal.js";
 
 import UserNav from "@/components/Common/UserNav";
-import { formattedDate } from "@/utils/helpers";
+import { longDate } from "@/utils/helpers";
 import Stats from "./Stats";
 
 const EmailsPage = ({ emails }) => {
@@ -38,7 +38,7 @@ const EmailsPage = ({ emails }) => {
                       <td>{i + 1}</td>
                       <td>{email.email}</td>
                       <td>{email.subject}</td>
-                      <td>{formattedDate(email.date)}</td>
+                      <td>{longDate(email.date)}</td>
                       <td>{email.event}</td>
                     </tr>
                   ))}
