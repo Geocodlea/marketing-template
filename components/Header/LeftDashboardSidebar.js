@@ -130,13 +130,13 @@ const LeftSidebar = ({ plan }) => {
                     className="w-100"
                     width={49}
                     height={48}
-                    src={session?.user.image || avatar}
+                    src={session?.user?.image || avatar}
                     alt="Author"
                   />
                 </div>
                 <div className="author-desc">
-                  <h6>{session?.user.name}</h6>
-                  <span>{session?.user.email}</span>
+                  <h6>{session?.user?.firstname}</h6>
+                  <span>{session?.user?.email}</span>
                 </div>
                 {!plan && <div className="author-badge">Free</div>}
               </Link>

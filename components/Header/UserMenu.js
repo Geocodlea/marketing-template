@@ -18,14 +18,14 @@ const UserMenu = () => {
         <div className="rbt-admin-profile">
           <div className="admin-thumbnail">
             <Image
-              src={session?.user.image || avatar}
+              src={session?.user?.image || avatar}
               width={31}
               height={31}
               alt="User Images"
             />
           </div>
           <div className="admin-info">
-            <span className="name">{session?.user.name}</span>
+            <span className="name">{session?.user?.firstname}</span>
             <Link
               className="rbt-btn-link color-primary"
               href="/profile-details"

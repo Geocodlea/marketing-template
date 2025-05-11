@@ -40,7 +40,7 @@ const FbForm = ({ user, updateAccount }) => {
       aria-labelledby="fb-tab"
     >
       {user.facebook?.hasAccessToken ? (
-        <p>Facebook Business Account - Conectat</p>
+        <p>Business Account - Conectat</p>
       ) : (
         <button
           className="btn-default mb-5"
@@ -48,7 +48,7 @@ const FbForm = ({ user, updateAccount }) => {
             signIn("facebook", { callbackUrl: "/profile-details#fb" })
           }
         >
-          Adaugă Facebook Business Account
+          Link Business Account
         </button>
       )}
 

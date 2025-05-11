@@ -8,7 +8,7 @@ import { getServerSession } from "next-auth/next";
 // Update user from profile
 export async function PATCH(request, { params }) {
   const session = await getServerSession(authOptions);
-  if (session?.user.id !== params.id) {
+  if (session?.user?.id !== params.id) {
     return new NextResponse("Unauthorized", {
       status: 401,
     });
@@ -61,7 +61,7 @@ export async function DELETE(request, { params }) {
   const { id } = params;
 
   const session = await getServerSession(authOptions);
-  if (session?.user.id !== id) {
+  if (session?.user?.id !== id) {
     return new NextResponse("Unauthorized", {
       status: 401,
     });
