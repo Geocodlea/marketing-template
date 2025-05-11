@@ -81,7 +81,7 @@ const ProfileBody = ({ userData }) => {
 
       if (response.ok) {
         setAlert(data);
-        signOut();
+        signOut({ callbackUrl: "/" });
       } else {
         setAlert(data);
       }

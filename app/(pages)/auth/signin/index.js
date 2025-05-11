@@ -50,7 +50,7 @@ const SigninPage = () => {
                   </div>
                   <div className="signup-box-bottom">
                     <div className="signup-box-content">
-                      {/* <div className="social-btn-grp">
+                      <div className="social-btn-grp">
                         <button
                           className="btn-default btn-border"
                           onClick={() =>
@@ -69,9 +69,9 @@ const SigninPage = () => {
                         </button>
                       </div>
 
-                      <br />
+                      <div className="rbt-sm-separator"></div>
 
-                      <div className="social-btn-grp">
+                      {/*<div className="social-btn-grp">
                         <button
                           className="btn-default btn-border"
                           onClick={() => signIn("tiktok", { callbackUrl: "/" })}

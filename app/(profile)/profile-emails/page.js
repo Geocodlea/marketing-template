@@ -19,7 +19,6 @@ const EmailsLayout = async () => {
   const brevoApiKey = process.env.BREVO_API_KEY;
 
   const response = await fetch(
-    // `${apiBaseUrl}/smtp/statistics/events?email=geocodlea@gmail.com`,
     `${apiBaseUrl}/smtp/statistics/events?tags=${user.brevo?.email}`,
     {
       method: "GET",

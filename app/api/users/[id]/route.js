@@ -58,15 +58,17 @@ export async function PATCH(request, { params }) {
 }
 
 export async function DELETE(request, { params }) {
+  const { id } = params;
+
   const session = await getServerSession(authOptions);
-  if (session?.user.id !== params.id) {
+  if (session?.user.id !== id) {
     return new NextResponse("Unauthorized", {
       status: 401,
     });
   }
 
   await dbConnect();
-  const deletedUser = await User.findOneAndDelete({ _id: params.id });
+  const deletedUser = await User.findOneAndDelete({ _id: id });
 
   if (!deletedUser) {
     return NextResponse.json({
@@ -75,7 +77,7 @@ export async function DELETE(request, { params }) {
     });
   }
 
-  await Account.deleteMany({ userId: params.id });
+  await Account.deleteMany({ userId: id });
 
   return NextResponse.json({
     status: "success",

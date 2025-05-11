@@ -8,8 +8,6 @@ import dbConnect from "@/utils/dbConnect";
 import User from "@/models/User";
 import sendVerificationRequest from "/utils/sendEmailVerification";
 
-import { getServerSession } from "next-auth/next";
-
 export const authOptions = {
   adapter: MongoDBAdapter(clientPromise),
   secret: process.env.NEXTAUTH_SECRET,
@@ -54,20 +52,6 @@ export const authOptions = {
       session.user.id = user.id;
       return session;
     },
-
-    async signIn({ account }) {
-      const session = await getServerSession(authOptions);
-
-      if (account.provider === "facebook") {
-        await dbConnect();
-        await User.updateOne(
-          { _id: session.user.id },
-          { "facebook.accessToken": account.access_token }
-        );
-      }
-
-      return true;
-    },
   },
 
   events: {
@@ -77,10 +61,20 @@ export const authOptions = {
         { _id: user.id },
         {
           $set: {
-            "facebook.adsRemaining": 10,
+            "facebook.adsRemaining": 100,
           },
         }
       );
+    },
+
+    async linkAccount({ account, user }) {
+      if (account.provider === "facebook") {
+        await dbConnect();
+        await User.updateOne(
+          { _id: user.id },
+          { "facebook.accessToken": account.access_token }
+        );
+      }
     },
   },
 
