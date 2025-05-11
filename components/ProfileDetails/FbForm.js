@@ -39,7 +39,7 @@ const FbForm = ({ user, updateAccount }) => {
       role="tabpanel"
       aria-labelledby="fb-tab"
     >
-      {user.facebook?.accessToken ? (
+      {user.facebook?.hasAccessToken ? (
         <p>Facebook Business Account - Conectat</p>
       ) : (
         <button

@@ -13,6 +13,17 @@ const ProfileDetails = async () => {
 
   await dbConnect();
   const user = await User.findOne({ _id: session.user.id });
+  const userClientData = {
+    _id: user._id.toString(),
+    name: user.name,
+    email: user.email,
+    brevo: { email: user.brevo.email, name: user.brevo.name },
+    facebook: {
+      pageId: user.facebook.pageId,
+      adAccountId: user.facebook.adAccountId,
+      hasAccessToken: Boolean(user.facebook.accessToken),
+    },
+  };
 
   return (
     <>
@@ -20,7 +31,7 @@ const ProfileDetails = async () => {
 
       <div className="content-page pb--50">
         <div className="chat-box-list">
-          <ProfileBody userData={JSON.stringify(user)} />
+          <ProfileBody user={userClientData} />
         </div>
       </div>
     </>

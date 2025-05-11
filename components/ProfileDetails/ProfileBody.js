@@ -14,10 +14,9 @@ import FbForm from "./FbForm";
 import EmailForm from "./EmailForm";
 import DeleteForm from "./DeleteForm";
 
-const ProfileBody = ({ userData }) => {
+const ProfileBody = ({ user }) => {
   const [alert, setAlert] = useState(null);
   const [dnsRecords, setDnsRecords] = useState([]);
-  const user = JSON.parse(userData);
 
   const updateAccount = async (accountDetails) => {
     if (accountDetails.brevoEmail) {
