@@ -19,6 +19,36 @@ const ProfileBody = ({ user }) => {
   const [dnsRecords, setDnsRecords] = useState([]);
 
   const updateAccount = async (accountDetails) => {
+    // Validate page
+    if (accountDetails.pageId) {
+      try {
+        const response = await fetch(`/api/facebook/validatePage/`, {
+          method: "POST",
+          body: JSON.stringify({ pageId: accountDetails.pageId }),
+        });
+
+        if (!response.ok) {
+          setAlert({
+            status: "danger",
+            message: `A apărut o eroare. Încercați mai târziu.`,
+          });
+          return;
+        }
+
+        const data = await response.json();
+
+        setAlert(data);
+        return;
+      } catch (error) {
+        setAlert({
+          status: "danger",
+          message: `A apărut o eroare: ${error.message}`,
+        });
+        return;
+      }
+    }
+
+    // Update dns records
     if (accountDetails.brevoEmail) {
       try {
         const response = await fetch(
@@ -47,6 +77,7 @@ const ProfileBody = ({ user }) => {
       }
     }
 
+    // Update account
     try {
       const response = await fetch(`/api/users/${user._id}`, {
         method: "PATCH",
@@ -55,11 +86,7 @@ const ProfileBody = ({ user }) => {
 
       const data = await response.json();
 
-      if (response.ok) {
-        setAlert(data);
-      } else {
-        setAlert(data);
-      }
+      setAlert(data);
     } catch (error) {
       setAlert({
         status: "danger",
