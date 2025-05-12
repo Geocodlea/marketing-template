@@ -19,12 +19,15 @@ const ProfileBody = ({ user }) => {
   const [dnsRecords, setDnsRecords] = useState([]);
 
   const updateAccount = async (accountDetails) => {
-    // Validate page
-    if (accountDetails.pageId) {
+    // Validate fb ids
+    if (accountDetails.adAccountId || accountDetails.pageId) {
       try {
-        const response = await fetch(`/api/facebook/validatePage/`, {
+        const response = await fetch(`/api/facebook/validateIds/`, {
           method: "POST",
-          body: JSON.stringify({ pageId: accountDetails.pageId }),
+          body: JSON.stringify({
+            adAccountId: accountDetails.adAccountId,
+            pageId: accountDetails.pageId,
+          }),
         });
 
         if (!response.ok) {
@@ -37,8 +40,12 @@ const ProfileBody = ({ user }) => {
 
         const data = await response.json();
 
+        if (data.status === "danger") {
+          setAlert(data);
+          return;
+        }
+
         setAlert(data);
-        return;
       } catch (error) {
         setAlert({
           status: "danger",
