@@ -42,6 +42,7 @@ export default async function AdDetailsPage({ params }) {
     `${apiBaseUrl}/${id}/insights?${queryParams.toString()}`
   );
   const adInsights = await response.json();
+  console.log("🚀 ~ page.js:45 ~ AdDetailsPage ~ adInsights:", adInsights);
 
   return (
     <>

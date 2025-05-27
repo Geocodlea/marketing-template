@@ -7,20 +7,11 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 
 const fbSchema = Yup.object().shape({
-  adAccountId: Yup.string()
-    .matches(/^\d*$/, "Numărul trebuie să conțină doar cifre.")
-    .test(
-      "exact-length-or-empty",
-      "Numărul trebuie să aibă exact 16 cifre.",
-      (value) => value === "" || value.length === 16
-    ),
-  pageId: Yup.string()
-    .matches(/^\d*$/, "Numărul trebuie să conțină doar cifre.")
-    .test(
-      "exact-length-or-empty",
-      "Numărul trebuie să aibă exact 15 cifre.",
-      (value) => value === "" || value.length === 15
-    ),
+  adAccountId: Yup.string().matches(
+    /^\d*$/,
+    "Id-ul trebuie să conțină doar cifre."
+  ),
+  pageId: Yup.string().matches(/^\d*$/, "Id-ul trebuie să conțină doar cifre."),
 });
 
 const FbForm = ({ user, updateAccount }) => {
