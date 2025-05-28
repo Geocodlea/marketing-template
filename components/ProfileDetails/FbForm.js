@@ -7,11 +7,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 
 const fbSchema = Yup.object().shape({
-  adAccountId: Yup.string().matches(
-    /^\d*$/,
-    "Id-ul trebuie să conțină doar cifre."
-  ),
-  pageId: Yup.string().matches(/^\d*$/, "Id-ul trebuie să conțină doar cifre."),
+  adAccountId: Yup.string().matches(/^\d*$/, "Doar cifre sunt acceptate"),
+  pageId: Yup.string().matches(/^\d*$/, "Doar cifre sunt acceptate"),
 });
 
 const FbForm = ({ user, updateAccount }) => {
@@ -53,6 +50,7 @@ const FbForm = ({ user, updateAccount }) => {
             <input
               id="adAccountId"
               type="text"
+              inputMode="numeric"
               placeholder={
                 user.facebook?.adAccountId ? "Setat" : "Ex.: 1653034732758696"
               }
@@ -74,6 +72,7 @@ const FbForm = ({ user, updateAccount }) => {
             <input
               id="pageId"
               type="text"
+              inputMode="numeric"
               placeholder={
                 user.facebook?.pageId ? "Setat" : "Ex.: 614020611786833"
               }

@@ -5,6 +5,7 @@ import dbConnect from "@/utils/dbConnect";
 import User from "@/models/User";
 import UserNav from "@/components/Common/UserNav";
 import PerformanceChart from "./PerformanceChart";
+import PerformanceTable from "./PerformanceTable";
 
 export default async function AdDetailsPage({ params }) {
   const { id } = params;
@@ -47,6 +48,8 @@ export default async function AdDetailsPage({ params }) {
   return (
     <>
       <UserNav title="Facebook Ad Insights" />
+
+      <PerformanceTable data={adInsights.data} />
 
       <PerformanceChart data={adInsights.data} />
     </>

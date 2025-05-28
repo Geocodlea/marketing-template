@@ -103,6 +103,9 @@ const EmailGraph = ({ emailData }) => {
         position: "top",
         labels: {
           color: "#fff",
+          boxWidth: 16,
+          boxHeight: 16,
+          padding: 20,
           font: {
             size: 14,
             weight: "500",

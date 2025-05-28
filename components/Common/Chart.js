@@ -33,7 +33,7 @@ const ChartComponent = ({ type = "line", data, options }) => {
   }, [type, data, options]);
 
   return (
-    <div className="w-full h-96 mb-5">
+    <div className="w-100 mb-5">
       <canvas ref={chartRef}></canvas>
     </div>
   );
