@@ -52,7 +52,7 @@ const FbForm = ({ user, updateAccount }) => {
               type="text"
               inputMode="numeric"
               placeholder={
-                user.facebook?.adAccountId ? "Setat" : "Ex.: 1653034732758696"
+                user.facebook?.adAccountId || "Ex.: 1653034732758696"
               }
               {...registerFb("adAccountId")}
               className={`form-control ${
@@ -73,9 +73,7 @@ const FbForm = ({ user, updateAccount }) => {
               id="pageId"
               type="text"
               inputMode="numeric"
-              placeholder={
-                user.facebook?.pageId ? "Setat" : "Ex.: 614020611786833"
-              }
+              placeholder={user.facebook?.pageId || "Ex.: 614020611786833"}
               {...registerFb("pageId")}
               className={`form-control ${fbErrors.pageId ? "is-invalid" : ""}`}
             />
